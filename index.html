@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MS Word মাস্টার কুইজ | স্মার্ট স্টাডি ও পারুলিয়া যুব কম্পিউটার কেন্দ্র</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF8F1;
+    --desk:#E4E0D2;
+    --ink:#1B2A4A;
+    --ink-soft:#4A5A7A;
+    --margin-red:#B33A3A;
+    --correct-green:#1A7A56;
+    --grey-blue:#6B7A99;
+    --gold:#D9A441;
+    --tick-grey:#D8D3C4;
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:var(--desk);
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(255,255,255,0.4) 0%, transparent 45%),
+      radial-gradient(circle at 80% 85%, rgba(0,0,0,0.04) 0%, transparent 40%);
+    font-family:'Noto Sans Bengali', sans-serif;
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px 14px;
+  }
+  .sheet{
+    width:100%;
+    max-width:680px;
+    background:var(--paper);
+    border-radius:6px;
+    box-shadow:0 18px 50px rgba(27,42,74,0.18), 0 2px 6px rgba(27,42,74,0.08);
+    position:relative;
+    overflow:hidden;
+    min-height:560px;
+    display:flex;
+    flex-direction:column;
+  }
+  .sheet::before{
+    content:"";
+    position:absolute;
+    top:0; bottom:0; left:54px;
+    width:1px;
+    background:rgba(179,58,58,0.28);
+    z-index:0;
+  }
+  .sheet::after{
+    content:"";
+    position:absolute;
+    top:0; bottom:0; left:0;
+    width:6px;
+    background:repeating-linear-gradient(180deg, var(--margin-red) 0 10px, transparent 10px 22px);
+    opacity:0.55;
+    z-index:0;
+  }
+  header.topbar{
+    position:relative;
+    z-index:1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 22px 14px 30px;
+    border-bottom:1px solid rgba(27,42,74,0.1);
+  }
+  .brandmark{
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    color:var(--grey-blue);
+    letter-spacing:0.03em;
+  }
+  .home-btn{
+    background:none;
+    border:1px solid rgba(27,42,74,0.2);
+    color:var(--ink-soft);
+    font-family:'Noto Sans Bengali', sans-serif;
+    font-size:0.78rem;
+    padding:6px 12px;
+    border-radius:20px;
+    cursor:pointer;
+    display:none;
+  }
+  .home-btn.show{display:inline-block;}
+  .home-btn:hover{border-color:var(--ink); color:var(--ink);}
+  main{
+    position:relative;
+    z-index:1;
+    flex:1;
+    padding:28px 30px 30px 30px;
+    display:flex;
+    flex-direction:column;
+  }
+  .screen{display:none;}
+  .screen.active{display:flex; flex-direction:column; flex:1; animation:fadeIn 0.35s ease;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+  /* ---- START SCREEN ---- */
+  .hero-eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    color:var(--margin-red);
+    letter-spacing:0.08em;
+    margin-bottom:6px;
+  }
+  h1.hero-title{
+    font-family:'Noto Serif Bengali', serif;
+    font-size:1.85rem;
+    line-height:1.3;
+    margin:0 0 8px 0;
+    color:var(--ink);
+  }
+  p.hero-sub{
+    font-size:0.95rem;
+    color:var(--ink-soft);
+    margin:0 0 26px 0;
+    line-height:1.6;
+  }
+  .mode-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin-bottom:8px;
+  }
+  @media (max-width:520px){ .mode-grid{grid-template-columns:1fr;} }
+  .mode-card{
+    border:1.5px solid rgba(27,42,74,0.14);
+    background:#fff;
+    border-radius:10px;
+    padding:18px 16px;
+    cursor:pointer;
+    text-align:left;
+    font-family:inherit;
+    transition:transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .mode-card:hover, .mode-card:focus-visible{
+    transform:translateY(-3px);
+    border-color:var(--gold);
+    box-shadow:0 10px 24px rgba(27,42,74,0.12);
+    outline:none;
+  }
+  .mode-card .tag{
+    font-family:'Space Mono', monospace;
+    font-size:0.68rem;
+    color:var(--correct-green);
+    background:rgba(26,122,86,0.1);
+    display:inline-block;
+    padding:2px 8px;
+    border-radius:10px;
+    margin-bottom:10px;
+  }
+  .mode-card.full .tag{color:var(--margin-red); background:rgba(179,58,58,0.1);}
+  .mode-card h3{
+    font-family:'Noto Serif Bengali', serif;
+    font-size:1.08rem;
+    margin:0 0 6px 0;
+    color:var(--ink);
+  }
+  .mode-card p{
+    font-size:0.83rem;
+    color:var(--ink-soft);
+    margin:0;
+    line-height:1.5;
+  }
+
+  .chip-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:18px;
+  }
+  .chip{
+    border:1px solid rgba(27,42,74,0.18);
+    background:#fff;
+    color:var(--ink);
+    font-family:'Noto Sans Bengali', sans-serif;
+    font-size:0.83rem;
+    padding:8px 14px;
+    border-radius:18px;
+    cursor:pointer;
+    transition:all 0.15s ease;
+  }
+  .chip:hover, .chip:focus-visible{
+    background:var(--ink);
+    color:#fff;
+    outline:none;
+  }
+  .back-link{
+    align-self:flex-start;
+    background:none;
+    border:none;
+    color:var(--grey-blue);
+    font-size:0.8rem;
+    cursor:pointer;
+    margin-bottom:14px;
+    padding:0;
+  }
+  .back-link:hover{color:var(--ink);}
+
+  /* ---- RULER PROGRESS ---- */
+  .ruler-wrap{
+    margin-bottom:22px;
+  }
+  .ruler-meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:8px;
+  }
+  .ruler-meta .count{
+    font-family:'Space Mono', monospace;
+    font-size:0.95rem;
+    color:var(--ink);
+  }
+  .ruler-meta .catname{
+    font-size:0.78rem;
+    color:var(--grey-blue);
+  }
+  .ruler-track{
+    position:relative;
+    height:34px;
+    display:flex;
+    align-items:flex-end;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:0;
+  }
+  .ruler-ticks{
+    display:flex;
+    width:100%;
+    justify-content:space-between;
+    align-items:flex-end;
+    height:100%;
+  }
+  .tick{
+    width:2px;
+    background:var(--tick-grey);
+    height:8px;
+    transition:background 0.25s ease, height 0.25s ease;
+  }
+  .tick.medium{height:14px;}
+  .tick.major{height:20px; width:2px;}
+  .tick.correct{background:var(--correct-green);}
+  .tick.incorrect{background:var(--margin-red);}
+  .ruler-cursor{
+    position:absolute;
+    bottom:-1px;
+    width:0; height:0;
+    border-left:6px solid transparent;
+    border-right:6px solid transparent;
+    border-bottom:8px solid var(--gold);
+    transform:translateX(-6px);
+    transition:left 0.35s ease;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ruler-cursor{transition:none;}
+  }
+
+  /* ---- QUESTION ---- */
+  .question-text{
+    font-family:'Noto Serif Bengali', serif;
+    font-size:1.18rem;
+    line-height:1.55;
+    color:var(--ink);
+    margin:0 0 20px 0;
+  }
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:20px;
+  }
+  .option-btn{
+    text-align:left;
+    background:#fff;
+    border:1.5px solid rgba(27,42,74,0.16);
+    border-radius:8px;
+    padding:12px 16px;
+    font-family:'Noto Sans Bengali', sans-serif;
+    font-size:0.95rem;
+    color:var(--ink);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .option-btn .lbl{
+    font-family:'Space Mono', monospace;
+    font-size:0.78rem;
+    color:var(--grey-blue);
+    border:1px solid rgba(27,42,74,0.2);
+    border-radius:50%;
+    width:22px; height:22px;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .option-btn:hover:not(:disabled){border-color:var(--gold);}
+  .option-btn:focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+  .option-btn:disabled{cursor:default;}
+  .option-btn.correct{
+    border-color:var(--correct-green);
+    background:rgba(26,122,86,0.08);
+  }
+  .option-btn.correct .lbl{background:var(--correct-green); color:#fff; border-color:var(--correct-green);}
+  .option-btn.incorrect{
+    border-color:var(--margin-red);
+    background:rgba(179,58,58,0.07);
+  }
+  .option-btn.incorrect .lbl{background:var(--margin-red); color:#fff; border-color:var(--margin-red);}
+  .option-btn.dim{opacity:0.55;}
+
+  .next-row{
+    margin-top:auto;
+    display:flex;
+    justify-content:flex-end;
+  }
+  .primary-btn{
+    background:var(--ink);
+    color:#fff;
+    border:none;
+    border-radius:24px;
+    padding:11px 26px;
+    font-family:'Noto Sans Bengali', sans-serif;
+    font-size:0.92rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:background 0.15s ease, transform 0.1s ease;
+  }
+  .primary-btn:hover{background:#2a3f68;}
+  .primary-btn:active{transform:scale(0.98);}
+  .primary-btn:disabled{background:#c9c4b4; cursor:not-allowed;}
+  .secondary-btn{
+    background:none;
+    border:1.5px solid rgba(27,42,74,0.2);
+    color:var(--ink);
+    border-radius:24px;
+    padding:10px 22px;
+    font-family:'Noto Sans Bengali', sans-serif;
+    font-size:0.9rem;
+    cursor:pointer;
+  }
+  .secondary-btn:hover{border-color:var(--ink);}
+
+  /* ---- RESULTS ---- */
+  .result-top{text-align:center; padding:10px 0 6px 0;}
+  .result-score{
+    font-family:'Space Mono', monospace;
+    font-size:3rem;
+    color:var(--ink);
+    line-height:1;
+  }
+  .result-score span{font-size:1.4rem; color:var(--grey-blue);}
+  .result-pct{
+    font-family:'Space Mono', monospace;
+    font-size:1rem;
+    color:var(--correct-green);
+    margin-top:4px;
+  }
+  .result-msg{
+    font-family:'Noto Serif Bengali', serif;
+    font-size:1.05rem;
+    text-align:center;
+    margin:14px 0 22px 0;
+    color:var(--ink);
+  }
+  .cat-breakdown{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:24px;
+  }
+  .cat-row{display:flex; align-items:center; gap:10px;}
+  .cat-row .cname{
+    font-size:0.82rem;
+    width:150px;
+    flex-shrink:0;
+    color:var(--ink-soft);
+  }
+  .cat-bar-track{
+    flex:1;
+    height:8px;
+    background:var(--tick-grey);
+    border-radius:6px;
+    overflow:hidden;
+  }
+  .cat-bar-fill{height:100%; background:var(--correct-green); border-radius:6px;}
+  .cat-row .cscore{
+    font-family:'Space Mono', monospace;
+    font-size:0.78rem;
+    color:var(--ink-soft);
+    width:38px;
+    text-align:right;
+    flex-shrink:0;
+  }
+  .result-actions{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:auto;
+  }
+  footer.brandfooter{
+    position:relative;
+    z-index:1;
+    text-align:center;
+    padding:14px 20px 18px 30px;
+    border-top:1px solid rgba(27,42,74,0.1);
+    font-size:0.74rem;
+    color:var(--grey-blue);
+    line-height:1.6;
+  }
+  footer.brandfooter b{color:var(--ink-soft);}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header class="topbar">
+    <span class="brandmark">MS WORD · প্র্যাকটিস কুইজ</span>
+    <button class="home-btn" id="homeBtn">⌂ হোম</button>
+  </header>
+
+  <main>
+    <!-- START SCREEN -->
+    <section class="screen active" id="screen-start">
+      <div class="hero-eyebrow">৬০টি প্রশ্ন · ৬টি অধ্যায়</div>
+      <h1 class="hero-title">MS Word মাস্টার কুইজ</h1>
+      <p class="hero-sub">ট্যাব সেটিংস, TOC, মেইল মার্জ ও টেবিল সহ MS Word-এর গুরুত্বপূর্ণ বিষয়গুলো থেকে নিজেকে যাচাই করুন। অধ্যায় ধরে প্র্যাকটিস করুন, বা একসাথে ৬০টি প্রশ্নের ফুল মক টেস্ট দিন।</p>
+
+      <div class="mode-grid">
+        <button class="mode-card" id="practiceCard">
+          <span class="tag">১০ প্রশ্ন</span>
+          <h3>অধ্যায় ভিত্তিক প্র্যাকটিস</h3>
+          <p>একটি নির্দিষ্ট টপিক বেছে নিয়ে নিজের গতিতে শিখুন।</p>
+        </button>
+        <button class="mode-card full" id="fullCard">
+          <span class="tag">৬০ প্রশ্ন</span>
+          <h3>ফুল মক টেস্ট</h3>
+          <p>সব প্রশ্ন এলোমেলোভাবে — পরীক্ষার আগে নিজেকে যাচাই করুন।</p>
+        </button>
+      </div>
+
+      <div id="chipArea"></div>
+    </section>
+
+    <!-- QUIZ SCREEN -->
+    <section class="screen" id="screen-quiz">
+      <div class="ruler-wrap">
+        <div class="ruler-meta">
+          <span class="count" id="qCounter">প্রশ্ন ১ / ১০</span>
+          <span class="catname" id="qCatName"></span>
+        </div>
+        <div class="ruler-track">
+          <div class="ruler-ticks" id="rulerTicks"></div>
+          <div class="ruler-cursor" id="rulerCursor"></div>
+        </div>
+      </div>
+      <p class="question-text" id="questionText"></p>
+      <div class="options" id="optionsArea"></div>
+      <div class="next-row">
+        <button class="primary-btn" id="nextBtn" disabled>পরবর্তী →</button>
+      </div>
+    </section>
+
+    <!-- RESULT SCREEN -->
+    <section class="screen" id="screen-result">
+      <div class="result-top">
+        <div class="result-score" id="resultScore">0<span>/10</span></div>
+        <div class="result-pct" id="resultPct">0%</div>
+      </div>
+      <p class="result-msg" id="resultMsg"></p>
+      <div class="cat-breakdown" id="catBreakdown"></div>
+      <div class="result-actions">
+        <button class="secondary-btn" id="retryBtn">আবার এই টেস্ট দিন</button>
+        <button class="primary-btn" id="homeFromResultBtn">অন্য অধ্যায় বেছে নিন</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="brandfooter">
+    <b>স্মার্ট স্টাডি যুব কম্পিউটার এডুকেশন সেন্টার</b> &amp; <b>পারুলিয়া যুব কম্পিউটার প্রশিক্ষণ কেন্দ্র</b><br>
+    নবদ্বীপ, নদীয়া — দুটি সেন্টারের যৌথ উদ্যোগ
+  </footer>
+</div>
+
+<script>
+const quizData = {
+  basics: { title: "Word বেসিক ও ইন্টারফেস", questions: [
+    {q:"MS Word একটি কী ধরনের সফটওয়্যার?", options:["স্প্রেডশিট সফটওয়্যার","ওয়ার্ড প্রসেসিং সফটওয়্যার","প্রেজেন্টেশন সফটওয়্যার","ডেটাবেস সফটওয়্যার"], correct:1},
+    {q:"নতুন ডকুমেন্ট খোলার শর্টকাট কী কোনটি?", options:["Ctrl+N","Ctrl+O","Ctrl+S","Ctrl+P"], correct:0},
+    {q:"ডকুমেন্ট সেভ করার শর্টকাট কী কোনটি?", options:["Ctrl+P","Ctrl+S","Ctrl+V","Ctrl+Z"], correct:1},
+    {q:"Word-এ যে এলাকায় Home, Insert, Layout-এর মতো ট্যাবগুলো থাকে, তাকে কী বলে?", options:["স্ট্যাটাস বার","রিবন (Ribbon)","কুইক অ্যাক্সেস টুলবার","টাইটেল বার"], correct:1},
+    {q:"Undo করার শর্টকাট কী কোনটি?", options:["Ctrl+Y","Ctrl+Z","Ctrl+U","Ctrl+X"], correct:1},
+    {q:"Redo করার শর্টকাট কী কোনটি?", options:["Ctrl+Y","Ctrl+R","Ctrl+Z","Ctrl+D"], correct:0},
+    {q:"টেক্সট কাট করার শর্টকাট কী কোনটি?", options:["Ctrl+C","Ctrl+X","Ctrl+V","Ctrl+A"], correct:1},
+    {q:"পুরো ডকুমেন্ট সিলেক্ট করার শর্টকাট কী কোনটি?", options:["Ctrl+S","Ctrl+A","Ctrl+P","Ctrl+F"], correct:1},
+    {q:"Replace অপশন খোলার শর্টকাট কী কোনটি?", options:["Ctrl+F","Ctrl+H","Ctrl+R","Ctrl+E"], correct:1},
+    {q:"Word ফাইলের সাধারণ এক্সটেনশন কোনটি?", options:[".xlsx",".pptx",".docx",".pdf"], correct:2}
+  ]},
+  tabs: { title: "ট্যাব সেটিংস", questions: [
+    {q:"Word-এ Tab সেটিংস করার জন্য কোন ডায়ালগ ব্যবহার করা হয়?", options:["Paragraph dialog-এর Tabs বাটন","Font dialog","Page Setup dialog","Styles পেন"], correct:0},
+    {q:"Ruler-এ নতুন ট্যাব স্টপ যোগ করার সবচেয়ে সহজ উপায় কী?", options:["Ruler-এর উপর ক্লিক করা","Enter চাপা","Spacebar চাপা","Ctrl+T চাপা"], correct:0},
+    {q:"ডিফল্ট ট্যাব স্টপের দূরত্ব সাধারণত কত থাকে?", options:["০.৫ ইঞ্চি","১ ইঞ্চি","২ ইঞ্চি","০.২৫ ইঞ্চি"], correct:0},
+    {q:"Left Tab স্টপ টেক্সটকে কীভাবে align করে?", options:["ডানদিকে","বামদিকে","মাঝখানে","ডেসিমেল পয়েন্ট অনুযায়ী"], correct:1},
+    {q:"Decimal Tab স্টপ মূলত কী ধরনের ডেটার জন্য ব্যবহার করা হয়?", options:["নাম","ঠিকানা","সংখ্যা বা টাকার পরিমাণ","তারিখ"], correct:2},
+    {q:"সূচিপত্রে দেখা ডট লাইন (......) যা ট্যাব স্টপের সাথে দেখানো হয়, তাকে কী বলে?", options:["Tab Border","Tab Leader","Tab Style","Tab Indent"], correct:1},
+    {q:"Ruler থেকে একটি ট্যাব স্টপ মুছতে কী করতে হয়?", options:["ডাবল ক্লিক করা","ড্র্যাগ করে Ruler-এর বাইরে নেওয়া","Right ক্লিক করা","Ctrl+ক্লিক করা"], correct:1},
+    {q:"Center Tab স্টপ টেক্সটকে কীভাবে align করে?", options:["ট্যাব পয়েন্টের বামে","ট্যাব পয়েন্টের ডানে","ট্যাব পয়েন্টের চারপাশে সমানভাবে","ডেসিমেলে"], correct:2},
+    {q:"Paragraph dialog box থেকে Tabs ডায়ালগ খুলতে কোন বাটনে ক্লিক করতে হয়?", options:["OK","Tabs...","Format","Apply"], correct:1},
+    {q:"Right Tab স্টপ ব্যবহার করলে টেক্সট কীভাবে বসে?", options:["বামদিকে শুরু হয়ে ডানে বাড়ে","ট্যাব পয়েন্ট থেকে বামদিকে বিস্তৃত হয়ে ডানে শেষ হয়","মাঝখানে","উপরে"], correct:1}
+  ]},
+  toc: { title: "টেবিল অফ কনটেন্টস (TOC)", questions: [
+    {q:"সূচিপত্র (TOC) স্বয়ংক্রিয়ভাবে তৈরি করার আগে টেক্সটে কী প্রয়োগ করতে হয়?", options:["Bold formatting","Heading Styles (Heading 1, 2...)","Font color","Highlight"], correct:1},
+    {q:"TOC ইনসার্ট করার অপশন কোন ট্যাবে পাওয়া যায়?", options:["Home","Insert","References","Review"], correct:2},
+    {q:"হেডিং পরিবর্তনের পর TOC আপডেট করতে কী করতে হয়?", options:["ডকুমেন্ট আবার সেভ করা","Update Table-এ ক্লিক করা","নতুন TOC আবার ইনসার্ট করা","Print করা"], correct:1},
+    {q:"Update Table-এ ক্লিক করলে কয়টি অপশন আসে?", options:["১টি","২টি","৩টি","৪টি"], correct:1},
+    {q:"TOC-তে প্রতিটি এন্ট্রির পাশে পেজ নাম্বার কীভাবে আসে?", options:["ম্যানুয়ালি টাইপ করতে হয়","স্বয়ংক্রিয়ভাবে Word নিজেই দেয়","Excel থেকে কপি করতে হয়","হাতে লিখতে হয়"], correct:1},
+    {q:"TOC-এ ক্লিক করে কোনো হেডিং-এ সরাসরি যেতে কী চাপতে হয়?", options:["Shift+ক্লিক","Ctrl+ক্লিক","Alt+ক্লিক","শুধু ক্লিক"], correct:1},
+    {q:"Heading 1, 2, 3 অনুযায়ী TOC-তে কী তৈরি হয়?", options:["সমান লেভেলের তালিকা","ইনডেন্টসহ স্তরভিত্তিক তালিকা","বর্ণানুক্রমিক তালিকা","সংখ্যাভিত্তিক টেবিল"], correct:1},
+    {q:"TOC সরিয়ে ফেলার অপশন কোথায় পাওয়া যায়?", options:["References > Table of Contents > Remove","Home > Delete","Insert > Delete Table","Layout > Remove"], correct:0},
+    {q:"একটি প্যারাগ্রাফকে Heading 1 স্টাইল দিতে হলে কোথা থেকে দেওয়া যায়?", options:["Insert ট্যাবের Styles গ্যালারি","Home ট্যাবের Styles গ্যালারি","Review ট্যাবের Styles গ্যালারি","View ট্যাবের Styles গ্যালারি"], correct:1},
+    {q:"কোনো হেডিং-এ স্টাইল প্রয়োগ না করলে TOC তৈরির সময় কী হবে?", options:["TOC-তে সব টেক্সট চলে আসবে","সেই অংশ TOC-তে দেখাবে না","Word এরর দেখাবে","TOC তৈরিই হবে না"], correct:1}
+  ]},
+  mailmerge: { title: "মেইল মার্জ", questions: [
+    {q:"Mail Merge মূলত কী কাজে ব্যবহার করা হয়?", options:["একটি ডকুমেন্টে অনেক ছবি যুক্ত করতে","একই ডকুমেন্টের একাধিক পার্সোনালাইজড কপি তৈরি করতে","প্রিন্ট স্পিড বাড়াতে","ফন্ট পরিবর্তন করতে"], correct:1},
+    {q:"Mail Merge শুরু করার অপশন কোন ট্যাবে পাওয়া যায়?", options:["Insert","Mailings","References","Review"], correct:1},
+    {q:"Mail Merge-এর জন্য ডেটা সোর্স হিসেবে সাধারণত কী ব্যবহার করা হয়?", options:["PowerPoint ফাইল","Excel শিট বা Word তালিকা","Image ফাইল","PDF ফাইল"], correct:1},
+    {q:"ডেটা সোর্সের কোনো কলাম ডকুমেন্টে বসাতে কোন অপশন ব্যবহার করা হয়?", options:["Insert Picture","Insert Merge Field","Insert Table","Insert Hyperlink"], correct:1},
+    {q:"সব ব্যক্তির জন্য তৈরি চিঠি একসাথে দেখার অপশনকে কী বলে?", options:["Preview Results","Print Preview","Read Mode","Outline View"], correct:0},
+    {q:"Mail Merge দিয়ে সাধারণভাবে কী তৈরি করা হয়?", options:["এক্সেল চার্ট","চিঠি, সার্টিফিকেট, এনভেলপ ও লেবেল","প্রেজেন্টেশন স্লাইড","ডেটাবেস টেবিল"], correct:1},
+    {q:"Mail Merge Wizard শুরু করতে কোন অপশনে ক্লিক করতে হয়?", options:["Start Mail Merge > Step-by-Step Mail Merge Wizard","Insert > Wizard","Design > Wizard","View > Wizard"], correct:0},
+    {q:"মার্জ শেষে সব রেজাল্ট আলাদা ডকুমেন্টে নেওয়ার অপশনকে কী বলে?", options:["Finish & Merge > Edit Individual Documents","Save As","Export","Print Now"], correct:0},
+    {q:"Mail Merge-এর ডেটা সোর্সে প্রতিটি সারি (row) কী রিপ্রেজেন্ট করে?", options:["একটি ফাইল","একজন প্রাপকের তথ্য (একটি রেকর্ড)","একটি পেজ","একটি প্যারাগ্রাফ"], correct:1},
+    {q:"ডেটা সোর্স বাছাই করার অপশনকে কী বলে?", options:["Select Recipients","Insert Field","Preview Results","Match Fields"], correct:0}
+  ]},
+  tables: { title: "টেবিল", questions: [
+    {q:"Word-এ টেবিল ইনসার্ট করার অপশন কোন ট্যাবে পাওয়া যায়?", options:["Home","Insert","Layout","References"], correct:1},
+    {q:"টেবিলে নতুন রো (row) যোগ করার সহজ উপায় কী?", options:["শেষ সেলে কার্সর রেখে Tab চাপা","Ctrl+N চাপা","Shift+Enter চাপা","Alt+R চাপা"], correct:0},
+    {q:"দুটি সেলকে একসাথে জোড়া দেওয়ার অপশনকে কী বলে?", options:["Split Cells","Merge Cells","Join Table","Combine Rows"], correct:1},
+    {q:"একটি সেলকে একাধিক সেলে ভাগ করার অপশনকে কী বলে?", options:["Merge Cells","Split Cells","Divide Table","Break Cell"], correct:1},
+    {q:"কনটেন্ট অনুযায়ী কলামের প্রস্থ স্বয়ংক্রিয়ভাবে ঠিক করার অপশনকে কী বলে?", options:["AutoFit Contents","AutoFormat","Resize Auto","Table Style"], correct:0},
+    {q:"টেবিলের রং ও বর্ডার স্টাইল পরিবর্তনের জন্য কোন ট্যাব ব্যবহার করা হয়?", options:["Table Design","Table Layout","Home","Insert"], correct:0},
+    {q:"টেবিলের একটি সম্পূর্ণ রো সিলেক্ট করতে মাউস কোথায় রাখতে হয়?", options:["সেলের ভেতরে","রো-এর বাম পাশে (margin-এর কাছে)","কলামের উপরে","টেবিলের বাইরে"], correct:1},
+    {q:"টেবিলের কোনো কলাম ডিলিট করার অপশন কোথায় পাওয়া যায়?", options:["Layout > Delete > Delete Columns","Home > Delete","Insert > Remove","Design > Clear"], correct:0},
+    {q:"Excel থেকে ডেটা টেবিলে পেস্ট করে এডিটেবল রাখতে কোন Paste অপশন ভালো?", options:["Paste as Picture","Keep Source Formatting / টেবিল হিসেবে পেস্ট","Paste as Hyperlink","শুধু Unformatted Text"], correct:1},
+    {q:"টেবিলে সংখ্যা যোগ (sum) করতে Word-এ কোন ফিচার ব্যবহার করা যায়?", options:["Layout ট্যাবের Formula ফিচার","আলাদা Excel খুলে","হাতে যোগ করে","Word-এ এটা সম্ভব নয়"], correct:0}
+  ]},
+  layout: { title: "পেজ লেআউট ও প্রিন্টিং", questions: [
+    {q:"পেজের সাইজ (A4, Letter) পরিবর্তনের অপশন কোন ট্যাবে পাওয়া যায়?", options:["Home","Insert","Layout","Review"], correct:2},
+    {q:"পেজ মার্জিন পরিবর্তনের অপশন কোথায় পাওয়া যায়?", options:["Layout > Margins","Home > Margins","Insert > Margins","View > Margins"], correct:0},
+    {q:"ডকুমেন্টের কিছু পেজ Portrait আর কিছু Landscape করতে কী ব্যবহার করতে হয়?", options:["Page Break","Section Break","Line Break","Column Break"], correct:1},
+    {q:"পেজ নাম্বার যুক্ত করার অপশন কোন ট্যাবে পাওয়া যায়?", options:["Insert > Page Number","Layout > Page Number","Design > Page Number","References > Page Number"], correct:0},
+    {q:"ডকুমেন্ট প্রিন্ট করার শর্টকাট কী কোনটি?", options:["Ctrl+S","Ctrl+P","Ctrl+O","Ctrl+W"], correct:1},
+    {q:"প্রিন্টের আগে ডকুমেন্ট কেমন দেখাবে তা দেখার অপশনকে কী বলে?", options:["Print Preview","Reading View","Outline View","Draft View"], correct:0},
+    {q:"একটি নির্দিষ্ট জায়গা থেকে জোর করে নতুন পেজ শুরু করার অপশনকে কী বলে?", options:["Section Break","Page Break","Column Break","Line Break"], correct:1},
+    {q:"ডকুমেন্টে একাধিক কলাম (নিউজপেপার স্টাইল) তৈরির অপশন কোন ট্যাবে পাওয়া যায়?", options:["Layout > Columns","Insert > Columns","Home > Columns","Design > Columns"], correct:0},
+    {q:"শুধু নির্দিষ্ট কিছু পেজ প্রিন্ট করতে Pages বক্সে কী লিখতে হয়?", options:["“2-5”-এর মত রেঞ্জ লিখতে হয়","সব পেজ আলাদাভাবে সিলেক্ট করতে হয়","এটা সম্ভব নয়","প্রতিটি পেজ আলাদা ফাইল করতে হয়"], correct:0},
+    {q:"ব্যাকগ্রাউন্ডে “Draft” বা “Confidential” লেখা Watermark যুক্ত করার অপশন কোন ট্যাবে?", options:["Insert > Watermark","Design > Watermark","Layout > Watermark","View > Watermark"], correct:1}
+  ]}
+};
+const categoryOrder = ["basics","tabs","toc","mailmerge","tables","layout"];
+
+let state = { mode:null, pool:[], idx:0, score:0, results:[], catTally:{} };
+
+const screens = {
+  start: document.getElementById('screen-start'),
+  quiz: document.getElementById('screen-quiz'),
+  result: document.getElementById('screen-result')
+};
+function showScreen(name){
+  Object.values(screens).forEach(s=>s.classList.remove('active'));
+  screens[name].classList.add('active');
+  document.getElementById('homeBtn').classList.toggle('show', name!=='start');
+}
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+document.getElementById('practiceCard').addEventListener('click', ()=>{
+  const chipArea = document.getElementById('chipArea');
+  chipArea.innerHTML = '';
+  const row = document.createElement('div');
+  row.className = 'chip-row';
+  categoryOrder.forEach(key=>{
+    const btn = document.createElement('button');
+    btn.className = 'chip';
+    btn.textContent = quizData[key].title;
+    btn.addEventListener('click', ()=> startPractice(key));
+    row.appendChild(btn);
+  });
+  chipArea.innerHTML = '';
+  chipArea.appendChild(row);
+});
+
+document.getElementById('fullCard').addEventListener('click', startFullTest);
+
+function startPractice(key){
+  const cat = quizData[key];
+  state = {
+    mode:'practice',
+    pool: cat.questions.map(q=>({...q, catTitle:cat.title})),
+    idx:0, score:0, results:[], catTally:{}
+  };
+  beginQuiz();
+}
+
+function startFullTest(){
+  let all = [];
+  categoryOrder.forEach(key=>{
+    quizData[key].questions.forEach(q=> all.push({...q, catTitle:quizData[key].title, catKey:key}));
+  });
+  all = shuffle(all);
+  state = { mode:'full', pool:all, idx:0, score:0, results:[], catTally:{} };
+  categoryOrder.forEach(key=>{ state.catTally[key] = {correct:0, total:0, title:quizData[key].title}; });
+  beginQuiz();
+}
+
+function beginQuiz(){
+  showScreen('quiz');
+  buildRuler();
+  renderQuestion();
+}
+
+function buildRuler(){
+  const ticks = document.getElementById('rulerTicks');
+  ticks.innerHTML = '';
+  const total = state.pool.length;
+  for(let i=0;i<total;i++){
+    const t = document.createElement('div');
+    t.className = 'tick';
+    const n = i+1;
+    if(total<=10){ if(n%5===0) t.classList.add('medium'); }
+    else { if(n%10===0) t.classList.add('major'); else if(n%5===0) t.classList.add('medium'); }
+    t.dataset.idx = i;
+    ticks.appendChild(t);
+  }
+  moveCursor();
+}
+
+function moveCursor(){
+  const total = state.pool.length;
+  const pct = total<=1 ? 0 : (state.idx/(total-1))*100;
+  document.getElementById('rulerCursor').style.left = pct+'%';
+}
+
+function renderQuestion(){
+  const item = state.pool[state.idx];
+  document.getElementById('qCounter').textContent = `প্রশ্ন ${state.idx+1} / ${state.pool.length}`;
+  document.getElementById('qCatName').textContent = item.catTitle;
+  document.getElementById('questionText').textContent = item.q;
+  const optWrap = document.getElementById('optionsArea');
+  optWrap.innerHTML = '';
+  const labels = ['ক','খ','গ','ঘ'];
+  item.options.forEach((opt, i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="lbl">${labels[i]}</span><span>${opt}</span>`;
+    btn.addEventListener('click', ()=> selectOption(i));
+    optWrap.appendChild(btn);
+  });
+  moveCursor();
+  document.getElementById('nextBtn').disabled = true;
+  document.getElementById('nextBtn').textContent = (state.idx === state.pool.length-1) ? 'রেজাল্ট দেখুন →' : 'পরবর্তী →';
+}
+
+function selectOption(i){
+  const item = state.pool[state.idx];
+  const buttons = document.querySelectorAll('#optionsArea .option-btn');
+  if(buttons[0].disabled) return;
+  const isCorrect = (i === item.correct);
+  buttons.forEach((b, idx)=>{
+    b.disabled = true;
+    if(idx === item.correct) b.classList.add('correct');
+    else if(idx === i) b.classList.add('incorrect');
+    else b.classList.add('dim');
+  });
+  state.results[state.idx] = isCorrect;
+  if(isCorrect) state.score++;
+  if(item.catKey){
+    state.catTally[item.catKey].total++;
+    if(isCorrect) state.catTally[item.catKey].correct++;
+  }
+  const tickEl = document.querySelectorAll('#rulerTicks .tick')[state.idx];
+  tickEl.classList.add(isCorrect ? 'correct' : 'incorrect');
+  document.getElementById('nextBtn').disabled = false;
+}
+
+document.getElementById('nextBtn').addEventListener('click', ()=>{
+  if(state.idx < state.pool.length-1){
+    state.idx++;
+    renderQuestion();
+  } else {
+    showResult();
+  }
+});
+
+function showResult(){
+  showScreen('result');
+  const total = state.pool.length;
+  document.getElementById('resultScore').innerHTML = `${state.score}<span>/${total}</span>`;
+  const pct = Math.round((state.score/total)*100);
+  document.getElementById('resultPct').textContent = pct+'%';
+  let msg = '';
+  if(pct>=80) msg = '🌟 অসাধারণ! আপনি এই বিষয়ে রীতিমতো দক্ষ।';
+  else if(pct>=50) msg = '👍 ভালো করেছেন! আরেকটু প্র্যাকটিস করলে আরও ভালো হবে।';
+  else msg = '💪 চিন্তা নেই, আবার চর্চা করুন — চাইলে এখনই আবার চেষ্টা করতে পারেন।';
+  document.getElementById('resultMsg').textContent = msg;
+
+  const breakdown = document.getElementById('catBreakdown');
+  breakdown.innerHTML = '';
+  if(state.mode === 'full'){
+    categoryOrder.forEach(key=>{
+      const t = state.catTally[key];
+      const row = document.createElement('div');
+      row.className = 'cat-row';
+      const fillPct = t.total ? (t.correct/t.total)*100 : 0;
+      row.innerHTML = `<span class="cname">${t.title}</span><span class="cat-bar-track"><span class="cat-bar-fill" style="width:${fillPct}%"></span></span><span class="cscore">${t.correct}/${t.total}</span>`;
+      breakdown.appendChild(row);
+    });
+  }
+}
+
+document.getElementById('retryBtn').addEventListener('click', ()=>{
+  if(state.mode === 'full') startFullTest();
+  else {
+    const key = categoryOrder.find(k=> quizData[k].title === state.pool[0].catTitle);
+    startPractice(key);
+  }
+});
+
+document.getElementById('homeFromResultBtn').addEventListener('click', goHome);
+document.getElementById('homeBtn').addEventListener('click', goHome);
+
+function goHome(){
+  document.getElementById('chipArea').innerHTML = '';
+  showScreen('start');
+}
+</script>
+</body>
+</html>
