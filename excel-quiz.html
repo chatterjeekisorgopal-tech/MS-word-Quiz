@@ -121,7 +121,17 @@
   </header>
 
   <main>
-    <section class="screen active" id="screen-start">
+    <section class="screen active" id="screen-lock">
+      <div class="hero-eyebrow">প্রবেশ সুরক্ষিত</div>
+      <h1 class="hero-title">🔒 পাসওয়ার্ড দিন</h1>
+      <p class="hero-sub">এই কুইজে প্রবেশ করতে আপনার সেন্টারের দেওয়া পাসওয়ার্ডটি লিখুন।</p>
+      <div class="answer-row">
+        <input class="answer-input" id="lockInput" type="text" placeholder="পাসওয়ার্ড লিখুন..." autocomplete="off" autocorrect="off" spellcheck="false">
+        <button class="submit-btn" id="lockBtn">প্রবেশ করুন</button>
+      </div>
+      <div class="feedback incorrect" id="lockError"><div class="head">❌ পাসওয়ার্ড ভুল হয়েছে, আবার চেষ্টা করুন।</div></div>
+    </section>
+    <section class="screen" id="screen-start">
       <div class="hero-eyebrow">৩০০+ প্রবলেম · টাইপ করে উত্তর দিন</div>
       <h1 class="hero-title">Excel মাস্টার কুইজ</h1>
       <p class="hero-sub">কোনো অপশন বাছাই নয় — প্রতিটি প্রশ্নের উত্তর নিজে টাইপ করে লিখতে হবে: ফাংশনের নাম, ফর্মুলা, শর্টকাট, বা হিসাব করে সংখ্যা। ভুল হলে সঠিক উত্তর ও সমাধান দেখিয়ে দেওয়া হবে।</p>
@@ -610,11 +620,11 @@ function playWrongSound(){ playTone(220,0.18,'sawtooth',0,0.13); playTone(160,0.
 
 /* ===================== APP STATE & SCREENS ===================== */
 var state = { pool:[], idx:0, score:0, results:[], sessionLen:25 };
-var screens = { start:document.getElementById('screen-start'), quiz:document.getElementById('screen-quiz'), result:document.getElementById('screen-result') };
+var screens = { lock:document.getElementById('screen-lock'), start:document.getElementById('screen-start'), quiz:document.getElementById('screen-quiz'), result:document.getElementById('screen-result') };
 function showScreen(name){
   Object.keys(screens).forEach(function(k){ screens[k].classList.remove('active'); });
   screens[name].classList.add('active');
-  document.getElementById('homeBtn').classList.toggle('show', name!=='start');
+  document.getElementById('homeBtn').classList.toggle('show', name!=='start' && name!=='lock');
 }
 function shuffle(arr){
   var a=arr.slice();
@@ -644,6 +654,25 @@ document.getElementById('newSettingsBtn').addEventListener('click', goHome);
 document.getElementById('retryBtn').addEventListener('click', startQuiz);
 
 function goHome(){ showScreen('start'); }
+
+/* ===================== PASSWORD GATE ===================== */
+var SITE_PASSWORD = 'Excel2026';
+function normPass(s){ return String(s).trim().toUpperCase(); }
+function tryUnlock(){
+  var val = document.getElementById('lockInput').value;
+  if(normPass(val) === normPass(SITE_PASSWORD)){
+    document.getElementById('lockError').classList.remove('show');
+    showScreen('start');
+  } else {
+    document.getElementById('lockError').classList.add('show');
+    document.getElementById('lockInput').focus();
+  }
+}
+document.getElementById('lockBtn').addEventListener('click', tryUnlock);
+document.getElementById('lockInput').addEventListener('keydown', function(e){
+  if(e.key==='Enter'){ e.preventDefault(); tryUnlock(); }
+});
+document.getElementById('lockInput').focus();
 
 function startQuiz(){
   var n = Math.min(state.sessionLen, FULL_BANK.length);
