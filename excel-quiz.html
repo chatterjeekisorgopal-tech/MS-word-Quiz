@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Excel মাস্টার কুইজ | স্মার্ট স্টাডি ও পারুলিয়া যুব কম্পিউটার কেন্দ্র</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F3EA;
+    --desk:#E2E6DA;
+    --ink:#1C2A20;
+    --ink-soft:#56654F;
+    --margin-red:#B33A3A;
+    --correct-green:#1A7A56;
+    --grey:#6B7A6A;
+    --gold:#D9A441;
+    --tick-grey:#D8D3C4;
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; background:var(--desk);
+    background-image:radial-gradient(circle at 20% 20%, rgba(255,255,255,0.4) 0%, transparent 45%);
+    font-family:'Noto Sans Bengali', sans-serif; color:var(--ink);
+    display:flex; align-items:center; justify-content:center; padding:28px 14px;
+  }
+  .sheet{
+    width:100%; max-width:700px; background:var(--paper); border-radius:6px;
+    box-shadow:0 18px 50px rgba(28,42,32,0.18), 0 2px 6px rgba(28,42,32,0.08);
+    position:relative; overflow:hidden; min-height:580px; display:flex; flex-direction:column;
+  }
+  .sheet::before{content:""; position:absolute; top:0; bottom:0; left:54px; width:1px; background:rgba(179,58,58,0.28); z-index:0;}
+  .sheet::after{content:""; position:absolute; top:0; bottom:0; left:0; width:6px;
+    background:repeating-linear-gradient(180deg, var(--margin-red) 0 10px, transparent 10px 22px); opacity:0.55; z-index:0;}
+  header.topbar{position:relative; z-index:1; display:flex; align-items:center; justify-content:space-between; padding:16px 22px 14px 30px; border-bottom:1px solid rgba(28,42,32,0.1);}
+  .brandmark{font-family:'Space Mono', monospace; font-size:0.7rem; color:var(--ink-soft); letter-spacing:0.03em;}
+  .icon-btn{background:none; border:1px solid rgba(28,42,32,0.2); color:var(--ink-soft); font-size:0.78rem; padding:6px 12px; border-radius:20px; cursor:pointer;}
+  .icon-btn.show{display:inline-block;} .icon-btn:not(.show){display:none;}
+  .icon-btn:hover{border-color:var(--ink); color:var(--ink);}
+  .top-actions{display:flex; gap:8px;}
+  main{position:relative; z-index:1; flex:1; padding:24px 26px 26px 30px; display:flex; flex-direction:column;}
+  .screen{display:none;} .screen.active{display:flex; flex-direction:column; flex:1; animation:fadeIn 0.3s ease;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+  .hero-eyebrow{font-family:'Space Mono', monospace; font-size:0.7rem; color:var(--correct-green); letter-spacing:0.07em; margin-bottom:6px;}
+  h1.hero-title{font-family:'Noto Serif Bengali', serif; font-size:1.7rem; margin:0 0 8px 0; color:var(--ink);}
+  p.hero-sub{font-size:0.92rem; color:var(--ink-soft); margin:0 0 20px 0; line-height:1.6;}
+  .option-label{font-size:0.8rem; color:var(--ink-soft); margin-bottom:8px; font-weight:600;}
+  .chip-row{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px;}
+  .chip{border:1.5px solid rgba(28,42,32,0.2); background:#fff; color:var(--ink); font-size:0.88rem; padding:9px 16px; border-radius:18px; cursor:pointer; transition:all 0.15s ease;}
+  .chip.active{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+  .chip:hover:not(.active){border-color:var(--gold);}
+  .sound-row{display:flex; align-items:center; gap:8px; margin-bottom:20px; font-size:0.85rem; color:var(--ink-soft);}
+  .toggle-sw{width:40px; height:22px; border-radius:12px; background:#C9D0C5; position:relative; cursor:pointer; flex-shrink:0; transition:background 0.2s ease;}
+  .toggle-sw.on{background:var(--correct-green);}
+  .toggle-sw .knob{position:absolute; top:2px; left:2px; width:18px; height:18px; border-radius:50%; background:#fff; transition:left 0.2s ease;}
+  .toggle-sw.on .knob{left:20px;}
+  .start-btn{margin-top:auto; background:var(--ink); color:var(--paper); border:none; border-radius:24px; padding:13px 0; font-size:0.98rem; font-weight:700; cursor:pointer; transition:background 0.15s ease;}
+  .start-btn:hover{background:#2c4030;}
+
+  .ruler-wrap{margin-bottom:18px;}
+  .ruler-meta{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;}
+  .ruler-meta .count{font-family:'Space Mono', monospace; font-size:0.92rem; color:var(--ink);}
+  .ruler-meta .score{font-family:'Space Mono', monospace; font-size:0.85rem; color:var(--correct-green);}
+  .ruler-track{position:relative; height:30px; display:flex; align-items:flex-end; border-bottom:2px solid var(--ink);}
+  .ruler-ticks{display:flex; width:100%; justify-content:space-between; align-items:flex-end; height:100%;}
+  .tick{width:2px; background:var(--tick-grey); height:8px; transition:background 0.25s ease, height 0.25s ease;}
+  .tick.medium{height:14px;} .tick.major{height:20px;}
+  .tick.correct{background:var(--correct-green);} .tick.incorrect{background:var(--margin-red);}
+  .ruler-cursor{position:absolute; bottom:-1px; width:0; height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-bottom:8px solid var(--gold); transform:translateX(-6px); transition:left 0.35s ease;}
+
+  .question-text{font-family:'Noto Serif Bengali', serif; font-size:1.15rem; line-height:1.6; color:var(--ink); margin:0 0 18px 0;}
+  .answer-row{display:flex; gap:10px; margin-bottom:14px;}
+  .answer-input{flex:1; border:1.5px solid rgba(28,42,32,0.2); border-radius:8px; padding:12px 14px; font-family:'Space Mono', monospace; font-size:1rem; color:var(--ink); outline:none;}
+  .answer-input:focus{border-color:var(--correct-green);}
+  .answer-input:disabled{background:#F0EDE2;}
+  .submit-btn{background:var(--correct-green); color:#fff; border:none; border-radius:8px; padding:0 22px; font-size:0.92rem; font-weight:600; cursor:pointer;}
+  .submit-btn:disabled{background:#B7C2AE; cursor:not-allowed;}
+  .feedback{display:none; border-radius:8px; padding:12px 14px; margin-bottom:14px; font-size:0.92rem; line-height:1.6;}
+  .feedback.show{display:block; animation:fadeIn 0.25s ease;}
+  .feedback.correct{background:rgba(26,122,86,0.1); border:1px solid rgba(26,122,86,0.3);}
+  .feedback.incorrect{background:rgba(179,58,58,0.08); border:1px solid rgba(179,58,58,0.3);}
+  .feedback .head{font-weight:700; margin-bottom:4px;}
+  .feedback.correct .head{color:var(--correct-green);} .feedback.incorrect .head{color:var(--margin-red);}
+  .feedback .ans-line{font-family:'Space Mono', monospace; color:var(--ink);}
+  .feedback .sol-line{color:var(--ink-soft); margin-top:4px;}
+  .next-row{margin-top:auto; display:flex; justify-content:flex-end;}
+  .primary-btn{background:var(--ink); color:var(--paper); border:none; border-radius:24px; padding:11px 26px; font-size:0.92rem; font-weight:600; cursor:pointer;}
+  .primary-btn:hover{background:#2c4030;}
+  .primary-btn:disabled{background:#C9D0C5; cursor:not-allowed;}
+  .secondary-btn{background:none; border:1.5px solid rgba(28,42,32,0.2); color:var(--ink); border-radius:24px; padding:10px 22px; font-size:0.9rem; cursor:pointer;}
+  .secondary-btn:hover{border-color:var(--ink);}
+
+  .result-top{text-align:center; padding:10px 0 6px 0;}
+  .result-score{font-family:'Space Mono', monospace; font-size:3rem; color:var(--ink); line-height:1;}
+  .result-score span{font-size:1.3rem; color:var(--ink-soft);}
+  .result-pct{font-family:'Space Mono', monospace; font-size:1rem; color:var(--correct-green); margin-top:4px;}
+  .result-msg{font-family:'Noto Serif Bengali', serif; font-size:1.05rem; text-align:center; margin:14px 0 18px 0; color:var(--ink);}
+  .review-toggle{font-size:0.85rem; color:var(--correct-green); text-align:center; margin-bottom:10px; cursor:pointer; text-decoration:underline;}
+  .review-list{display:none; max-height:220px; overflow-y:auto; border:1px solid rgba(28,42,32,0.15); border-radius:8px; padding:10px 14px; margin-bottom:18px; font-size:0.85rem;}
+  .review-list.show{display:block;}
+  .review-item{padding:8px 0; border-bottom:1px solid rgba(28,42,32,0.1);}
+  .review-item:last-child{border-bottom:none;}
+  .review-item .rq{color:var(--ink);} .review-item .ra{font-family:'Space Mono', monospace; color:var(--margin-red);} .review-item .rc{font-family:'Space Mono', monospace; color:var(--correct-green);}
+  .result-actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:auto;}
+
+  footer.brandfooter{position:relative; z-index:1; text-align:center; padding:14px 20px 18px 30px; border-top:1px solid rgba(28,42,32,0.1); font-size:0.72rem; color:var(--ink-soft); line-height:1.6;}
+  footer.brandfooter b{color:var(--ink-soft);}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header class="topbar">
+    <span class="brandmark">EXCEL · মাস্টার কুইজ</span>
+    <div class="top-actions">
+      <button class="icon-btn" id="homeBtn">⌂ হোম</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="screen active" id="screen-start">
+      <div class="hero-eyebrow">৩০০+ প্রবলেম · টাইপ করে উত্তর দিন</div>
+      <h1 class="hero-title">Excel মাস্টার কুইজ</h1>
+      <p class="hero-sub">কোনো অপশন বাছাই নয় — প্রতিটি প্রশ্নের উত্তর নিজে টাইপ করে লিখতে হবে: ফাংশনের নাম, ফর্মুলা, শর্টকাট, বা হিসাব করে সংখ্যা। ভুল হলে সঠিক উত্তর ও সমাধান দেখিয়ে দেওয়া হবে।</p>
+
+      <div class="option-label">কতগুলো প্রশ্ন চান?</div>
+      <div class="chip-row" id="lenChips">
+        <button class="chip" data-len="10">১০</button>
+        <button class="chip active" data-len="25">২৫</button>
+        <button class="chip" data-len="50">৫০</button>
+        <button class="chip" data-len="100">১০০</button>
+        <button class="chip" data-len="all">সব (৩০০+)</button>
+      </div>
+
+      <div class="option-label">সাউন্ড</div>
+      <div class="sound-row">
+        <div class="toggle-sw on" id="soundToggle"><div class="knob"></div></div>
+        <span id="soundLabel">সঠিক/ভুল উত্তরে সাউন্ড চালু আছে</span>
+      </div>
+
+      <button class="start-btn" id="startBtn">কুইজ শুরু করুন</button>
+    </section>
+
+    <section class="screen" id="screen-quiz">
+      <div class="ruler-wrap">
+        <div class="ruler-meta">
+          <span class="count" id="qCounter">প্রশ্ন ১ / ২৫</span>
+          <span class="score" id="scoreCounter">স্কোর: ০</span>
+        </div>
+        <div class="ruler-track">
+          <div class="ruler-ticks" id="rulerTicks"></div>
+          <div class="ruler-cursor" id="rulerCursor"></div>
+        </div>
+      </div>
+      <p class="question-text" id="questionText"></p>
+      <div class="answer-row">
+        <input class="answer-input" id="answerInput" type="text" placeholder="আপনার উত্তর লিখুন..." autocomplete="off" autocorrect="off" spellcheck="false">
+        <button class="submit-btn" id="submitBtn">চেক করুন</button>
+      </div>
+      <div class="feedback" id="feedbackBox">
+        <div class="head" id="feedbackHead"></div>
+        <div class="ans-line" id="feedbackAns"></div>
+        <div class="sol-line" id="feedbackSol"></div>
+      </div>
+      <div class="next-row"><button class="primary-btn" id="nextBtn" disabled>পরবর্তী প্রশ্ন →</button></div>
+    </section>
+
+    <section class="screen" id="screen-result">
+      <div class="result-top">
+        <div class="result-score" id="resultScore">0<span>/25</span></div>
+        <div class="result-pct" id="resultPct">0%</div>
+      </div>
+      <p class="result-msg" id="resultMsg"></p>
+      <div class="review-toggle" id="reviewToggle">ভুল হওয়া প্রশ্নগুলো দেখুন</div>
+      <div class="review-list" id="reviewList"></div>
+      <div class="result-actions">
+        <button class="secondary-btn" id="retryBtn">আবার একই সেটিংসে চেষ্টা করুন</button>
+        <button class="primary-btn" id="newSettingsBtn">নতুন সেটিংস</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="brandfooter">
+    <b>স্মার্ট স্টাডি যুব কম্পিউটার এডুকেশন সেন্টার</b> &amp; <b>পারুলিয়া যুব কম্পিউটার প্রশিক্ষণ কেন্দ্র</b><br>
+    নবদ্বীপ, নদীয়া
+  </footer>
+</div>
+
+<script>
+/* ===================== STATIC QUESTION BANK ===================== */
+/* format: [question, [accepted answers...], solution-note(optional)] */
+var staticRaw = [
+['সংখ্যার সমষ্টি বের করতে কোন ফাংশন ব্যবহার করা হয়?', ['SUM'], ''],
+['একাধিক সংখ্যার গড় (average) বের করতে কোন ফাংশন ব্যবহার হয়?', ['AVERAGE'], ''],
+['একটি রেঞ্জের সবচেয়ে বড় মান বের করতে কোন ফাংশন ব্যবহার হয়?', ['MAX'], ''],
+['একটি রেঞ্জের সবচেয়ে ছোট মান বের করতে কোন ফাংশন ব্যবহার হয়?', ['MIN'], ''],
+['শুধুমাত্র সংখ্যাযুক্ত সেলের সংখ্যা গণনা করতে কোন ফাংশন ব্যবহার হয়?', ['COUNT'], ''],
+['খালি নয় এমন সব সেল (টেক্সট+সংখ্যা) গণনা করতে কোন ফাংশন ব্যবহার হয়?', ['COUNTA'], ''],
+['একটি রেঞ্জে কতগুলো সেল খালি আছে তা বের করতে কোন ফাংশন ব্যবহার হয়?', ['COUNTBLANK'], ''],
+['শর্ত মিলিয়ে সংখ্যা গণনা করার জন্য কোন ফাংশন ব্যবহার হয়?', ['COUNTIF'], ''],
+['একাধিক শর্ত মিলিয়ে সংখ্যা গণনা করার জন্য কোন ফাংশন ব্যবহার হয়?', ['COUNTIFS'], ''],
+['শর্ত মিলিয়ে সংখ্যার সমষ্টি বের করার জন্য কোন ফাংশন ব্যবহার হয়?', ['SUMIF'], ''],
+['একাধিক শর্ত মিলিয়ে সমষ্টি বের করার জন্য কোন ফাংশন ব্যবহার হয়?', ['SUMIFS'], ''],
+['শর্ত মিলিয়ে গড় বের করার জন্য কোন ফাংশন ব্যবহার হয়?', ['AVERAGEIF'], ''],
+['একটি শর্ত সত্য হলে এক মান, মিথ্যা হলে অন্য মান দেখানোর জন্য কোন ফাংশন ব্যবহার হয়?', ['IF'], ''],
+['দুটি শর্ত একসাথে সত্য কিনা পরীক্ষা করতে কোন ফাংশন ব্যবহার হয়?', ['AND'], ''],
+['দুটি শর্তের মধ্যে অন্তত একটি সত্য কিনা পরীক্ষা করতে কোন ফাংশন ব্যবহার হয়?', ['OR'], ''],
+['একটি শর্তের বিপরীত (true থেকে false) ফলাফল দিতে কোন ফাংশন ব্যবহার হয়?', ['NOT'], ''],
+['একটি টেবিল থেকে নির্দিষ্ট কলামের মান উলম্বভাবে খুঁজতে কোন ফাংশন ব্যবহার হয়?', ['VLOOKUP'], ''],
+['একটি টেবিল থেকে নির্দিষ্ট সারির মান অনুভূমিকভাবে খুঁজতে কোন ফাংশন ব্যবহার হয়?', ['HLOOKUP'], ''],
+['একটি রেঞ্জে নির্দিষ্ট মানের পজিশন নাম্বার খুঁজে বের করতে কোন ফাংশন ব্যবহার হয়?', ['MATCH'], ''],
+['নির্দিষ্ট রো ও কলাম নাম্বার দিয়ে একটি মান বের করতে কোন ফাংশন ব্যবহার হয়?', ['INDEX'], ''],
+['আজকের তারিখ দেখানোর জন্য কোন ফাংশন ব্যবহার হয়?', ['TODAY'], ''],
+['আজকের তারিখ ও সময় উভয়ই দেখানোর জন্য কোন ফাংশন ব্যবহার হয়?', ['NOW'], ''],
+['একটি তারিখ থেকে শুধু বছর বের করতে কোন ফাংশন ব্যবহার হয়?', ['YEAR'], ''],
+['একটি তারিখ থেকে শুধু মাস বের করতে কোন ফাংশন ব্যবহার হয়?', ['MONTH'], ''],
+['একটি তারিখ থেকে শুধু দিন বের করতে কোন ফাংশন ব্যবহার হয়?', ['DAY'], ''],
+['দুটি টেক্সট বা সেলকে জোড়া লাগানোর জন্য কোন ফাংশন ব্যবহার হয়?', ['CONCATENATE','CONCAT'], ''],
+['একটি টেক্সটের বাম পাশ থেকে নির্দিষ্ট সংখ্যক অক্ষর নিতে কোন ফাংশন ব্যবহার হয়?', ['LEFT'], ''],
+['একটি টেক্সটের ডান পাশ থেকে নির্দিষ্ট সংখ্যক অক্ষর নিতে কোন ফাংশন ব্যবহার হয়?', ['RIGHT'], ''],
+['একটি টেক্সটের মাঝখান থেকে নির্দিষ্ট সংখ্যক অক্ষর নিতে কোন ফাংশন ব্যবহার হয়?', ['MID'], ''],
+['একটি টেক্সটে কতগুলো অক্ষর আছে তা বের করতে কোন ফাংশন ব্যবহার হয়?', ['LEN'], ''],
+['একটি টেক্সটকে সম্পূর্ণ বড় হাতের (uppercase) করতে কোন ফাংশন ব্যবহার হয়?', ['UPPER'], ''],
+['একটি টেক্সটকে সম্পূর্ণ ছোট হাতের (lowercase) করতে কোন ফাংশন ব্যবহার হয়?', ['LOWER'], ''],
+['একটি টেক্সটের প্রথম অক্ষর বড় হাতের ও বাকি ছোট হাতের করতে কোন ফাংশন ব্যবহার হয়?', ['PROPER'], ''],
+['একটি টেক্সটের আগে-পিছের অতিরিক্ত স্পেস মুছে ফেলতে কোন ফাংশন ব্যবহার হয়?', ['TRIM'], ''],
+['একটি সংখ্যাকে নির্দিষ্ট দশমিক স্থান পর্যন্ত রাউন্ড করতে কোন ফাংশন ব্যবহার হয়?', ['ROUND'], ''],
+['একটি সংখ্যাকে সবসময় উপরের দিকে রাউন্ড করতে কোন ফাংশন ব্যবহার হয়?', ['ROUNDUP'], ''],
+['একটি সংখ্যাকে সবসময় নিচের দিকে রাউন্ড করতে কোন ফাংশন ব্যবহার হয়?', ['ROUNDDOWN'], ''],
+['একটি সংখ্যার বর্গমূল (square root) বের করতে কোন ফাংশন ব্যবহার হয়?', ['SQRT'], ''],
+['একটি সংখ্যাকে নির্দিষ্ট পাওয়ারে উন্নীত করতে কোন ফাংশন ব্যবহার হয়?', ['POWER'], ''],
+['দুটি তারিখের মধ্যে দিন/মাস/বছরের পার্থক্য বের করতে কোন ফাংশন ব্যবহার হয়?', ['DATEDIF'], ''],
+['একটি সংখ্যার পরম মান (যেমন -৫ থেকে ৫) বের করতে কোন ফাংশন ব্যবহার হয়?', ['ABS'], ''],
+['সেভ করার শর্টকাট কী কোনটি?', ['CTRL+S'], ''],
+['কপি করার শর্টকাট কী কোনটি?', ['CTRL+C'], ''],
+['পেস্ট করার শর্টকাট কী কোনটি?', ['CTRL+V'], ''],
+['কাট করার শর্টকাট কী কোনটি?', ['CTRL+X'], ''],
+['Undo করার শর্টকাট কী কোনটি?', ['CTRL+Z'], ''],
+['Redo করার শর্টকাট কী কোনটি?', ['CTRL+Y'], ''],
+['নতুন ওয়ার্কবুক খোলার শর্টকাট কী কোনটি?', ['CTRL+N'], ''],
+['বোল্ড করার শর্টকাট কী কোনটি?', ['CTRL+B'], ''],
+['ইটালিক করার শর্টকাট কী কোনটি?', ['CTRL+I'], ''],
+['আন্ডারলাইন করার শর্টকাট কী কোনটি?', ['CTRL+U'], ''],
+['Find করার শর্টকাট কী কোনটি?', ['CTRL+F'], ''],
+['Find ও Replace একসাথে করার শর্টকাট কী কোনটি?', ['CTRL+H'], ''],
+['Format Cells ডায়ালগ খোলার শর্টকাট কী কোনটি?', ['CTRL+1'], ''],
+['একটি সেল এডিট মোডে যাওয়ার শর্টকাট কী কোনটি?', ['F2'], ''],
+['ফর্মুলার রেফারেন্স টাইপ (relative/absolute) পরিবর্তন করার শর্টকাট কী কোনটি?', ['F4'], ''],
+['ওয়ার্কশিটের শুরুতে (A1) যাওয়ার শর্টকাট কী কোনটি?', ['CTRL+HOME'], ''],
+['ওয়ার্কশিটের ডেটার শেষ সেলে যাওয়ার শর্টকাট কী কোনটি?', ['CTRL+END'], ''],
+['AutoSum প্রয়োগ করার শর্টকাট কী কোনটি?', ['ALT+='], ''],
+['আজকের তারিখ স্ট্যাটিক ভ্যালু হিসেবে ইনসার্ট করার শর্টকাট কী কোনটি?', ['CTRL+;'], ''],
+['বর্তমান সময় স্ট্যাটিক ভ্যালু হিসেবে ইনসার্ট করার শর্টকাট কী কোনটি?', ['CTRL+SHIFT+;'], ''],
+['একাধিক ওয়ার্কশিট একসাথে থাকা ফাইলটিকে কী বলা হয়?', ['WORKBOOK'], ''],
+['একটি Excel ফাইলের ভেতরের একটি পৃষ্ঠাকে কী বলা হয়?', ['WORKSHEET','SHEET'], ''],
+['একটি রো এবং কলামের মিলনস্থলকে কী বলা হয়?', ['CELL'], ''],
+['একাধিক সেলের সমষ্টিকে কী বলা হয়?', ['RANGE'], ''],
+['যে সেলটি বর্তমানে সিলেক্ট করা আছে তাকে কী বলা হয়?', ['ACTIVE CELL'], ''],
+['যেখানে ফর্মুলা বা মান টাইপ করে দেখা যায় তাকে কী বলা হয়?', ['FORMULA BAR'], ''],
+['সেল রেফারেন্স দেখানো বক্সটিকে কী বলা হয়?', ['NAME BOX'], ''],
+['সেলের নিচে-ডানে থাকা ছোট বিন্দু যা টেনে ডেটা সিরিজ করা যায়, তাকে কী বলা হয়?', ['FILL HANDLE'], ''],
+['একটি প্যাটার্ন চিনে স্বয়ংক্রিয়ভাবে বাকি ডেটা পূরণ করার ফিচারকে কী বলা হয়?', ['FLASH FILL'], ''],
+['A1 — এই রেফারেন্সটি কোন ধরনের রেফারেন্স?', ['RELATIVE','আপেক্ষিক'], ''],
+['$A$1 — এই রেফারেন্সটি কোন ধরনের রেফারেন্স?', ['ABSOLUTE','পরম'], ''],
+['A$1 — এই রেফারেন্সটি কোন ধরনের রেফারেন্স?', ['MIXED','মিশ্র'], ''],
+['একটি বড় ডেটাসেটকে সংক্ষেপে সারাংশ আকারে বিশ্লেষণ করার শক্তিশালী টুলকে কী বলা হয়?', ['PIVOTTABLE'], ''],
+['ডেটাতে শর্ত অনুযায়ী রং বা স্টাইল প্রয়োগ করার ফিচারকে কী বলা হয়?', ['CONDITIONAL FORMATTING'], ''],
+['কোনো সেলে কী ধরনের ডেটা ঢোকানো যাবে তা সীমিত করার ফিচারকে কী বলা হয়?', ['DATA VALIDATION'], ''],
+['স্ক্রল করার সময় উপরের রো/বাম কলাম স্থির রাখার ফিচারকে কী বলা হয়?', ['FREEZE PANES'], ''],
+['একাধিক সেলকে একসাথে জোড়া দেওয়ার অপশনকে কী বলা হয়?', ['MERGE CELLS','MERGE & CENTER','MERGE'], ''],
+['Excel ফাইলকে কমা-সেপারেটেড টেক্সট ফরম্যাটে সেভ করলে তার এক্সটেনশন কী হয়?', ['.CSV','CSV'], ''],
+['Excel ফাইলের ডিফল্ট এক্সটেনশন কী?', ['.XLSX','XLSX'], ''],
+['কোনো সেলে সরাসরি মান না লিখে অন্য সেলের ওপর ভিত্তি করে হিসাব করার এক্সপ্রেশনকে কী বলা হয়?', ['FORMULA'], ''],
+['কোনো সংখ্যাকে শূন্য (０) দ্বারা ভাগ করলে কী এরর দেখাবে?', ['#DIV/0!'], ''],
+['VLOOKUP-এ খোঁজা মান না পেলে কী এরর দেখাবে?', ['#N/A'], ''],
+['কোনো সেল রেফারেন্স ডিলিট হয়ে গেলে ফর্মুলায় কী এরর দেখাবে?', ['#REF!'], ''],
+['সংখ্যার বদলে টেক্সট দিয়ে গাণিতিক ফর্মুলা চালালে কী এরর দেখাবে?', ['#VALUE!'], ''],
+['ফাংশনের নাম ভুল বা ভুল বানানে লিখলে কী এরর দেখাবে?', ['#NAME?'], ''],
+['কলামের প্রস্থ কম হওয়ায় সংখ্যা দেখানোর জায়গা না থাকলে সেলে কী দেখাবে?', ['####'], ''],
+['গাণিতিকভাবে অসম্ভব কোনো সংখ্যা বের করতে গেলে কী এরর দেখাবে?', ['#NUM!'], ''],
+['দুটি রেঞ্জ রেফারেন্সের মধ্যে কোনো intersection না থাকলে কী এরর দেখাবে?', ['#NULL!'], ''],
+['PivotTable ইনসার্ট করার অপশন কোন ট্যাবে পাওয়া যায়?', ['INSERT'], ''],
+['চার্ট ইনসার্ট করার অপশন কোন ট্যাবে পাওয়া যায়?', ['INSERT'], ''],
+['Conditional Formatting অপশন কোন ট্যাবে পাওয়া যায়?', ['HOME'], ''],
+['Data Validation অপশন কোন ট্যাবে পাওয়া যায়?', ['DATA'], ''],
+['Sort & Filter অপশন প্রধানত কোন ট্যাবে পাওয়া যায়?', ['DATA','HOME'], ''],
+['Freeze Panes অপশন কোন ট্যাবে পাওয়া যায়?', ['VIEW'], ''],
+['Page Margins/Orientation সেট করার অপশন কোন ট্যাবে পাওয়া যায়?', ['PAGE LAYOUT'], ''],
+['Print Area সেট করার অপশন কোন ট্যাবে পাওয়া যায়?', ['PAGE LAYOUT'], ''],
+['Spell Check অপশন কোন ট্যাবে পাওয়া যায়?', ['REVIEW'], ''],
+['Comment বা Note যুক্ত করার অপশন কোন ট্যাবে পাওয়া যায়?', ['REVIEW','INSERT'], ''],
+['Font পরিবর্তনের অপশন কোন ট্যাবে পাওয়া যায়?', ['HOME'], ''],
+['Number Format (Currency, Percentage) পরিবর্তনের অপশন কোন ট্যাবে পাওয়া যায়?', ['HOME'], ''],
+['AutoSum বাটনটি কোন ট্যাবে পাওয়া যায়?', ['HOME','FORMULAS'], ''],
+['Macro Record করার অপশন কোন ট্যাবে পাওয়া যায়?', ['VIEW','DEVELOPER'], ''],
+['What-If Analysis অপশন কোন ট্যাবে পাওয়া যায়?', ['DATA'], ''],
+['A1 থেকে A20 পর্যন্ত সংখ্যার সমষ্টি বের করার একটি ফর্মুলা লিখুন।', ['=SUM(A1:A20)'], 'SUM ফাংশন A1 থেকে A20 পর্যন্ত সব মান যোগ করে।'],
+['B1 থেকে B10 পর্যন্ত সংখ্যার গড় বের করার একটি ফর্মুলা লিখুন।', ['=AVERAGE(B1:B10)'], ''],
+['C1 থেকে C15 এর মধ্যে সবচেয়ে বড় মান বের করার একটি ফর্মুলা লিখুন।', ['=MAX(C1:C15)'], ''],
+['D1 থেকে D15 এর মধ্যে সবচেয়ে ছোট মান বের করার একটি ফর্মুলা লিখুন।', ['=MIN(D1:D15)'], ''],
+['A1 থেকে A50 এর মধ্যে কতগুলো সেলে সংখ্যা আছে তা বের করার একটি ফর্মুলা লিখুন।', ['=COUNT(A1:A50)'], ''],
+['A2 ও B2 সেলের মান যোগ করার একটি ফর্মুলা লিখুন।', ['=A2+B2'], ''],
+['A2 সেলের মান থেকে B2 সেলের মান বিয়োগ করার একটি ফর্মুলা লিখুন।', ['=A2-B2'], ''],
+['A2 ও B2 সেলের মান গুণ করার একটি ফর্মুলা লিখুন।', ['=A2*B2'], ''],
+['A2 সেলের মানকে B2 সেলের মান দিয়ে ভাগ করার একটি ফর্মুলা লিখুন।', ['=A2/B2'], ''],
+['A1 সেলের মান ৫০-এর বেশি বা সমান হলে "Pass" আর না হলে "Fail" দেখানোর একটি ফর্মুলা লিখুন।', ['=IF(A1>=50,"Pass","Fail")'], 'IF(শর্ত, সত্য হলে যা দেখাবে, মিথ্যা হলে যা দেখাবে)'],
+['A1 থেকে A20-এর মধ্যে শুধু "Yes" লেখা সেলগুলো গণনা করার একটি ফর্মুলা লিখুন।', ['=COUNTIF(A1:A20,"Yes")'], ''],
+['A1 থেকে A20-এর মধ্যে যেগুলো ১০০-এর বেশি, সেই সংখ্যাগুলোর সমষ্টি বের করার একটি ফর্মুলা লিখুন।', ['=SUMIF(A1:A20,">100")'], ''],
+['A1 সেলে থাকা টেক্সটের মোট অক্ষরসংখ্যা বের করার একটি ফর্মুলা লিখুন।', ['=LEN(A1)'], ''],
+['A1 সেলের টেক্সটকে সম্পূর্ণ বড় হাতের অক্ষরে রূপান্তর করার একটি ফর্মুলা লিখুন।', ['=UPPER(A1)'], ''],
+['A1 ও B1 সেলের টেক্সট জোড়া লাগানোর একটি ফর্মুলা লিখুন।', ['=CONCATENATE(A1,B1)','=A1&B1'], ''],
+['আজকের তারিখ দেখানোর একটি ফর্মুলা লিখুন।', ['=TODAY()'], ''],
+['A1 সেলের সংখ্যাটিকে ২ দশমিক স্থান পর্যন্ত রাউন্ড করার একটি ফর্মুলা লিখুন।', ['=ROUND(A1,2)'], ''],
+['A1 সেলের মানের বর্গমূল বের করার একটি ফর্মুলা লিখুন।', ['=SQRT(A1)'], ''],
+['A1 থেকে A10-এর মধ্যে কতগুলো সেল খালি নয় তা বের করার একটি ফর্মুলা লিখুন।', ['=COUNTA(A1:A10)'], ''],
+['একটি লুকআপ টেবিল D2:F20 থেকে A2-এর মান খুঁজে তার তৃতীয় কলামের তথ্য আনার (Exact Match) ফর্মুলা লিখুন।', ['=VLOOKUP(A2,D2:F20,3,FALSE)'], ''],
+['A1 ও B1 দুটি সেলের মান-ই ১০-এর বেশি হলে TRUE দেখানোর একটি ফর্মুলা লিখুন।', ['=AND(A1>10,B1>10)'], ''],
+['A1 অথবা B1, যে কোনো একটি সেলের মান ১০-এর বেশি হলে TRUE দেখানোর একটি ফর্মুলা লিখুন।', ['=OR(A1>10,B1>10)'], ''],
+['A1 সেলের মান ০ থেকে ১০০-এর মধ্যে আছে কিনা, AND দিয়ে পরীক্ষা করার একটি ফর্মুলা লিখুন।', ['=AND(A1>=0,A1<=100)'], ''],
+['C1 সেলে A1 ও B1-এর গড় বের করার একটি ফর্মুলা লিখুন (AVERAGE ফাংশন ছাড়া, শুধু + আর / দিয়ে)।', ['=(A1+B1)/2'], ''],
+['A1 সেলের মান ঋণাত্মক হলে তার পরম মান (absolute value) দেখানোর একটি ফর্মুলা লিখুন।', ['=ABS(A1)'], ''],
+['A1 সেল খালি কিনা পরীক্ষা করে "Empty" বা "Filled" দেখানোর একটি ফর্মুলা লিখুন।', ['=IF(A1="","Empty","Filled")'], ''],
+['A1 থেকে A10-এর মধ্যে সবচেয়ে বড় মানটির পজিশন বের করার একটি ফর্মুলা লিখুন (MATCH ফাংশন দিয়ে)।', ['=MATCH(MAX(A1:A10),A1:A10,0)'], ''],
+['সময়ের সাথে ট্রেন্ড দেখানোর জন্য সাধারণত কোন ধরনের চার্ট সবচেয়ে উপযোগী?', ['LINE CHART','LINE'], ''],
+['বিভিন্ন ক্যাটাগরির তুলনা করার জন্য সাধারণত কোন ধরনের চার্ট সবচেয়ে বেশি ব্যবহৃত হয়?', ['BAR CHART','COLUMN CHART','BAR','COLUMN'], ''],
+['মোট থেকে প্রতিটি অংশের শতকরা ভাগ দেখানোর জন্য কোন ধরনের চার্ট ব্যবহার করা হয়?', ['PIE CHART','PIE'], ''],
+['দুটি ভেরিয়েবলের মধ্যে সম্পর্ক দেখানোর জন্য কোন ধরনের চার্ট ব্যবহার করা হয়?', ['SCATTER CHART','SCATTER'], ''],
+['ডেটাকে A থেকে Z অনুযায়ী সাজানোর অপশনকে কী বলা হয়?', ['SORT'], ''],
+['শুধুমাত্র নির্দিষ্ট শর্ত মেলে এমন ডেটা দেখানোর ফিচারকে কী বলা হয়?', ['FILTER'], ''],
+['একাধিক কলাম অনুযায়ী একসাথে সর্ট করার অপশনকে কী বলা হয়?', ['CUSTOM SORT'], ''],
+['কাজ করার সময় উপরের রো বা প্রথম কলাম স্থির রেখে বাকি অংশ স্ক্রল করার ফিচারের নাম কী?', ['FREEZE PANES'], ''],
+['একটি ওয়ার্কশিটের নাম পরিবর্তন করতে শিট ট্যাবে কী করতে হয়?', ['DOUBLE-CLICK','DOUBLE CLICK'], ''],
+['একাধিক নন-কন্টিনিউয়াস সেল সিলেক্ট করতে কোন কী চেপে ক্লিক করতে হয়?', ['CTRL'], ''],
+['একটানা রেঞ্জ সিলেক্ট করতে কোন কী চেপে ক্লিক করতে হয়?', ['SHIFT'], ''],
+['একটি কলামের প্রস্থ স্বয়ংক্রিয়ভাবে কনটেন্ট অনুযায়ী ঠিক করার অপশনকে কী বলা হয়?', ['AUTOFIT'], ''],
+['টেক্সটকে সেলের ভেতরে একাধিক লাইনে দেখানোর অপশনকে কী বলা হয়?', ['WRAP TEXT'], ''],
+['একটি সেলের মধ্যে ছোট চার্ট রেখার মতো দেখানো মিনি-চার্টকে কী বলা হয়?', ['SPARKLINE'], ''],
+['ফর্মুলার পরিবর্তে তার ফলাফল (ভ্যালু) হিসেবে পেস্ট করার অপশনকে কী বলা হয়?', ['PASTE VALUES','PASTE SPECIAL'], ''],
+['একটি সেল রেঞ্জকে নাম দিয়ে চিহ্নিত করার ফিচারকে কী বলা হয়?', ['NAMED RANGE'], ''],
+['রো ও কলামের নাম্বার/লেটার হেডার দেখানো বন্ধ বা চালু করার অপশন কোন ট্যাবে পাওয়া যায়?', ['VIEW'], ''],
+['ডুপ্লিকেট (একই) মান চিহ্নিত করার কন্ডিশনাল ফরম্যাটিং ফিচারের নাম কী?', ['HIGHLIGHT DUPLICATE VALUES','DUPLICATE VALUES'], ''],
+['একটি কলামের টেক্সটকে আলাদা কলামে ভাগ করার ফিচারকে কী বলা হয়?', ['TEXT TO COLUMNS'], '']
+];
+
+/* ===================== DYNAMIC TEMPLATE GENERATORS ===================== */
+function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function numDisp(n){ return Number.isInteger(n) ? String(n) : (Math.round(n*100)/100).toString(); }
+function pick(arr){ return arr[randInt(0,arr.length-1)]; }
+var wordBank = ['COMPUTER','EXCEL','STUDENT','NABADWIP','KEYBOARD','MONITOR','PRINTER','INTERNET','SOFTWARE','HARDWARE','FORMULA','WORKSHEET','ACCOUNT','BUSINESS','TRAINING'];
+
+function genArithmetic(n){
+  var out=[]; var ops=['+','-','*','/'];
+  for(var i=0;i<n;i++){
+    var op=pick(ops), a,b,res;
+    if(op==='/'){ b=randInt(2,12); res=randInt(2,20); a=b*res; }
+    else { a=randInt(1,200); b=randInt(1,200); res = op==='+'?a+b:(op==='-'?a-b:a*b); }
+    out.push({q:'যদি A1='+a+' এবং B1='+b+' হয়, তাহলে =A1'+op+'B1 এর ফলাফল কত হবে?', type:'number', correctNumber:res, tol:0.01,
+      sol:'হিসাব: '+a+' '+op+' '+b+' = '+numDisp(res)});
+  }
+  return out;
+}
+function genSum(n){
+  var out=[];
+  for(var i=0;i<n;i++){
+    var x=randInt(10,500), y=randInt(10,500), z=randInt(10,500), sum=x+y+z;
+    out.push({q:'B2='+x+', B3='+y+', B4='+z+' হলে =SUM(B2:B4) এর ফলাফল কত?', type:'number', correctNumber:sum, tol:0.01,
+      sol:'হিসাব: '+x+'+'+y+'+'+z+' = '+sum});
+  }
+  return out;
+}
+function genAverage(n){
+  var out=[];
+  for(var i=0;i<n;i++){
+    var a=randInt(1,100),b=randInt(1,100),c=randInt(1,100),d=randInt(1,100);
+    var avg=Math.round(((a+b+c+d)/4)*100)/100;
+    out.push({q:'C1='+a+', C2='+b+', C3='+c+', C4='+d+' হলে =AVERAGE(C1:C4) এর মান কত? (প্রয়োজনে দশমিকে উত্তর দিন)', type:'number', correctNumber:avg, tol:0.02,
+      sol:'হিসাব: ('+a+'+'+b+'+'+c+'+'+d+')/4 = '+avg});
+  }
+  return out;
+}
+function genMaxMin(n){
+  var out=[];
+  for(var i=0;i<n;i++){
+    var a=randInt(1,500),b=randInt(1,500),c=randInt(1,500);
+    var useMax = Math.random()<0.5;
+    var res = useMax ? Math.max(a,b,c) : Math.min(a,b,c);
+    out.push({q:'D1='+a+', D2='+b+', D3='+c+' হলে =' + (useMax?'MAX':'MIN') + '(D1:D3) এর মান কত?', type:'number', correctNumber:res, tol:0.01,
+      sol:(useMax?'সবচেয়ে বড় মান: ':'সবচেয়ে ছোট মান: ')+res});
+  }
+  return out;
+}
+function genCountIf(n){
+  var out=[];
+  for(var i=0;i<n;i++){
+    var nums=[]; for(var j=0;j<6;j++) nums.push(randInt(1,100));
+    var threshold=randInt(20,80);
+    var count = nums.filter(function(v){return v>threshold;}).length;
+    out.push({q:'একটি কলামে সংখ্যাগুলো হল: '+nums.join(', ')+'। এই রেঞ্জে =COUNTIF(range,">'+threshold+'") এর ফলাফল কত হবে?', type:'number', correctNumber:count, tol:0,
+      sol:threshold+'-এর বেশি সংখ্যা মোট '+count+'টি'});
+  }
+  return out;
+}
+function genSumIf(n){
+  var out=[];
+  for(var i=0;i<n;i++){
+    var nums=[]; for(var j=0;j<5;j++) nums.push(randInt(10,100));
+    var threshold=randInt(30,70);
+    var matched = nums.filter(function(v){return v>threshold;});
+    var sum = matched.reduce(function(a,b){return a+b;},0);
+    out.push({q:'একটি কলামে সংখ্যাগুলো হল: '+nums.join(', ')+'। =SUMIF(range,">'+threshold+'") এর ফলাফল কত হবে?', type:'number', correctNumber:sum, tol:0,
+      sol:threshold+'-এর বেশি সংখ্যাগুলো ('+matched.join(', ')+') এর সমষ্টি = '+sum});
+  }
+  return out;
+}
+function genIfPassFail(n){
+  var out=[];
+  for(var i=0;i<n;i++){
+    var score=randInt(0,100);
+    var res = score>=40 ? 'Pass':'Fail';
+    out.push({q:'E1='+score+' হলে, সূত্র =IF(E1>=40,"Pass","Fail") প্রয়োগ করলে ফলাফল কী হবে?', type:'text', ans:[res],
+      sol:score+(score>=40?' ≥ 40, তাই ফলাফল "Pass"':' < 40, তাই ফলাফল "Fail"')});
+  }
+  return out;
+}
+function genPercentDiscount(n){
+  var out=[];
+  for(var i=0;i<n;i++){
+    var price=randInt(100,2000), percent=randInt(5,50);
+    var disc = Math.round(price*(1-percent/100)*100)/100;
+    out.push({q:'একটি পণ্যের দাম ₹'+price+', তার উপর '+percent+'% ছাড় দেওয়া হলে ছাড়ের পর দাম কত হবে?', type:'number', correctNumber:disc, tol:0.5,
+      sol:'হিসাব: '+price+' × (1 - '+percent+'/100) = '+disc});
+  }
+  return out;
+}
+function genProfitLoss(n){
+  var out=[];
+  for(var i=0;i<n;i++){
+    var cp=randInt(100,5000), sp=randInt(100,5000);
+    var diff=sp-cp;
+    out.push({q:'ক্রয়মূল্য ₹'+cp+', বিক্রয়মূল্য ₹'+sp+' হলে লাভ/ক্ষতি কত টাকা হবে? (লাভ হলে + আর ক্ষতি হলে - চিহ্ন সহ লিখুন)', type:'number', correctNumber:diff, tol:0.01,
+      sol:'হিসাব: '+sp+' - '+cp+' = '+diff+' ('+(diff>=0?'লাভ':'ক্ষতি')+')'});
+  }
+  return out;
+}
+function genLen(n){
+  var out=[];
+  for(var i=0;i<n;i++){
+    var word=pick(wordBank);
+    out.push({q:'A1 সেলে "'+word+'" লেখা থাকলে =LEN(A1) এর মান কত হবে?', type:'number', correctNumber:word.length, tol:0,
+      sol:'"'+word+'" শব্দে '+word.length+'টি অক্ষর আছে।'});
+  }
+  return out;
+}
+function genUpperLower(n){
+  var out=[];
+  for(var i=0;i<n;i++){
+    var word=pick(wordBank);
+    var useUpper = Math.random()<0.5;
+    if(useUpper){
+      out.push({q:'A1 সেলে "'+word.toLowerCase()+'" লেখা থাকলে =UPPER(A1) এর ফলাফল কী হবে?', type:'text', ans:[word.toUpperCase()], sol:''});
+    } else {
+      out.push({q:'A1 সেলে "'+word+'" লেখা থাকলে =LOWER(A1) এর ফলাফল কী হবে?', type:'text', ans:[word.toLowerCase()], sol:''});
+    }
+  }
+  return out;
+}
+function genLeftRightMid(n){
+  var out=[];
+  for(var i=0;i<n;i++){
+    var word=pick(wordBank);
+    var which=pick(['LEFT','RIGHT','MID']);
+    if(which==='LEFT'){
+      var k=randInt(2,Math.min(5,word.length-1));
+      out.push({q:'A1 সেলে "'+word+'" লেখা থাকলে =LEFT(A1,'+k+') এর ফলাফল কী হবে?', type:'text', ans:[word.slice(0,k)], sol:''});
+    } else if(which==='RIGHT'){
+      var k2=randInt(2,Math.min(5,word.length-1));
+      out.push({q:'A1 সেলে "'+word+'" লেখা থাকলে =RIGHT(A1,'+k2+') এর ফলাফল কী হবে?', type:'text', ans:[word.slice(-k2)], sol:''});
+    } else {
+      var start=randInt(1,Math.max(1,word.length-3));
+      var cnt=randInt(2,Math.min(4,word.length-start+1));
+      out.push({q:'A1 সেলে "'+word+'" লেখা থাকলে =MID(A1,'+start+','+cnt+') এর ফলাফল কী হবে?', type:'text', ans:[word.substr(start-1,cnt)], sol:''});
+    }
+  }
+  return out;
+}
+function genOrderOfOps(n){
+  var out=[];
+  for(var i=0;i<n;i++){
+    var a=randInt(1,20),b=randInt(1,20),c=randInt(2,10), e=randInt(2,9), dq=randInt(1,15);
+    var d=dq*e;
+    var step1=a+b, step2=step1*c, step3=d/e;
+    var res = step2-step3;
+    out.push({q:'=('+a+'+'+b+')*'+c+'-'+d+'/'+e+' এর ফলাফল কত হবে?', type:'number', correctNumber:res, tol:0.01,
+      sol:'হিসাব: ('+a+'+'+b+')='+step1+'; '+step1+'×'+c+'='+step2+'; '+d+'/'+e+'='+step3+'; '+step2+'-'+step3+'='+res});
+  }
+  return out;
+}
+function genRound(n){
+  var out=[];
+  for(var i=0;i<n;i++){
+    var number = randInt(1000,99999)/100;
+    var digits = randInt(0,2);
+    var factor = Math.pow(10,digits);
+    var rounded = Math.round(number*factor)/factor;
+    out.push({q:'=ROUND('+number+','+digits+') এর ফলাফল কত হবে?', type:'number', correctNumber:rounded, tol:0.001,
+      sol:number+' কে '+digits+' দশমিক স্থানে রাউন্ড করলে হয় '+rounded});
+  }
+  return out;
+}
+function genRelativeRef(n){
+  var out=[];
+  var colPairs=[['A','B'],['C','D'],['E','F']];
+  for(var i=0;i<n;i++){
+    var cp=pick(colPairs); var c1=cp[0], c2=cp[1];
+    var startRow=randInt(1,5), shift=randInt(1,6);
+    var newRow=startRow+shift;
+    out.push({q:'একটি সেলে ফর্মুলা =' + c1+startRow+'+'+c2+startRow + ' লেখা আছে। এই সেলটি কপি করে '+shift+' সারি নিচে পেস্ট করা হলে, নতুন ফর্মুলাটি কী হবে?',
+      type:'text', ans:['='+c1+newRow+'+'+c2+newRow],
+      sol:'রিলেটিভ রেফারেন্স সারি অনুযায়ী শিফট হয়: '+c1+startRow+'→'+c1+newRow+', '+c2+startRow+'→'+c2+newRow});
+  }
+  return out;
+}
+function genAbsoluteRef(n){
+  var out=[];
+  var colPairs=[['A','B'],['C','D'],['E','F']];
+  for(var i=0;i<n;i++){
+    var cp=pick(colPairs); var c1=cp[0], c2=cp[1];
+    var fixedRow=randInt(1,3), startRow=randInt(4,8), shift=randInt(1,6);
+    var newRow=startRow+shift;
+    out.push({q:'একটি সেলে ফর্মুলা =$'+c1+'$'+fixedRow+'+'+c2+startRow+' লেখা আছে। এই সেলটি কপি করে '+shift+' সারি নিচে পেস্ট করা হলে, নতুন ফর্মুলাটি কী হবে?',
+      type:'text', ans:['=$'+c1+'$'+fixedRow+'+'+c2+newRow],
+      sol:'অ্যাবসোলিউট অংশ ($'+c1+'$'+fixedRow+') পরিবর্তন হয় না, রিলেটিভ অংশ '+c2+startRow+'→'+c2+newRow+' হয়ে যায়'});
+  }
+  return out;
+}
+function genDateDiff(n){
+  var out=[];
+  var months=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
+  for(var i=0;i<n;i++){
+    var year=2026, month=randInt(0,10);
+    var day1=randInt(1,15);
+    var gap=randInt(3,60);
+    var d1=new Date(year,month,day1);
+    var d2=new Date(d1.getTime()+gap*24*60*60*1000);
+    var diffDays = Math.round((d2-d1)/(24*60*60*1000));
+    var fmt=function(d){return d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear();};
+    out.push({q:'A1 তারিখ '+fmt(d1)+' এবং B1 তারিখ '+fmt(d2)+' হলে, =B1-A1 ফর্মুলার ফলাফল (দিনের সংখ্যা) কত হবে?', type:'number', correctNumber:diffDays, tol:0,
+      sol:fmt(d1)+' থেকে '+fmt(d2)+' পর্যন্ত মোট '+diffDays+' দিন'});
+  }
+  return out;
+}
+
+function buildDynamicPool(){
+  var pool=[];
+  pool=pool.concat(genArithmetic(10), genSum(9), genAverage(9), genMaxMin(9), genCountIf(9), genSumIf(9),
+    genIfPassFail(9), genPercentDiscount(9), genProfitLoss(9), genLen(9), genUpperLower(9), genLeftRightMid(9),
+    genOrderOfOps(9), genRound(9), genRelativeRef(9), genAbsoluteRef(9), genDateDiff(9));
+  return pool;
+}
+
+function buildFullBank(){
+  var bank = staticRaw.map(function(r){ return {q:r[0], type:'text', ans:r[1], sol:r[2]}; });
+  bank = bank.concat(buildDynamicPool());
+  return bank;
+}
+var FULL_BANK = buildFullBank();
+
+/* ===================== ANSWER CHECKING ===================== */
+function normText(s){
+  return String(s).trim().toUpperCase().replace(/\s+/g,'').replace(/^=/,'');
+}
+function checkAnswer(item, userInput){
+  if(item.type === 'number'){
+    var val = parseFloat(String(userInput).replace(/,/g,'').trim());
+    if(isNaN(val)) return false;
+    var tol = (item.tol === undefined) ? 0.01 : item.tol;
+    return Math.abs(val - item.correctNumber) <= Math.max(tol, 0.0001);
+  } else {
+    var norm = normText(userInput);
+    return item.ans.some(function(a){ return normText(a) === norm; });
+  }
+}
+function correctAnswerDisplay(item){
+  return item.type === 'number' ? numDisp(item.correctNumber) : item.ans[0];
+}
+
+/* ===================== SOUND ===================== */
+var soundOn = true;
+var audioCtx = null;
+function ensureAudio(){ if(!audioCtx){ try{ audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }catch(e){ audioCtx=null; } } return audioCtx; }
+function playTone(freq, duration, type, delay, gainVal){
+  if(!soundOn) return;
+  var ctx = ensureAudio();
+  if(!ctx) return;
+  var osc = ctx.createOscillator();
+  var gain = ctx.createGain();
+  osc.type = type; osc.frequency.value = freq;
+  osc.connect(gain); gain.connect(ctx.destination);
+  var startTime = ctx.currentTime + delay;
+  gain.gain.setValueAtTime(0.0001, startTime);
+  gain.gain.linearRampToValueAtTime(gainVal, startTime+0.01);
+  gain.gain.exponentialRampToValueAtTime(0.001, startTime+duration);
+  osc.start(startTime); osc.stop(startTime+duration+0.03);
+}
+function playCorrectSound(){ playTone(880,0.12,'sine',0,0.16); playTone(1320,0.16,'sine',0.1,0.16); }
+function playWrongSound(){ playTone(220,0.18,'sawtooth',0,0.13); playTone(160,0.22,'sawtooth',0.12,0.13); }
+
+/* ===================== APP STATE & SCREENS ===================== */
+var state = { pool:[], idx:0, score:0, results:[], sessionLen:25 };
+var screens = { start:document.getElementById('screen-start'), quiz:document.getElementById('screen-quiz'), result:document.getElementById('screen-result') };
+function showScreen(name){
+  Object.keys(screens).forEach(function(k){ screens[k].classList.remove('active'); });
+  screens[name].classList.add('active');
+  document.getElementById('homeBtn').classList.toggle('show', name!=='start');
+}
+function shuffle(arr){
+  var a=arr.slice();
+  for(var i=a.length-1;i>0;i--){ var j=randInt(0,i); var t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+
+document.querySelectorAll('#lenChips .chip').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('#lenChips .chip').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    state.sessionLen = btn.dataset.len === 'all' ? FULL_BANK.length : parseInt(btn.dataset.len,10);
+  });
+});
+state.sessionLen = 25;
+
+var soundToggleEl = document.getElementById('soundToggle');
+soundToggleEl.addEventListener('click', function(){
+  soundOn = !soundOn;
+  soundToggleEl.classList.toggle('on', soundOn);
+  document.getElementById('soundLabel').textContent = soundOn ? 'সঠিক/ভুল উত্তরে সাউন্ড চালু আছে' : 'সাউন্ড বন্ধ আছে';
+});
+
+document.getElementById('startBtn').addEventListener('click', startQuiz);
+document.getElementById('homeBtn').addEventListener('click', goHome);
+document.getElementById('newSettingsBtn').addEventListener('click', goHome);
+document.getElementById('retryBtn').addEventListener('click', startQuiz);
+
+function goHome(){ showScreen('start'); }
+
+function startQuiz(){
+  var n = Math.min(state.sessionLen, FULL_BANK.length);
+  state.pool = shuffle(FULL_BANK).slice(0, n);
+  state.idx = 0; state.score = 0; state.results = [];
+  showScreen('quiz');
+  buildRuler();
+  renderQuestion();
+}
+
+function buildRuler(){
+  var ticks = document.getElementById('rulerTicks');
+  ticks.innerHTML='';
+  var total = state.pool.length;
+  for(var i=0;i<total;i++){
+    var t=document.createElement('div'); t.className='tick';
+    var n=i+1;
+    if(total<=15){ if(n%5===0) t.classList.add('medium'); }
+    else { if(n%25===0) t.classList.add('major'); else if(n%10===0) t.classList.add('medium'); }
+    ticks.appendChild(t);
+  }
+  moveCursor();
+}
+function moveCursor(){
+  var total=state.pool.length;
+  var pct = total<=1?0:(state.idx/(total-1))*100;
+  document.getElementById('rulerCursor').style.left = pct+'%';
+}
+
+function renderQuestion(){
+  var item = state.pool[state.idx];
+  document.getElementById('qCounter').textContent = 'প্রশ্ন '+(state.idx+1)+' / '+state.pool.length;
+  document.getElementById('scoreCounter').textContent = 'স্কোর: '+state.score;
+  document.getElementById('questionText').textContent = item.q;
+  var input = document.getElementById('answerInput');
+  input.value=''; input.disabled=false;
+  document.getElementById('submitBtn').disabled=false;
+  document.getElementById('feedbackBox').classList.remove('show','correct','incorrect');
+  document.getElementById('nextBtn').disabled=true;
+  document.getElementById('nextBtn').textContent = (state.idx===state.pool.length-1) ? 'রেজাল্ট দেখুন →' : 'পরবর্তী প্রশ্ন →';
+  moveCursor();
+  setTimeout(function(){ input.focus(); }, 30);
+}
+
+function submitAnswer(){
+  var item = state.pool[state.idx];
+  var input = document.getElementById('answerInput');
+  if(input.disabled) return;
+  var userVal = input.value.trim();
+  if(userVal === ''){ input.focus(); return; }
+  var isCorrect = checkAnswer(item, userVal);
+  input.disabled = true;
+  document.getElementById('submitBtn').disabled = true;
+
+  var box = document.getElementById('feedbackBox');
+  box.classList.add('show', isCorrect?'correct':'incorrect');
+  document.getElementById('feedbackHead').textContent = isCorrect ? '✅ সঠিক উত্তর!' : '❌ ভুল উত্তর';
+  document.getElementById('feedbackAns').textContent = 'সঠিক উত্তর: ' + correctAnswerDisplay(item);
+  document.getElementById('feedbackSol').textContent = item.sol ? ('সমাধান: ' + item.sol) : '';
+
+  if(isCorrect){ state.score++; playCorrectSound(); } else { playWrongSound(); }
+  state.results.push({q:item.q, user:userVal, correct:isCorrect, correctAns:correctAnswerDisplay(item)});
+
+  var tickEl = document.querySelectorAll('#rulerTicks .tick')[state.idx];
+  if(tickEl) tickEl.classList.add(isCorrect?'correct':'incorrect');
+  document.getElementById('scoreCounter').textContent = 'স্কোর: '+state.score;
+  document.getElementById('nextBtn').disabled = false;
+}
+document.getElementById('submitBtn').addEventListener('click', submitAnswer);
+document.getElementById('answerInput').addEventListener('keydown', function(e){
+  if(e.key==='Enter'){ e.preventDefault();
+    if(!document.getElementById('answerInput').disabled) submitAnswer();
+    else document.getElementById('nextBtn').click();
+  }
+});
+document.getElementById('nextBtn').addEventListener('click', function(){
+  if(state.idx < state.pool.length-1){ state.idx++; renderQuestion(); }
+  else { showResult(); }
+});
+
+function showResult(){
+  showScreen('result');
+  var total = state.pool.length;
+  document.getElementById('resultScore').innerHTML = state.score+'<span>/'+total+'</span>';
+  var pct = Math.round((state.score/total)*100);
+  document.getElementById('resultPct').textContent = pct+'%';
+  var msg='';
+  if(pct>=80) msg='🌟 অসাধারণ! আপনি Excel-এ রীতিমতো দক্ষ।';
+  else if(pct>=50) msg='👍 ভালো করেছেন! আরেকটু প্র্যাকটিস করলে আরও ভালো হবে।';
+  else msg='💪 চিন্তা নেই, ভুল হওয়া প্রশ্নগুলো দেখে আবার চর্চা করুন।';
+  document.getElementById('resultMsg').textContent = msg;
+
+  var missed = state.results.filter(function(r){ return !r.correct; });
+  var reviewList = document.getElementById('reviewList');
+  var reviewToggle = document.getElementById('reviewToggle');
+  if(missed.length === 0){
+    reviewToggle.textContent = 'সব প্রশ্নের উত্তর সঠিক হয়েছে! 🎉';
+    reviewList.innerHTML='';
+  } else {
+    reviewToggle.textContent = 'ভুল হওয়া '+missed.length+'টি প্রশ্ন দেখুন';
+    reviewList.innerHTML = missed.map(function(r){
+      return '<div class="review-item"><div class="rq">'+r.q+'</div>'+
+        '<div>আপনার উত্তর: <span class="ra">'+(r.user||'(খালি)')+'</span> · সঠিক: <span class="rc">'+r.correctAns+'</span></div></div>';
+    }).join('');
+  }
+  reviewList.classList.remove('show');
+}
+document.getElementById('reviewToggle').addEventListener('click', function(){
+  document.getElementById('reviewList').classList.toggle('show');
+});
+</script>
+</body>
+</html>
