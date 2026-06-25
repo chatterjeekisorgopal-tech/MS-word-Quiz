@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ভারতের ওয়েদার | স্মার্ট স্টাডি ও পারুলিয়া যুব কম্পিউটার কেন্দ্র</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --surface:#F5F7F9;
+    --ink:#1C2733;
+    --ink-soft:#5C6B7A;
+    --accent:#2C6FB0;
+    --line:rgba(28,39,51,0.1);
+    --sky-top:#8EC9F0;
+    --sky-bottom:#FDF4D8;
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; background:#DDE3E8;
+    font-family:'Noto Sans Bengali', sans-serif; color:var(--ink);
+    display:flex; align-items:center; justify-content:center; padding:24px 12px;
+  }
+  .app{
+    width:100%; max-width:720px; background:var(--surface); border-radius:14px;
+    box-shadow:0 22px 55px rgba(28,39,51,0.22); overflow:hidden;
+  }
+  /* ---- HEADER / SEARCH ---- */
+  .topbar{padding:16px 20px 12px 20px; background:#fff; position:relative; z-index:5;}
+  .brand-row{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:10px;}
+  h1.app-title{font-family:'Noto Serif Bengali', serif; font-size:1.25rem; margin:0; color:var(--ink);}
+  .search-wrap{position:relative;}
+  .search-input{
+    width:100%; padding:11px 14px; border:1.5px solid var(--line); border-radius:8px;
+    font-family:'Noto Sans Bengali', sans-serif; font-size:0.95rem; outline:none; color:var(--ink);
+  }
+  .search-input:focus{border-color:var(--accent);}
+  .search-hint{font-size:0.74rem; color:var(--ink-soft); margin-top:6px;}
+  .suggestions{
+    position:absolute; top:calc(100% + 4px); left:0; right:0; background:#fff;
+    border:1px solid var(--line); border-radius:8px; box-shadow:0 10px 26px rgba(28,39,51,0.15);
+    max-height:260px; overflow-y:auto; display:none; z-index:10;
+  }
+  .suggestions.show{display:block;}
+  .suggestion-item{padding:10px 14px; cursor:pointer; font-size:0.9rem; border-bottom:1px solid var(--line);}
+  .suggestion-item:last-child{border-bottom:none;}
+  .suggestion-item:hover, .suggestion-item.hl{background:#EEF3F8;}
+  .suggestion-item .nm{color:var(--ink); font-weight:600;}
+  .suggestion-item .st{color:var(--ink-soft); font-size:0.78rem;}
+  .suggestion-empty{padding:12px 14px; font-size:0.85rem; color:var(--ink-soft);}
+
+  /* ---- SKY PANEL ---- */
+  .sky{
+    position:relative; height:260px; overflow:hidden;
+    background:linear-gradient(180deg, var(--sky-top), var(--sky-bottom));
+  }
+  .sky-layer{position:absolute; inset:0; overflow:hidden;}
+  .sun{
+    position:absolute; top:38px; left:50%; width:78px; height:78px; margin-left:-39px;
+    border-radius:50%; background:radial-gradient(circle at 35% 30%, #FFF3C4, #FFD56B 60%, #F5B53E 100%);
+    box-shadow:0 0 50px 18px rgba(255,213,107,0.55); opacity:0; transition:opacity 0.6s ease;
+    animation:pulseGlow 4s ease-in-out infinite;
+  }
+  .sky.show-sun .sun{opacity:1;}
+  @keyframes pulseGlow{0%,100%{box-shadow:0 0 50px 18px rgba(255,213,107,0.55);} 50%{box-shadow:0 0 65px 26px rgba(255,213,107,0.75);}}
+  .moon{
+    position:absolute; top:34px; left:50%; width:62px; height:62px; margin-left:-31px;
+    border-radius:50%; background:radial-gradient(circle at 38% 32%, #FFFBE8, #E8E2C2 55%, #C9C2A0 100%);
+    box-shadow:0 0 34px 10px rgba(232,226,194,0.4); opacity:0; transition:opacity 0.6s ease;
+  }
+  .sky.show-moon .moon{opacity:1;}
+  .stars{position:absolute; inset:0; opacity:0; transition:opacity 0.6s ease;}
+  .sky.show-stars .stars{opacity:1;}
+  .star{position:absolute; width:3px; height:3px; background:#fff; border-radius:50%; animation:twinkle 2.4s ease-in-out infinite;}
+  @keyframes twinkle{0%,100%{opacity:0.2;} 50%{opacity:1;}}
+  .cloud{
+    position:absolute; background:#fff; border-radius:50px; opacity:0; transition:opacity 0.6s ease;
+    box-shadow:20px 6px 0 -4px #fff, -20px 4px 0 -6px #fff;
+  }
+  .sky.show-clouds .cloud, .sky.show-clouds-heavy .cloud{opacity:0.92;}
+  .sky.show-clouds-heavy .cloud{background:#AEB9C2; box-shadow:20px 6px 0 -4px #AEB9C2, -20px 4px 0 -6px #AEB9C2;}
+  .cloud1{width:90px; height:30px; top:50px; animation:drift 50s linear infinite;}
+  .cloud2{width:70px; height:24px; top:100px; animation:drift 65s linear infinite reverse;}
+  .cloud3{width:110px; height:34px; top:150px; animation:drift 80s linear infinite;}
+  .cloud4{width:60px; height:22px; top:30px; animation:drift 38s linear infinite reverse;}
+  .cloud5{width:95px; height:28px; top:190px; animation:drift 95s linear infinite;}
+  @keyframes drift{from{transform:translateX(-160px);} to{transform:translateX(760px);}}
+  .fog{position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.55)); opacity:0; transition:opacity 0.6s ease;}
+  .sky.show-fog .fog{opacity:1;}
+  .rain-layer{position:absolute; inset:0; opacity:0; transition:opacity 0.6s ease;}
+  .sky.show-rain .rain-layer{opacity:1;}
+  .raindrop{position:absolute; width:2px; height:14px; background:rgba(255,255,255,0.55); top:-20px; transform:rotate(12deg); animation:fall linear infinite;}
+  @keyframes fall{from{top:-20px;} to{top:270px;}}
+  .snow-layer{position:absolute; inset:0; opacity:0; transition:opacity 0.6s ease;}
+  .sky.show-snow .snow-layer{opacity:1;}
+  .snowflake{position:absolute; width:5px; height:5px; background:#fff; border-radius:50%; top:-10px; animation:snowfall linear infinite;}
+  @keyframes snowfall{from{top:-10px;} to{top:270px;}}
+  .thunder-flash{position:absolute; inset:0; background:#fff; opacity:0; pointer-events:none;}
+  .thunder-flash.flash{opacity:0.75; transition:opacity 0.08s ease-out;}
+  .thunder-flash.fade{opacity:0; transition:opacity 0.5s ease-out;}
+
+  .sky-info{
+    position:relative; z-index:3; height:100%; display:flex; flex-direction:column;
+    justify-content:flex-end; padding:14px 20px; color:#fff; text-shadow:0 1px 6px rgba(0,0,0,0.35);
+  }
+  .place-name{font-family:'Noto Serif Bengali', serif; font-size:1.2rem; font-weight:700;}
+  .place-time{font-family:'Space Mono', monospace; font-size:0.78rem; opacity:0.9; margin-top:2px;}
+  .temp-row{display:flex; align-items:baseline; gap:10px; margin-top:6px;}
+  .temp-big{font-family:'Space Mono', monospace; font-size:2.6rem; font-weight:700;}
+  .desc-feels{font-size:0.88rem; opacity:0.95;}
+
+  /* ---- STATS ---- */
+  .stats-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:1px; background:var(--line);}
+  .stat-cell{background:var(--surface); padding:14px 8px; text-align:center;}
+  .stat-cell .v{font-family:'Space Mono', monospace; font-size:1.05rem; color:var(--ink); font-weight:700;}
+  .stat-cell .l{font-size:0.7rem; color:var(--ink-soft); margin-top:3px;}
+
+  /* ---- HOURLY ---- */
+  .section-title{font-size:0.82rem; font-weight:700; color:var(--ink-soft); padding:16px 20px 6px 20px;}
+  .hourly-strip{display:flex; gap:14px; overflow-x:auto; padding:4px 20px 16px 20px;}
+  .hour-card{flex-shrink:0; text-align:center; min-width:54px;}
+  .hour-card .t{font-size:0.74rem; color:var(--ink-soft); font-family:'Space Mono', monospace;}
+  .hour-card .ic{font-size:1.3rem; margin:4px 0;}
+  .hour-card .temp{font-size:0.85rem; font-weight:700; color:var(--ink); font-family:'Space Mono', monospace;}
+  .hour-card .rp{font-size:0.68rem; color:var(--accent);}
+
+  /* ---- DAILY ---- */
+  .daily-list{padding:0 20px 18px 20px;}
+  .day-row{display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--line);}
+  .day-row:last-child{border-bottom:none;}
+  .day-row .dn{width:64px; font-size:0.85rem; font-weight:600; color:var(--ink);}
+  .day-row .di{font-size:1.25rem; width:30px; text-align:center;}
+  .day-row .dd{flex:1; font-size:0.8rem; color:var(--ink-soft);}
+  .day-row .dr{font-size:0.74rem; color:var(--accent); width:42px; text-align:right;}
+  .day-row .dt{font-family:'Space Mono', monospace; font-size:0.85rem; color:var(--ink); width:70px; text-align:right;}
+  .day-row .dt .min{color:var(--ink-soft);}
+
+  .status-msg{padding:30px 20px; text-align:center; color:var(--ink-soft); font-size:0.9rem;}
+
+  footer.brandfooter{
+    text-align:center; padding:14px 20px 18px 20px; border-top:1px solid var(--line);
+    font-size:0.72rem; color:var(--ink-soft); line-height:1.6; background:#fff;
+  }
+  footer.brandfooter b{color:var(--ink-soft);}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="brand-row"><h1 class="app-title">🌤️ ভারতের ওয়েদার</h1></div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="জায়গার নাম লিখুন... (যেমন: Kolkata, Nabadwip, Darjeeling)" autocomplete="off">
+      <div class="suggestions" id="suggestions"></div>
+    </div>
+    <div class="search-hint">ইংরেজি বানানে লিখলে সবচেয়ে ভালো ফল পাবেন।</div>
+  </div>
+
+  <div class="sky" id="sky">
+    <div class="sky-layer">
+      <div class="stars" id="stars"></div>
+      <div class="moon"></div>
+      <div class="sun"></div>
+      <div class="cloud cloud1"></div>
+      <div class="cloud cloud2"></div>
+      <div class="cloud cloud3"></div>
+      <div class="cloud cloud4"></div>
+      <div class="cloud cloud5"></div>
+      <div class="fog"></div>
+      <div class="rain-layer" id="rainLayer"></div>
+      <div class="snow-layer" id="snowLayer"></div>
+      <div class="thunder-flash" id="thunderFlash"></div>
+    </div>
+    <div class="sky-info">
+      <div class="place-name" id="placeName">খুঁজছি...</div>
+      <div class="place-time" id="placeTime">—</div>
+      <div class="temp-row">
+        <div class="temp-big" id="tempBig">—</div>
+        <div class="desc-feels"><div id="descText">—</div><div id="feelsText"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="contentArea">
+    <div class="stats-grid" id="statsGrid"></div>
+    <div class="section-title">আজকের পরবর্তী ঘণ্টাগুলো</div>
+    <div class="hourly-strip" id="hourlyStrip"></div>
+    <div class="section-title">৭ দিনের পূর্বাভাস</div>
+    <div class="daily-list" id="dailyList"></div>
+  </div>
+
+  <footer class="brandfooter">
+    <b>স্মার্ট স্টাডি যুব কম্পিউটার এডুকেশন সেন্টার</b> &amp; <b>পারুলিয়া যুব কম্পিউটার প্রশিক্ষণ কেন্দ্র</b><br>
+    নবদ্বীপ, নদীয়া · আবহাওয়ার তথ্য: Open-Meteo.com
+  </footer>
+</div>
+
+<script>
+const GEO_URL = 'https://geocoding-api.open-meteo.com/v1/search';
+const WX_URL = 'https://api.open-meteo.com/v1/forecast';
+
+const bnWeekdays = ['রবি','সোম','মঙ্গল','বুধ','বৃহ','শুক্র','শনি'];
+const bnDescriptions = {
+  0:'আকাশ পরিষ্কার', 1:'বেশিরভাগ পরিষ্কার', 2:'আংশিক মেঘলা', 3:'মেঘলা আকাশ',
+  45:'কুয়াশা', 48:'জমাট কুয়াশা',
+  51:'লঘু গুঁড়িগুঁড়ি বৃষ্টি', 53:'মাঝারি গুঁড়িগুঁড়ি বৃষ্টি', 55:'ঘন গুঁড়িগুঁড়ি বৃষ্টি',
+  56:'হিমায়িত গুঁড়িগুঁড়ি বৃষ্টি', 57:'ঘন হিমায়িত গুঁড়িগুঁড়ি বৃষ্টি',
+  61:'লঘু বৃষ্টি', 63:'মাঝারি বৃষ্টি', 65:'ভারী বৃষ্টি',
+  66:'হিমায়িত বৃষ্টি', 67:'ভারী হিমায়িত বৃষ্টি',
+  71:'লঘু তুষারপাত', 73:'মাঝারি তুষারপাত', 75:'ভারী তুষারপাত', 77:'তুষার দানা',
+  80:'লঘু বৃষ্টির ছাট', 81:'মাঝারি বৃষ্টির ছাট', 82:'ভারী বৃষ্টির ছাট',
+  85:'লঘু তুষার ছাট', 86:'ভারী তুষার ছাট',
+  95:'বজ্রঝড়', 96:'বজ্রসহ শিলাবৃষ্টি', 99:'ভারী বজ্রসহ শিলাবৃষ্টি'
+};
+
+function weatherGroup(code){
+  if(code === 0) return 'clear';
+  if(code === 1 || code === 2) return 'partly';
+  if(code === 3) return 'overcast';
+  if(code === 45 || code === 48) return 'fog';
+  if([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(code)) return 'rain';
+  if([71,73,75,77,85,86].includes(code)) return 'snow';
+  if(code === 95 || code === 96 || code === 99) return 'thunder';
+  return 'partly';
+}
+function iconFor(code, isDay){
+  const g = weatherGroup(code);
+  if(g === 'clear') return isDay ? '☀️' : '🌙';
+  if(g === 'partly') return isDay ? '🌤️' : '☁️';
+  if(g === 'overcast') return '☁️';
+  if(g === 'fog') return '🌫️';
+  if(g === 'rain') return '🌧️';
+  if(g === 'snow') return '❄️';
+  if(g === 'thunder') return '⛈️';
+  return '🌡️';
+}
+
+const skyGradients = {
+  day:{clear:['#8EC9F0','#FDF4D8'], partly:['#8AB9DE','#E7EEEF'], overcast:['#9AA7B2','#C7CDD2'], rain:['#6E7C89','#93A0AA'], thunder:['#4B5663','#6B7682'], fog:['#B9C2C9','#D8DEE2'], snow:['#B7C7D6','#E4ECF2']},
+  night:{clear:['#0B1B33','#1B3A5C'], partly:['#0E2238','#234059'], overcast:['#10202E','#2B3A48'], rain:['#0B1620','#2A3640'], thunder:['#070D14','#1C2630'], fog:['#1A222A','#333D45'], snow:['#13202C','#2C3D4B']}
+};
+
+let thunderTimer = null;
+
+function updateSky(group, isDay){
+  const sky = document.getElementById('sky');
+  const colors = skyGradients[isDay ? 'day' : 'night'][group];
+  sky.style.setProperty('--sky-top', colors[0]);
+  sky.style.setProperty('--sky-bottom', colors[1]);
+
+  sky.classList.remove('show-sun','show-moon','show-stars','show-clouds','show-clouds-heavy','show-rain','show-snow','show-fog');
+  if(isDay && (group === 'clear' || group === 'partly')) sky.classList.add('show-sun');
+  if(!isDay && (group === 'clear' || group === 'partly')){ sky.classList.add('show-moon'); sky.classList.add('show-stars'); }
+  if(group === 'partly') sky.classList.add('show-clouds');
+  if(['overcast','rain','thunder','snow','fog'].includes(group)) sky.classList.add('show-clouds-heavy');
+  if(group === 'fog') sky.classList.add('show-fog');
+  if(group === 'rain' || group === 'thunder') sky.classList.add('show-rain');
+  if(group === 'snow') sky.classList.add('show-snow');
+
+  if(thunderTimer){ clearInterval(thunderTimer); thunderTimer = null; }
+  const flashEl = document.getElementById('thunderFlash');
+  flashEl.classList.remove('flash','fade');
+  if(group === 'thunder'){
+    thunderTimer = setInterval(()=>{
+      flashEl.classList.remove('fade');
+      flashEl.classList.add('flash');
+      setTimeout(()=>{ flashEl.classList.remove('flash'); flashEl.classList.add('fade'); }, 120);
+    }, 3500 + Math.random()*3000);
+  }
+}
+
+function buildStars(){
+  const wrap = document.getElementById('stars');
+  if(wrap.childElementCount > 0) return;
+  for(let i=0;i<25;i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random()*100 + '%';
+    s.style.top = Math.random()*70 + '%';
+    s.style.animationDelay = (Math.random()*2.4) + 's';
+    wrap.appendChild(s);
+  }
+}
+function buildRain(){
+  const wrap = document.getElementById('rainLayer');
+  if(wrap.childElementCount > 0) return;
+  for(let i=0;i<35;i++){
+    const r = document.createElement('div');
+    r.className = 'raindrop';
+    r.style.left = Math.random()*100 + '%';
+    r.style.animationDuration = (0.5 + Math.random()*0.5) + 's';
+    r.style.animationDelay = (Math.random()*1.2) + 's';
+    wrap.appendChild(r);
+  }
+}
+function buildSnow(){
+  const wrap = document.getElementById('snowLayer');
+  if(wrap.childElementCount > 0) return;
+  for(let i=0;i<22;i++){
+    const f = document.createElement('div');
+    f.className = 'snowflake';
+    f.style.left = Math.random()*100 + '%';
+    f.style.animationDuration = (3 + Math.random()*3) + 's';
+    f.style.animationDelay = (Math.random()*3) + 's';
+    wrap.appendChild(f);
+  }
+}
+buildStars(); buildRain(); buildSnow();
+
+function parseLocalDate(str){
+  const parts = str.split('-');
+  return new Date(parseInt(parts[0],10), parseInt(parts[1],10)-1, parseInt(parts[2],10));
+}
+
+function rainLabel(p){
+  if(p <= 20) return 'বৃষ্টির সম্ভাবনা কম';
+  if(p <= 60) return 'বৃষ্টি হতে পারে';
+  return 'বৃষ্টির সম্ভাবনা বেশি';
+}
+
+function renderAll(data, placeLabel){
+  const cur = data.current;
+  const isDay = cur.is_day === 1;
+  const group = weatherGroup(cur.weather_code);
+  updateSky(group, isDay);
+
+  document.getElementById('placeName').textContent = placeLabel;
+  const dt = cur.time.replace('T', ' · ');
+  document.getElementById('placeTime').textContent = dt;
+  document.getElementById('tempBig').textContent = Math.round(cur.temperature_2m) + '°';
+  document.getElementById('descText').textContent = bnDescriptions[cur.weather_code] || 'আবহাওয়ার তথ্য';
+  document.getElementById('feelsText').textContent = 'অনুভূত হচ্ছে ' + Math.round(cur.apparent_temperature) + '°';
+
+  const rainToday = data.daily.precipitation_probability_max ? data.daily.precipitation_probability_max[0] : 0;
+  const uvToday = data.daily.uv_index_max ? data.daily.uv_index_max[0] : null;
+
+  const stats = [
+    {v: cur.relative_humidity_2m + '%', l: 'হিউমিডিটি'},
+    {v: Math.round(cur.wind_speed_10m) + ' km/h', l: 'বাতাসের গতি'},
+    {v: rainToday + '%', l: rainLabel(rainToday)},
+    {v: uvToday !== null ? uvToday.toFixed(1) : '—', l: 'UV ইনডেক্স'}
+  ];
+  document.getElementById('statsGrid').innerHTML = stats.map(s=>
+    '<div class="stat-cell"><div class="v">' + s.v + '</div><div class="l">' + s.l + '</div></div>'
+  ).join('');
+
+  const hourKey = cur.time.slice(0,13) + ':00';
+  let idx = data.hourly.time.indexOf(hourKey);
+  if(idx === -1) idx = 0;
+  let hourlyHtml = '';
+  for(let i=idx; i<Math.min(idx+13, data.hourly.time.length); i++){
+    const label = i === idx ? 'এখন' : data.hourly.time[i].slice(11,16);
+    const hIcon = iconFor(data.hourly.weather_code[i], data.hourly.is_day ? data.hourly.is_day[i]===1 : isDay);
+    hourlyHtml += '<div class="hour-card">' +
+      '<div class="t">' + label + '</div>' +
+      '<div class="ic">' + hIcon + '</div>' +
+      '<div class="temp">' + Math.round(data.hourly.temperature_2m[i]) + '°</div>' +
+      '<div class="rp">' + data.hourly.precipitation_probability[i] + '%</div>' +
+    '</div>';
+  }
+  document.getElementById('hourlyStrip').innerHTML = hourlyHtml;
+
+  let dailyHtml = '';
+  for(let i=0; i<data.daily.time.length; i++){
+    const d = parseLocalDate(data.daily.time[i]);
+    const dayLabel = i === 0 ? 'আজ' : bnWeekdays[d.getDay()];
+    const dIcon = iconFor(data.daily.weather_code[i], true);
+    dailyHtml += '<div class="day-row">' +
+      '<div class="dn">' + dayLabel + '</div>' +
+      '<div class="di">' + dIcon + '</div>' +
+      '<div class="dd">' + (bnDescriptions[data.daily.weather_code[i]] || '') + '</div>' +
+      '<div class="dr">' + data.daily.precipitation_probability_max[i] + '%</div>' +
+      '<div class="dt">' + Math.round(data.daily.temperature_2m_max[i]) + '° <span class="min">' + Math.round(data.daily.temperature_2m_min[i]) + '°</span></div>' +
+    '</div>';
+  }
+  document.getElementById('dailyList').innerHTML = dailyHtml;
+
+  document.getElementById('contentArea').style.display = '';
+}
+
+function showStatus(msg){
+  document.getElementById('contentArea').innerHTML = '<div class="status-msg">' + msg + '</div>';
+}
+
+async function loadWeatherForCoords(lat, lon, placeLabel){
+  document.getElementById('placeName').textContent = placeLabel;
+  document.getElementById('tempBig').textContent = '—';
+  document.getElementById('descText').textContent = 'আবহাওয়া আনা হচ্ছে...';
+  document.getElementById('feelsText').textContent = '';
+  try{
+    const params = new URLSearchParams({
+      latitude: lat, longitude: lon,
+      current: 'temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,wind_speed_10m',
+      hourly: 'temperature_2m,precipitation_probability,weather_code,is_day',
+      daily: 'weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,uv_index_max',
+      timezone: 'auto',
+      forecast_days: '7'
+    });
+    const res = await fetch(WX_URL + '?' + params.toString());
+    if(!res.ok) throw new Error('weather fetch failed');
+    const data = await res.json();
+    renderAll(data, placeLabel);
+  } catch(err){
+    document.getElementById('descText').textContent = 'তথ্য আনা যাচ্ছে না';
+    showStatus('আবহাওয়ার তথ্য আনতে সমস্যা হয়েছে। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।');
+  }
+}
+
+async function geocode(query, countryOnly){
+  const params = new URLSearchParams({ name: query, count: '8', language: 'en', format: 'json' });
+  if(countryOnly) params.set('countryCode', 'IN');
+  const res = await fetch(GEO_URL + '?' + params.toString());
+  if(!res.ok) throw new Error('geocode failed');
+  const data = await res.json();
+  return data.results || [];
+}
+
+function labelFor(r){
+  return r.name + (r.admin1 ? ', ' + r.admin1 : '');
+}
+
+async function selectPlace(r){
+  document.getElementById('suggestions').classList.remove('show');
+  document.getElementById('searchInput').value = labelFor(r);
+  await loadWeatherForCoords(r.latitude, r.longitude, labelFor(r));
+}
+
+async function loadDefault(){
+  try{
+    let results = await geocode('Nabadwip', true);
+    if(results.length === 0) results = await geocode('Kolkata', true);
+    if(results.length > 0){
+      const r = results[0];
+      document.getElementById('searchInput').value = labelFor(r);
+      await loadWeatherForCoords(r.latitude, r.longitude, labelFor(r));
+    } else {
+      showStatus('শুরুর জায়গা খুঁজে পাওয়া যায়নি। উপরে সার্চ বক্সে একটি জায়গার নাম লিখুন।');
+    }
+  } catch(err){
+    showStatus('ইন্টারনেট সংযোগ পরীক্ষা করুন এবং আবার চেষ্টা করুন।');
+  }
+}
+
+let debounceTimer = null;
+const searchInput = document.getElementById('searchInput');
+const suggestionsEl = document.getElementById('suggestions');
+
+searchInput.addEventListener('input', ()=>{
+  const q = searchInput.value.trim();
+  if(debounceTimer) clearTimeout(debounceTimer);
+  if(q.length < 2){
+    suggestionsEl.classList.remove('show');
+    return;
+  }
+  debounceTimer = setTimeout(async ()=>{
+    try{
+      const results = await geocode(q, true);
+      if(results.length === 0){
+        suggestionsEl.innerHTML = '<div class="suggestion-empty">কোনো জায়গা খুঁজে পাওয়া যায়নি। ইংরেজি বানানে চেষ্টা করুন।</div>';
+      } else {
+        suggestionsEl.innerHTML = results.map((r, i)=>
+          '<div class="suggestion-item" data-idx="' + i + '"><div class="nm">' + r.name + '</div><div class="st">' + (r.admin1 || '') + (r.admin1 && r.country ? ', ' : '') + (r.country || '') + '</div></div>'
+        ).join('');
+        suggestionsEl.querySelectorAll('.suggestion-item').forEach((el, i)=>{
+          el.addEventListener('click', ()=> selectPlace(results[i]));
+        });
+      }
+      suggestionsEl.classList.add('show');
+    } catch(err){
+      suggestionsEl.innerHTML = '<div class="suggestion-empty">ইন্টারনেট সংযোগ পরীক্ষা করুন।</div>';
+      suggestionsEl.classList.add('show');
+    }
+  }, 350);
+});
+
+document.addEventListener('click', (e)=>{
+  if(!e.target.closest('.search-wrap')) suggestionsEl.classList.remove('show');
+});
+
+loadDefault();
+</script>
+</body>
+</html>
