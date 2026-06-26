@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>কাস্টম ওয়েব টুল তৈরি | স্মার্ট স্টাডি ও পারুলিয়া যুব কম্পিউটার কেন্দ্র</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F8FB;
+    --surface:#FFFFFF;
+    --ink:#1A2238;
+    --ink-soft:#5B6478;
+    --accent:#4F46E5;
+    --accent-soft:#EEF0FD;
+    --whatsapp:#25D366;
+    --line:rgba(26,34,56,0.1);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--bg); font-family:'Noto Sans Bengali', sans-serif; color:var(--ink);}
+  .wrap{max-width:760px; margin:0 auto; padding:0 18px;}
+
+  /* ---- HERO ---- */
+  .hero{background:linear-gradient(160deg, var(--accent), #7C3AED); color:#fff; padding:48px 0 56px 0; text-align:center; border-radius:0 0 28px 28px;}
+  .hero .eyebrow{font-family:'Space Mono', monospace; font-size:0.74rem; letter-spacing:0.1em; text-transform:uppercase; opacity:0.85; margin-bottom:10px;}
+  .hero h1{font-family:'Noto Serif Bengali', serif; font-size:1.9rem; margin:0 0 12px 0; line-height:1.35;}
+  .hero p{font-size:0.98rem; line-height:1.7; opacity:0.95; max-width:560px; margin:0 auto 22px auto;}
+  .hero .cta-row{display:flex; gap:10px; justify-content:center; flex-wrap:wrap;}
+  .btn{display:inline-flex; align-items:center; gap:8px; padding:12px 22px; border-radius:24px; font-size:0.92rem; font-weight:700; text-decoration:none; cursor:pointer; border:none;}
+  .btn-light{background:#fff; color:var(--accent);}
+  .btn-light:hover{background:#f0f0ff;}
+  .btn-outline{background:rgba(255,255,255,0.12); color:#fff; border:1.5px solid rgba(255,255,255,0.5);}
+  .btn-outline:hover{background:rgba(255,255,255,0.2);}
+
+  /* ---- SECTION ---- */
+  .section{padding:40px 0;}
+  .section-title{font-family:'Noto Serif Bengali', serif; font-size:1.35rem; text-align:center; margin:0 0 8px 0;}
+  .section-sub{font-size:0.9rem; color:var(--ink-soft); text-align:center; margin:0 0 28px 0; max-width:520px; margin-left:auto; margin-right:auto; line-height:1.6;}
+
+  /* ---- TOOL CARDS ---- */
+  .tool-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media (max-width:540px){ .tool-grid{grid-template-columns:1fr;} }
+  .tool-card{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:22px 20px; display:flex; flex-direction:column; box-shadow:0 6px 20px rgba(26,34,56,0.05); transition:transform 0.15s ease, box-shadow 0.15s ease;}
+  .tool-card:hover{transform:translateY(-3px); box-shadow:0 14px 30px rgba(26,34,56,0.1);}
+  .tool-card .emoji{font-size:2rem; margin-bottom:10px;}
+  .tool-card h3{font-family:'Noto Serif Bengali', serif; font-size:1.08rem; margin:0 0 6px 0;}
+  .tool-card p{font-size:0.85rem; color:var(--ink-soft); line-height:1.55; margin:0 0 16px 0; flex:1;}
+  .tool-card a{align-self:flex-start; font-size:0.85rem; font-weight:700; color:var(--accent); text-decoration:none; display:inline-flex; align-items:center; gap:5px;}
+  .tool-card a:hover{text-decoration:underline;}
+
+  /* ---- CAPABILITY LIST ---- */
+  .cap-list{background:var(--accent-soft); border-radius:16px; padding:26px 24px; display:grid; grid-template-columns:1fr 1fr; gap:12px 20px;}
+  @media (max-width:540px){ .cap-list{grid-template-columns:1fr;} }
+  .cap-item{display:flex; align-items:flex-start; gap:10px; font-size:0.88rem; line-height:1.5;}
+  .cap-item .tick{color:var(--accent); font-weight:700; flex-shrink:0;}
+
+  /* ---- PROCESS ---- */
+  .process-row{display:flex; gap:14px; flex-wrap:wrap; justify-content:center;}
+  .process-step{flex:1; min-width:140px; max-width:170px; text-align:center;}
+  .process-step .num{width:34px; height:34px; border-radius:50%; background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Space Mono', monospace; font-weight:700; margin:0 auto 10px auto;}
+  .process-step p{font-size:0.82rem; color:var(--ink-soft); line-height:1.5; margin:0;}
+
+  /* ---- CONTACT ---- */
+  .contact-card{background:linear-gradient(160deg, #1A2238, #2D3656); color:#fff; border-radius:20px; padding:36px 26px; text-align:center;}
+  .contact-card h2{font-family:'Noto Serif Bengali', serif; font-size:1.4rem; margin:0 0 10px 0;}
+  .contact-card p{font-size:0.9rem; opacity:0.85; margin:0 0 22px 0; line-height:1.6;}
+  .contact-row{display:flex; gap:10px; justify-content:center; flex-wrap:wrap;}
+  .btn-whatsapp{background:var(--whatsapp); color:#fff;}
+  .btn-whatsapp:hover{background:#1fb858;}
+
+  footer{text-align:center; padding:24px 18px 30px 18px; font-size:0.74rem; color:var(--ink-soft); line-height:1.7;}
+  footer b{color:var(--ink);}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">কাস্টম ওয়েব টুল ডেভেলপমেন্ট</div>
+    <h1>আপনার প্রতিষ্ঠানের জন্য<br>কাস্টম ওয়েব টুল তৈরি করি</h1>
+    <p>প্রশিক্ষণ কেন্দ্র, স্কুল, কোচিং সেন্টার ও ছোট ব্যবসার জন্য কুইজ, ক্যালকুলেটর, টেস্ট ও অন্যান্য ইন্টারেক্টিভ টুল — দ্রুত তৈরি, সহজে ব্যবহারযোগ্য, এবং আপনার নিজের ব্র্যান্ডিং সহ।</p>
+    <div class="cta-row">
+      <a class="btn btn-light" href="#tools">আমাদের কাজ দেখুন</a>
+      <a class="btn btn-outline" href="#contact">যোগাযোগ করুন</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="section" id="tools">
+    <h2 class="section-title">আমাদের তৈরি করা টুলসমূহ</h2>
+    <p class="section-sub">নিচের প্রতিটি টুল লাইভ — ক্লিক করে নিজে চালিয়ে দেখুন। আপনার প্রতিষ্ঠানের জন্য এই ধরনের যেকোনো টুল কাস্টম তৈরি করে দেওয়া হয়।</p>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="emoji">📝</div>
+        <h3>MS Word মাস্টার কুইজ</h3>
+        <p>৬০টি প্রশ্নের ইন্টারেক্টিভ কুইজ, অধ্যায় ভিত্তিক প্র্যাকটিস ও ফুল মক টেস্ট মোড সহ।</p>
+        <a href="https://chatterjeekisorgopal-tech.github.io/MS-word-Quiz/" target="_blank">লাইভ দেখুন →</a>
+      </div>
+      <div class="tool-card">
+        <div class="emoji">⌨️</div>
+        <h3>টাইপিং স্পিড টেস্ট</h3>
+        <p>ইংরেজি ও বাংলা — দুই ভাষায় টাইপিং স্পিড ও অ্যাকুরেসি যাচাই, পরীক্ষার মতো টাইমার সহ।</p>
+        <a href="https://chatterjeekisorgopal-tech.github.io/MS-word-Quiz/typing.html" target="_blank">লাইভ দেখুন →</a>
+      </div>
+      <div class="tool-card">
+        <div class="emoji">🌤️</div>
+        <h3>ভারতের ওয়েদার অ্যাপ</h3>
+        <p>ভারতের যেকোনো জায়গার লাইভ আবহাওয়া — তাপমাত্রা, বৃষ্টির সম্ভাবনা, অ্যানিমেটেড আকাশ দৃশ্য।</p>
+        <a href="https://chatterjeekisorgopal-tech.github.io/MS-word-Quiz/weather.html" target="_blank">লাইভ দেখুন →</a>
+      </div>
+      <div class="tool-card">
+        <div class="emoji">📊</div>
+        <h3>Excel মাস্টার কুইজ</h3>
+        <p>৩০০+ সমস্যা-সমাধান প্রশ্ন, সাউন্ড ফিডব্যাক ও পাসওয়ার্ড সুরক্ষা সহ — কোনো MCQ নেই, সবই টাইপ করে উত্তর।</p>
+        <a href="https://chatterjeekisorgopal-tech.github.io/MS-word-Quiz/excel-quiz.html" target="_blank">লাইভ দেখুন →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">আমরা আরও যা বানাতে পারি</h2>
+    <div class="cap-list">
+      <div class="cap-item"><span class="tick">✓</span> স্টুডেন্ট/স্টাফ পারফরম্যান্স ট্র্যাকার</div>
+      <div class="cap-item"><span class="tick">✓</span> অ্যাডমিশন/ইনকোয়ারি ফর্ম</div>
+      <div class="cap-item"><span class="tick">✓</span> সার্টিফিকেট জেনারেটর</div>
+      <div class="cap-item"><span class="tick">✓</span> বিষয়ভিত্তিক প্র্যাকটিস কুইজ (যেকোনো সাবজেক্ট)</div>
+      <div class="cap-item"><span class="tick">✓</span> মাল্টি-ক্যালকুলেটর (GST, EMI, সুদ ইত্যাদি)</div>
+      <div class="cap-item"><span class="tick">✓</span> ফ্ল্যাশকার্ড ও ম্যাচিং গেম</div>
+      <div class="cap-item"><span class="tick">✓</span> ইন্টারেক্টিভ ডায়াগ্রাম ও ব্যাখ্যা</div>
+      <div class="cap-item"><span class="tick">✓</span> আপনার নিজের আইডিয়া অনুযায়ী কাস্টম টুল</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">কীভাবে কাজ করি</h2>
+    <div class="process-row">
+      <div class="process-step"><div class="num">১</div><p>আপনার প্রয়োজন ও আইডিয়া শুনি</p></div>
+      <div class="process-step"><div class="num">২</div><p>দ্রুত একটা টুল তৈরি করে দেখাই</p></div>
+      <div class="process-step"><div class="num">৩</div><p>আপনার ফিডব্যাক অনুযায়ী পরিবর্তন করি</p></div>
+      <div class="process-step"><div class="num">৪</div><p>লাইভ লিংক করে হস্তান্তর করি</p></div>
+    </div>
+  </div>
+
+  <div class="section" id="contact">
+    <div class="contact-card">
+      <h2>আপনার প্রতিষ্ঠানের জন্য টুল বানাতে চান?</h2>
+      <p>হোয়াটসঅ্যাপে মেসেজ করুন — আপনার আইডিয়া বলুন, আমরা একটা ডেমো তৈরি করে দেখাব।</p>
+      <div class="contact-row">
+        <a class="btn btn-whatsapp" href="https://wa.me/919563971100" target="_blank">💬 WhatsApp-এ মেসেজ করুন</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <b>স্মার্ট স্টাডি যুব কম্পিউটার এডুকেশন সেন্টার</b> &amp; <b>পারুলিয়া যুব কম্পিউটার প্রশিক্ষণ কেন্দ্র</b><br>
+  নবদ্বীপ, নদীয়া, পশ্চিমবঙ্গ
+</footer>
+
+</body>
+</html>
