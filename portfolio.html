@@ -6,7 +6,7 @@
 <title>কাস্টম ওয়েব অ্যাপ তৈরি | স্মার্ট স্টাডি ও পারুলিয়া যুব কম্পিউটার কেন্দ্র</title>
 <meta property="og:type" content="website">
 <meta property="og:title" content="আপনার প্রতিষ্ঠানের জন্য কাস্টম ওয়েব অ্যাপ — কুইজ, ক্যালকুলেটর, টেস্ট ও আরও অনেক কিছু">
-<meta property="og:description" content="প্রশিক্ষণ কেন্দ্র, স্কুল, কোচিং সেন্টার ও ছোট ব্যবসার জন্য কাস্টম ওয়েব অ্যাপ তৈরি করি। ৪টি লাইভ ডেমো দেখুন, WhatsApp-এ যোগাযোগ করুন।">
+<meta property="og:description" content="প্রশিক্ষণ কেন্দ্র, স্কুল, কোচিং সেন্টার ও ছোট ব্যবসার জন্য কাস্টম ওয়েব অ্যাপ তৈরি করি। ৫টি লাইভ ডেমো দেখুন, WhatsApp-এ যোগাযোগ করুন।">
 <meta property="og:url" content="https://chatterjeekisorgopal-tech.github.io/MS-word-Quiz/portfolio.html">
 <meta property="og:image" content="https://chatterjeekisorgopal-tech.github.io/MS-word-Quiz/og-image.jpg">
 <meta property="og:image:width" content="1200">
@@ -78,6 +78,9 @@
   .live-dot{width:7px; height:7px; border-radius:50%; background:var(--whatsapp); animation:pulseDot 1.6s ease-in-out infinite;}
   @keyframes pulseDot{0%,100%{opacity:1; box-shadow:0 0 0 0 rgba(37,211,102,0.5);} 50%{opacity:0.6; box-shadow:0 0 0 5px rgba(37,211,102,0);}}
   .tool-card .emoji{font-size:2rem; margin-bottom:10px;}
+  .tool-card .tool-icon-svg{width:46px; height:46px; margin-bottom:10px; display:block; filter:drop-shadow(0 4px 10px rgba(20,40,80,0.25)); animation:cardIconFloat 3s ease-in-out infinite;}
+  @keyframes cardIconFloat{0%,100%{transform:translateY(0);} 50%{transform:translateY(-3px);}}
+  @media (prefers-reduced-motion: reduce){ .tool-card .tool-icon-svg{animation:none;} }
   .tool-card h3{font-family:'Noto Serif Bengali', serif; font-size:1.08rem; margin:0 0 6px 0;}
   .tool-card p{font-size:0.85rem; color:var(--ink-soft); line-height:1.55; margin:0 0 16px 0; flex:1;}
   .tool-card a{align-self:flex-start; font-size:0.85rem; font-weight:700; color:var(--accent); text-decoration:none; display:inline-flex; align-items:center; gap:5px;}
@@ -121,7 +124,7 @@
   <div class="orb orb2"></div>
   <div class="orb orb3"></div>
   <div class="wrap hero-inner">
-    <div class="badge-pill">✨ ৪টি লাইভ ওয়েব অ্যাপ — নিজে চালিয়ে দেখুন</div>
+    <div class="badge-pill">✨ ৫টি লাইভ ওয়েব অ্যাপ — নিজে চালিয়ে দেখুন</div>
     <h1>আপনার প্রতিষ্ঠানের জন্য এমন একটি <span class="hl">ওয়েব অ্যাপ</span> — যা প্রথম দেখাতেই মুগ্ধ করবে</h1>
     <p>প্রশিক্ষণ কেন্দ্র, স্কুল, কোচিং সেন্টার ও ছোট ব্যবসার জন্য কাস্টম ওয়েব অ্যাপ — কুইজ, ক্যালকুলেটর, টেস্ট থেকে শুরু করে আপনার নিজের আইডিয়া অনুযায়ী যা চান, তাই।</p>
     <div class="cta-row">
@@ -129,7 +132,7 @@
       <a class="btn btn-outline" href="#contact">যোগাযোগ করুন</a>
     </div>
     <div class="stat-row">
-      <div class="stat-chip"><b>৪+</b>লাইভ ওয়েব অ্যাপ</div>
+      <div class="stat-chip"><b>৫+</b>লাইভ ওয়েব অ্যাপ</div>
       <div class="stat-chip"><b>১০০%</b>কাস্টম তৈরি</div>
       <div class="stat-chip"><b>২৪/৭</b>অ্যাক্সেসযোগ্য</div>
     </div>
@@ -196,6 +199,21 @@
         <h3>Excel মাস্টার কুইজ</h3>
         <p>৩০০+ সমস্যা-সমাধান প্রশ্ন, সাউন্ড ফিডব্যাক ও পাসওয়ার্ড সুরক্ষা সহ — সবই টাইপ করে উত্তর দিতে হয়।</p>
         <a href="https://chatterjeekisorgopal-tech.github.io/MS-word-Quiz/excel-quiz.html" target="_blank">লাইভ দেখুন →</a>
+      </div>
+      <div class="tool-card">
+        <div class="live-badge"><span class="live-dot"></span>LIVE</div>
+        <svg viewBox="0 0 100 100" class="tool-icon-svg" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="4" width="92" height="92" rx="18" fill="#142850"/>
+          <rect x="22" y="30" width="56" height="6" rx="3" fill="#D9A441"/>
+          <rect x="47" y="30" width="6" height="46" rx="3" fill="#D9A441"/>
+          <circle cx="34" cy="50" r="3" fill="#FFFFFF" opacity="0.7"/>
+          <circle cx="66" cy="50" r="3" fill="#FFFFFF" opacity="0.7"/>
+          <circle cx="78" cy="78" r="14" fill="#1A7A56"/>
+          <path d="M71 78 L76 83 L86 71" stroke="#FFFFFF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3>Tally Prime ও একাউন্টান্সি মাস্টার</h3>
+        <p>৪০০+ ভাউচার এন্ট্রি ও থিওরি প্র্যাকটিস — আসল F-key চেপে ভাউচার বাছুন, Dr/Cr লেজার লিখুন, পাসওয়ার্ড সুরক্ষা সহ।</p>
+        <a href="https://chatterjeekisorgopal-tech.github.io/MS-word-Quiz/tally.html" target="_blank">লাইভ দেখুন →</a>
       </div>
     </div>
   </div>
