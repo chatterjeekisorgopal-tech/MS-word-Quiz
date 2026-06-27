@@ -3,106 +3,100 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tally Prime ও একাউন্টান্সি মাস্টার | স্মার্ট স্টাডি ও পারুলিয়া যুব কম্পিউটার কেন্দ্র</title>
+<title>Tally Prime &amp; Accountancy Master | স্মার্ট স্টাডি ও পারুলিয়া যুব কম্পিউটার কেন্দ্র</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#F3F5F9;
-    --navy:#142850;
-    --navy2:#1F3A66;
-    --ink:#16213A;
-    --ink-soft:#566077;
-    --gold:#D9A441;
-    --correct-green:#1A7A56;
-    --wrong-red:#B33A3A;
-    --tick-grey:#D6DAE3;
+    --paper:#F3F5F9; --navy:#142850; --navy2:#1F3A66; --ink:#16213A; --ink-soft:#566077;
+    --gold:#D9A441; --correct-green:#1A7A56; --wrong-red:#B33A3A; --tick-grey:#D6DAE3;
     font-size:16px;
   }
   *{box-sizing:border-box;}
-  body{margin:0; min-height:100vh; background:#D8DCE6; font-family:'Noto Sans Bengali', sans-serif; color:var(--ink);
+  body{margin:0; min-height:100vh; background:#D8DCE6; font-family:'Noto Sans Bengali','Noto Sans Devanagari',sans-serif; color:var(--ink);
     display:flex; align-items:center; justify-content:center; padding:24px 12px;}
   .sheet{width:100%; max-width:740px; background:var(--paper); border-radius:10px; box-shadow:0 18px 50px rgba(20,40,80,0.25);
     overflow:hidden; min-height:600px; display:flex; flex-direction:column;}
-  header.topbar{background:var(--navy); color:#fff; padding:16px 22px; display:flex; align-items:center; justify-content:space-between;}
-  .brandmark{font-family:'Space Mono', monospace; font-size:0.72rem; letter-spacing:0.03em; opacity:0.85;}
-  .icon-btn{background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.3); color:#fff; font-size:0.78rem; padding:6px 12px; border-radius:18px; cursor:pointer; display:none;}
+  header.topbar{background:var(--navy); color:#fff; padding:14px 22px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;}
+  .brandmark{font-family:'Space Mono', monospace; font-size:0.7rem; letter-spacing:0.03em; opacity:0.85;}
+  .top-actions{display:flex; align-items:center; gap:10px;}
+  .lang-switch{display:flex; gap:4px; background:rgba(255,255,255,0.1); border-radius:14px; padding:3px;}
+  .lang-btn{background:none; border:none; color:rgba(255,255,255,0.75); font-size:0.74rem; padding:5px 10px; border-radius:10px; cursor:pointer; font-family:'Noto Sans Bengali','Noto Sans Devanagari',sans-serif;}
+  .lang-btn.active{background:var(--gold); color:#142850; font-weight:700;}
+  .icon-btn{background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.3); color:#fff; font-size:0.85rem; padding:6px 11px; border-radius:18px; cursor:pointer; display:none;}
   .icon-btn.show{display:inline-block;}
   main{flex:1; padding:22px 24px; display:flex; flex-direction:column;}
   .screen{display:none;} .screen.active{display:flex; flex-direction:column; flex:1; animation:fadeIn 0.3s ease;}
   @keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
 
   .hero-eyebrow{font-family:'Space Mono', monospace; font-size:0.7rem; color:var(--correct-green); letter-spacing:0.06em; margin-bottom:6px;}
-  h1.hero-title{font-family:'Noto Serif Bengali', serif; font-size:1.55rem; margin:0 0 8px 0; color:var(--ink); line-height:1.4;}
-  p.hero-sub{font-size:0.92rem; color:var(--ink-soft); margin:0 0 20px 0; line-height:1.6;}
+  h1.hero-title{font-family:'Noto Serif Bengali','Noto Sans Devanagari',serif; font-size:1.5rem; margin:0 0 8px 0; color:var(--ink); line-height:1.4;}
+  p.hero-sub{font-size:0.9rem; color:var(--ink-soft); margin:0 0 20px 0; line-height:1.65;}
   .option-label{font-size:0.8rem; color:var(--ink-soft); margin-bottom:8px; font-weight:600;}
   .chip-row{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px;}
-  .chip{border:1.5px solid rgba(22,33,58,0.2); background:#fff; color:var(--ink); font-size:0.86rem; padding:9px 15px; border-radius:18px; cursor:pointer;}
+  .chip{border:1.5px solid rgba(22,33,58,0.2); background:#fff; color:var(--ink); font-size:0.84rem; padding:9px 15px; border-radius:18px; cursor:pointer; font-family:inherit;}
   .chip.active{background:var(--navy); color:#fff; border-color:var(--navy);}
-  .start-btn{margin-top:auto; background:var(--navy); color:#fff; border:none; border-radius:24px; padding:13px 0; font-size:0.96rem; font-weight:700; cursor:pointer;}
+  .start-btn{margin-top:auto; background:var(--navy); color:#fff; border:none; border-radius:24px; padding:13px 0; font-size:0.96rem; font-weight:700; cursor:pointer; font-family:inherit;}
   .start-btn:hover{background:#0e1d3c;}
 
   .ruler-wrap{margin-bottom:16px;}
   .ruler-meta{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;}
-  .ruler-meta .count{font-family:'Space Mono', monospace; font-size:0.9rem; color:var(--ink);}
-  .ruler-meta .score{font-family:'Space Mono', monospace; font-size:0.82rem; color:var(--correct-green);}
+  .ruler-meta .count{font-family:'Space Mono', monospace; font-size:0.88rem; color:var(--ink);}
+  .ruler-meta .score{font-family:'Space Mono', monospace; font-size:0.8rem; color:var(--correct-green);}
   .ruler-track{position:relative; height:28px; display:flex; align-items:flex-end; border-bottom:2px solid var(--navy);}
   .ruler-ticks{display:flex; width:100%; justify-content:space-between; align-items:flex-end; height:100%;}
   .tick{width:2px; background:var(--tick-grey); height:7px;} .tick.medium{height:12px;} .tick.major{height:18px;}
   .tick.correct{background:var(--correct-green);} .tick.incorrect{background:var(--wrong-red);}
   .ruler-cursor{position:absolute; bottom:-1px; width:0; height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-bottom:8px solid var(--gold); transform:translateX(-6px); transition:left 0.35s ease;}
 
-  .q-tag{display:inline-block; font-family:'Space Mono', monospace; font-size:0.66rem; padding:3px 9px; border-radius:10px; margin-bottom:10px; letter-spacing:0.04em;}
+  .q-tag{display:inline-block; font-family:'Space Mono', monospace; font-size:0.64rem; padding:3px 9px; border-radius:10px; margin-bottom:10px; letter-spacing:0.04em;}
   .q-tag.tx{background:rgba(217,164,65,0.18); color:#8a6418;}
   .q-tag.th{background:rgba(26,122,86,0.12); color:var(--correct-green);}
-  .question-text{font-family:'Noto Serif Bengali', serif; font-size:1.12rem; line-height:1.6; color:var(--ink); margin:0 0 16px 0;}
+  .question-text{font-family:'Noto Serif Bengali','Noto Sans Devanagari',serif; font-size:1.08rem; line-height:1.6; color:var(--ink); margin:0 0 16px 0;}
 
   .fkey-row{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px;}
-  .fkey-btn{background:var(--navy2); color:#fff; border:2px solid transparent; border-radius:6px; padding:8px 10px; font-size:0.72rem; text-align:center; cursor:pointer; flex:1; min-width:78px;}
+  .fkey-btn{background:var(--navy2); color:#fff; border:2px solid transparent; border-radius:6px; padding:8px 10px; font-size:0.72rem; text-align:center; cursor:pointer; flex:1; min-width:78px; font-family:inherit;}
   .fkey-btn .k{display:block; font-family:'Space Mono', monospace; font-size:0.68rem; opacity:0.85;}
   .fkey-btn.active{border-color:var(--gold); background:#0e1d3c;}
   .fkey-btn.lock-correct{border-color:var(--correct-green); background:rgba(26,122,86,0.25);}
   .fkey-btn.lock-wrong{border-color:var(--wrong-red); background:rgba(179,58,58,0.25);}
 
   .ledger-row{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
-  .ledger-row label{width:78px; font-size:0.84rem; color:var(--ink-soft); flex-shrink:0;}
+  .ledger-row label{width:96px; font-size:0.82rem; color:var(--ink-soft); flex-shrink:0;}
   .ledger-input, .answer-input{flex:1; border:1.5px solid rgba(22,33,58,0.2); border-radius:8px; padding:11px 13px; font-family:'Space Mono', monospace; font-size:0.95rem; color:var(--ink); outline:none;}
   .ledger-input:focus, .answer-input:focus{border-color:var(--navy);}
   .ledger-input:disabled, .answer-input:disabled{background:#EAEDF2;}
   .answer-row{display:flex; gap:10px; margin-bottom:8px;}
-  .submit-btn{background:var(--correct-green); color:#fff; border:none; border-radius:8px; padding:0 22px; font-size:0.9rem; font-weight:600; cursor:pointer;}
+  .submit-btn{background:var(--correct-green); color:#fff; border:none; border-radius:8px; padding:0 18px; font-size:0.88rem; font-weight:600; cursor:pointer; font-family:inherit;}
   .submit-btn:disabled{background:#B7C2AE; cursor:not-allowed;}
 
-  .feedback{display:none; border-radius:8px; padding:12px 14px; margin:8px 0 14px 0; font-size:0.88rem; line-height:1.65;}
+  .feedback{display:none; border-radius:8px; padding:12px 14px; margin:8px 0 14px 0; font-size:0.86rem; line-height:1.65;}
   .feedback.show{display:block;}
   .feedback.correct{background:rgba(26,122,86,0.1); border:1px solid rgba(26,122,86,0.3);}
   .feedback.incorrect{background:rgba(179,58,58,0.08); border:1px solid rgba(179,58,58,0.3);}
   .feedback .head{font-weight:700; margin-bottom:5px;}
   .feedback.correct .head{color:var(--correct-green);} .feedback.incorrect .head{color:var(--wrong-red);}
-  .feedback .row-fb{font-family:'Space Mono', monospace; font-size:0.82rem; color:var(--ink);}
-  .feedback .sol-line{color:var(--ink-soft); margin-top:5px; font-family:'Noto Sans Bengali', sans-serif;}
+  .feedback .row-fb{font-family:'Space Mono', monospace; font-size:0.8rem; color:var(--ink);}
+  .feedback .sol-line{color:var(--ink-soft); margin-top:5px; font-family:'Noto Sans Bengali','Noto Sans Devanagari',sans-serif;}
 
   .next-row{margin-top:auto; display:flex; justify-content:flex-end;}
-  .primary-btn{background:var(--navy); color:#fff; border:none; border-radius:24px; padding:11px 24px; font-size:0.9rem; font-weight:600; cursor:pointer;}
+  .primary-btn{background:var(--navy); color:#fff; border:none; border-radius:24px; padding:11px 24px; font-size:0.88rem; font-weight:600; cursor:pointer; font-family:inherit;}
   .primary-btn:disabled{background:#AAB3C2; cursor:not-allowed;}
-  .secondary-btn{background:none; border:1.5px solid rgba(22,33,58,0.2); color:var(--ink); border-radius:24px; padding:10px 20px; font-size:0.88rem; cursor:pointer;}
+  .secondary-btn{background:none; border:1.5px solid rgba(22,33,58,0.2); color:var(--ink); border-radius:24px; padding:10px 20px; font-size:0.86rem; cursor:pointer; font-family:inherit;}
 
   .result-top{text-align:center; padding:8px 0 4px 0;}
   .result-score{font-family:'Space Mono', monospace; font-size:2.8rem; color:var(--ink); line-height:1;}
   .result-score span{font-size:1.2rem; color:var(--ink-soft);}
   .result-pct{font-family:'Space Mono', monospace; font-size:0.95rem; color:var(--correct-green); margin-top:4px;}
-  .result-msg{font-family:'Noto Serif Bengali', serif; font-size:1.02rem; text-align:center; margin:12px 0 16px 0;}
-  .review-toggle{font-size:0.84rem; color:var(--correct-green); text-align:center; margin-bottom:10px; cursor:pointer; text-decoration:underline;}
-  .review-list{display:none; max-height:220px; overflow-y:auto; border:1px solid rgba(22,33,58,0.15); border-radius:8px; padding:10px 14px; margin-bottom:16px; font-size:0.82rem;}
+  .result-msg{font-family:'Noto Serif Bengali','Noto Sans Devanagari',serif; font-size:1rem; text-align:center; margin:12px 0 16px 0;}
+  .review-toggle{font-size:0.82rem; color:var(--correct-green); text-align:center; margin-bottom:10px; cursor:pointer; text-decoration:underline;}
+  .review-list{display:none; max-height:220px; overflow-y:auto; border:1px solid rgba(22,33,58,0.15); border-radius:8px; padding:10px 14px; margin-bottom:16px; font-size:0.8rem;}
   .review-list.show{display:block;}
   .review-item{padding:8px 0; border-bottom:1px solid rgba(22,33,58,0.1);}
   .review-item:last-child{border-bottom:none;}
   .review-item .ra{color:var(--wrong-red); font-family:'Space Mono', monospace;} .review-item .rc{color:var(--correct-green); font-family:'Space Mono', monospace;}
   .result-actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:auto;}
-
-  footer.brandfooter{text-align:center; padding:14px 20px 18px 20px; border-top:1px solid rgba(22,33,58,0.1); font-size:0.72rem; color:var(--ink-soft); line-height:1.6; background:#fff;}
-  footer.brandfooter b{color:var(--ink-soft);}
 
   .tally-icon-wrap{display:flex; justify-content:center; margin:6px 0 16px 0;}
   .tally-icon{width:92px; height:92px; filter:drop-shadow(0 8px 18px rgba(20,40,80,0.4)); animation:tIconPop 0.55s cubic-bezier(.34,1.56,.64,1) both, tIconFloat 3.2s ease-in-out infinite 0.55s;}
@@ -116,13 +110,23 @@
   .badge-bg, .badge-check{opacity:0; transform-box:fill-box; transform-origin:center; animation:badgePop 0.5s ease both; animation-delay:0.75s;}
   @keyframes badgePop{from{opacity:0; transform:scale(0.3);} to{opacity:1; transform:scale(1);}}
   @media (prefers-reduced-motion: reduce){ .tally-icon, .tbar-h, .tbar-v, .dot-left, .dot-right{animation:none !important;} }
+
+  footer.brandfooter{text-align:center; padding:14px 20px 18px 20px; border-top:1px solid rgba(22,33,58,0.1); font-size:0.72rem; color:var(--ink-soft); line-height:1.6; background:#fff;}
+  footer.brandfooter b{color:var(--ink-soft);}
 </style>
 </head>
 <body>
 <div class="sheet">
   <header class="topbar">
-    <span class="brandmark">TALLY PRIME · একাউন্টান্সি মাস্টার</span>
-    <button class="icon-btn" id="homeBtn">⌂ হোম</button>
+    <span class="brandmark">TALLY PRIME · ACCOUNTANCY MASTER</span>
+    <div class="top-actions">
+      <div class="lang-switch" id="langSwitch">
+        <button class="lang-btn active" data-lang="bn">বাং</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="hi">हि</button>
+      </div>
+      <button class="icon-btn" id="homeBtn">⌂</button>
+    </div>
   </header>
   <main>
     <section class="screen active" id="screen-lock">
@@ -137,39 +141,40 @@
           <path class="badge-check" d="M71 78 L76 83 L86 71" stroke="#FFFFFF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <div class="hero-eyebrow" style="text-align:center;">প্রবেশ সুরক্ষিত</div>
-      <h1 class="hero-title" style="text-align:center;">পাসওয়ার্ড দিন</h1>
-      <p class="hero-sub" style="text-align:center;">এই অ্যাপে প্রবেশ করতে আপনার সেন্টারের দেওয়া পাসওয়ার্ডটি লিখুন।</p>
+      <div class="hero-eyebrow" style="text-align:center;" id="lockEyebrow"></div>
+      <h1 class="hero-title" style="text-align:center;" id="lockTitle"></h1>
+      <p class="hero-sub" style="text-align:center;" id="lockSub"></p>
       <div class="answer-row">
-        <input class="answer-input" id="lockInput" type="text" placeholder="পাসওয়ার্ড লিখুন..." autocomplete="off" spellcheck="false">
-        <button class="submit-btn" id="lockBtn">প্রবেশ করুন</button>
+        <input class="answer-input" id="lockInput" type="text" autocomplete="off" spellcheck="false">
+        <button class="submit-btn" id="lockBtn"></button>
       </div>
-      <div class="feedback incorrect" id="lockError"><div class="head">❌ পাসওয়ার্ড ভুল হয়েছে, আবার চেষ্টা করুন।</div></div>
+      <div class="feedback incorrect" id="lockError"><div class="head" id="lockErrorText"></div></div>
     </section>
+
     <section class="screen" id="screen-start">
-      <div class="hero-eyebrow">৪০০+ এক্সারসাইজ · ভাউচার এন্ট্রি + থিওরি</div>
-      <h1 class="hero-title">Tally Prime ও একাউন্টান্সি মাস্টার</h1>
-      <p class="hero-sub">আসল Tally-র মতো F-key চেপে ভাউচার বেছে নিন, তারপর Dr ও Cr লেজার টাইপ করুন — ঠিক যেমনটা বাস্তবে করবেন। সাথে Manual Accountancy-র থিওরি ও শর্টকাট প্রশ্নও থাকছে।</p>
-      <div class="option-label">কী ধরনের প্রশ্ন চান?</div>
+      <div class="hero-eyebrow" id="startEyebrow"></div>
+      <h1 class="hero-title" id="startTitle"></h1>
+      <p class="hero-sub" id="startSub"></p>
+      <div class="option-label" id="kindLabel"></div>
       <div class="chip-row" id="kindChips">
-        <button class="chip active" data-kind="mixed">মিশ্রিত (দুটোই)</button>
-        <button class="chip" data-kind="transaction">শুধু ভাউচার এন্ট্রি</button>
-        <button class="chip" data-kind="theory">শুধু থিওরি ও শর্টকাট</button>
+        <button class="chip active" data-kind="mixed"></button>
+        <button class="chip" data-kind="transaction"></button>
+        <button class="chip" data-kind="theory"></button>
       </div>
-      <div class="option-label">কতগুলো প্রশ্ন চান?</div>
+      <div class="option-label" id="lenLabel"></div>
       <div class="chip-row" id="lenChips">
-        <button class="chip" data-len="10">১০</button>
-        <button class="chip active" data-len="25">২৫</button>
-        <button class="chip" data-len="50">৫০</button>
-        <button class="chip" data-len="100">১০০</button>
-        <button class="chip" data-len="all">সব (৪০০+)</button>
+        <button class="chip" data-len="10"></button>
+        <button class="chip active" data-len="25"></button>
+        <button class="chip" data-len="50"></button>
+        <button class="chip" data-len="100"></button>
+        <button class="chip" data-len="all"></button>
       </div>
-      <button class="start-btn" id="startBtn">শুরু করুন</button>
+      <button class="start-btn" id="startBtn"></button>
     </section>
 
     <section class="screen" id="screen-quiz">
       <div class="ruler-wrap">
-        <div class="ruler-meta"><span class="count" id="qCounter">প্রশ্ন ১ / ২৫</span><span class="score" id="scoreCounter">স্কোর: ০</span></div>
+        <div class="ruler-meta"><span class="count" id="qCounter"></span><span class="score" id="scoreCounter"></span></div>
         <div class="ruler-track"><div class="ruler-ticks" id="rulerTicks"></div><div class="ruler-cursor" id="rulerCursor"></div></div>
       </div>
       <div id="qTagArea"></div>
@@ -177,15 +182,15 @@
 
       <div id="transactionArea" style="display:none;">
         <div class="fkey-row" id="fkeyRow"></div>
-        <div class="ledger-row"><label>Dr. (ডেবিট)</label><input class="ledger-input" id="drInput" type="text" placeholder="লেজারের নাম লিখুন" autocomplete="off" spellcheck="false"></div>
-        <div class="ledger-row"><label>Cr. (ক্রেডিট)</label><input class="ledger-input" id="crInput" type="text" placeholder="লেজারের নাম লিখুন" autocomplete="off" spellcheck="false"></div>
-        <div style="display:flex; justify-content:flex-end; margin-bottom:8px;"><button class="submit-btn" id="txSubmitBtn">এন্ট্রি চেক করুন</button></div>
+        <div class="ledger-row"><label id="drLabel"></label><input class="ledger-input" id="drInput" type="text" autocomplete="off" spellcheck="false"></div>
+        <div class="ledger-row"><label id="crLabel"></label><input class="ledger-input" id="crInput" type="text" autocomplete="off" spellcheck="false"></div>
+        <div style="display:flex; justify-content:flex-end; margin-bottom:8px;"><button class="submit-btn" id="txSubmitBtn"></button></div>
       </div>
 
       <div id="theoryArea" style="display:none;">
         <div class="answer-row">
-          <input class="answer-input" id="theoryInput" type="text" placeholder="আপনার উত্তর লিখুন..." autocomplete="off" spellcheck="false">
-          <button class="submit-btn" id="thSubmitBtn">চেক করুন</button>
+          <input class="answer-input" id="theoryInput" type="text" autocomplete="off" spellcheck="false">
+          <button class="submit-btn" id="thSubmitBtn"></button>
         </div>
       </div>
 
@@ -194,17 +199,17 @@
         <div id="feedbackDetail"></div>
         <div class="sol-line" id="feedbackSol"></div>
       </div>
-      <div class="next-row"><button class="primary-btn" id="nextBtn" disabled>পরবর্তী প্রশ্ন →</button></div>
+      <div class="next-row"><button class="primary-btn" id="nextBtn" disabled></button></div>
     </section>
 
     <section class="screen" id="screen-result">
       <div class="result-top"><div class="result-score" id="resultScore">0<span>/25</span></div><div class="result-pct" id="resultPct">0%</div></div>
       <p class="result-msg" id="resultMsg"></p>
-      <div class="review-toggle" id="reviewToggle">ভুল হওয়া প্রশ্নগুলো দেখুন</div>
+      <div class="review-toggle" id="reviewToggle"></div>
       <div class="review-list" id="reviewList"></div>
       <div class="result-actions">
-        <button class="secondary-btn" id="retryBtn">আবার একই সেটিংসে চেষ্টা করুন</button>
-        <button class="primary-btn" id="newSettingsBtn">নতুন সেটিংস</button>
+        <button class="secondary-btn" id="retryBtn"></button>
+        <button class="primary-btn" id="newSettingsBtn"></button>
       </div>
     </section>
   </main>
@@ -215,7 +220,73 @@
 </div>
 
 <script>
-/* ===================== VOUCHER OPTIONS ===================== */
+/* ===================== LANGUAGE STATE ===================== */
+var currentLang = 'bn';
+var bnDigits = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+function toBnNum(n){ return String(n).replace(/[0-9]/g, function(d){ return bnDigits[+d]; }); }
+function fmtNum(n){ return currentLang==='bn' ? toBnNum(n) : String(n); }
+function rupee(n){ return '₹'+fmtNum(n); }
+function amtBn(n){ return '₹'+toBnNum(n); }
+function amtEn(n){ return '₹'+String(n); }
+function t(key){ return UI[key] ? UI[key][currentLang] : key; }
+
+/* ===================== UI STRING DICTIONARY ===================== */
+var UI = {
+  lockEyebrow:{bn:'প্রবেশ সুরক্ষিত', en:'Secure Access', hi:'सुरक्षित प्रवेश'},
+  lockTitle:{bn:'পাসওয়ার্ড দিন', en:'Enter Password', hi:'पासवर्ड डालें'},
+  lockSub:{bn:'এই অ্যাপে প্রবেশ করতে আপনার সেন্টারের দেওয়া পাসওয়ার্ডটি লিখুন।', en:'Enter the password given by your center to access this app.', hi:'इस ऐप में प्रवेश के लिए अपने सेंटर का पासवर्ड डालें।'},
+  lockPlaceholder:{bn:'পাসওয়ার্ড লিখুন...', en:'Enter password...', hi:'पासवर्ड डालें...'},
+  lockBtn:{bn:'প্রবেশ করুন', en:'Enter', hi:'प्रवेश करें'},
+  lockErrorText:{bn:'❌ পাসওয়ার্ড ভুল হয়েছে, আবার চেষ্টা করুন।', en:'❌ Wrong password, please try again.', hi:'❌ पासवर्ड गलत है, फिर कोशिश करें।'},
+
+  startEyebrow:{bn:'৪০০+ এক্সারসাইজ · ভাউচার এন্ট্রি + থিওরি', en:'400+ Exercises · Voucher Entry + Theory', hi:'400+ अभ्यास · वाउचर एंट्री + थ्योरी'},
+  startTitle:{bn:'Tally Prime ও একাউন্টান্সি মাস্টার', en:'Tally Prime & Accountancy Master', hi:'Tally Prime और अकाउंटेंसी मास्टर'},
+  startSub:{bn:'আসল Tally-র মতো F-key চেপে ভাউচার বেছে নিন, তারপর Dr ও Cr লেজার টাইপ করুন। সাথে Manual Accountancy-র থিওরি ও শর্টকাট প্রশ্নও থাকছে।',
+            en:'Choose the voucher by pressing F-keys just like real Tally, then type the Dr and Cr ledgers. Manual Accountancy theory and shortcut questions are included too.',
+            hi:'असली Tally की तरह F-key दबाकर वाउचर चुनें, फिर Dr और Cr लेजर टाइप करें। साथ में Manual Accountancy की थ्योरी और शॉर्टकट प्रश्न भी हैं।'},
+  kindLabel:{bn:'কী ধরনের প্রশ্ন চান?', en:'What type of questions do you want?', hi:'आपको किस प्रकार के प्रश्न चाहिए?'},
+  kindMixed:{bn:'মিশ্রিত (দুটোই)', en:'Mixed (Both)', hi:'मिश्रित (दोनों)'},
+  kindTransaction:{bn:'শুধু ভাউচার এন্ট্রি', en:'Only Voucher Entry', hi:'केवल वाउचर एंट्री'},
+  kindTheory:{bn:'শুধু থিওরি ও শর্টকাট', en:'Only Theory & Shortcuts', hi:'केवल थ्योरी और शॉर्टकट'},
+  lenLabel:{bn:'কতগুলো প্রশ্ন চান?', en:'How many questions do you want?', hi:'आपको कितने प्रश्न चाहिए?'},
+  len10:{bn:'১০', en:'10', hi:'10'}, len25:{bn:'২৫', en:'25', hi:'25'}, len50:{bn:'৫০', en:'50', hi:'50'}, len100:{bn:'১০০', en:'100', hi:'100'},
+  lenAll:{bn:'সব (৪০০+)', en:'All (400+)', hi:'सभी (400+)'},
+  startBtn:{bn:'শুরু করুন', en:'Start', hi:'शुरू करें'},
+
+  qTagTx:{bn:'ভাউচার এন্ট্রি', en:'Voucher Entry', hi:'वाउचर एंट्री'},
+  qTagTh:{bn:'থিওরি / শর্টকাট', en:'Theory / Shortcut', hi:'थ्योरी / शॉर्टकट'},
+  drLabel:{bn:'Dr. (ডেবিট)', en:'Dr. (Debit)', hi:'Dr. (डेबिट)'},
+  crLabel:{bn:'Cr. (ক্রেডিট)', en:'Cr. (Credit)', hi:'Cr. (क्रेडिट)'},
+  ledgerPlaceholder:{bn:'লেজারের নাম লিখুন', en:'Type ledger name', hi:'लेजर का नाम लिखें'},
+  txSubmit:{bn:'এন্ট্রি চেক করুন', en:'Check Entry', hi:'एंट्री जांचें'},
+  answerPlaceholder:{bn:'আপনার উত্তর লিখুন...', en:'Type your answer...', hi:'अपना उत्तर लिखें...'},
+  thSubmit:{bn:'চেক করুন', en:'Check', hi:'जांचें'},
+  nextBtn:{bn:'পরবর্তী প্রশ্ন →', en:'Next Question →', hi:'अगला प्रश्न →'},
+  resultBtn:{bn:'রেজাল্ট দেখুন →', en:'View Result →', hi:'रिज़ल्ट देखें →'},
+  fbCorrectHead:{bn:'✅ সঠিক এন্ট্রি!', en:'✅ Correct Entry!', hi:'✅ सही एंट्री!'},
+  fbWrongHead:{bn:'❌ এন্ট্রিতে ভুল আছে', en:'❌ There is a mistake', hi:'❌ एंट्री में गलती है'},
+  fbCorrectHeadTh:{bn:'✅ সঠিক উত্তর!', en:'✅ Correct Answer!', hi:'✅ सही उत्तर!'},
+  fbWrongHeadTh:{bn:'❌ ভুল উত্তর', en:'❌ Wrong Answer', hi:'❌ गलत उत्तर'},
+  fbVoucher:{bn:'ভাউচার:', en:'Voucher:', hi:'वाउचर:'},
+  fbCorrectShort:{bn:'সঠিক:', en:'Correct:', hi:'सही:'},
+  fbSolPrefix:{bn:'ব্যাখ্যা:', en:'Explanation:', hi:'स्पष्टीकरण:'},
+  fbCorrectAnsPrefix:{bn:'সঠিক উত্তর:', en:'Correct answer:', hi:'सही उत्तर:'},
+  scoreLabel:{bn:'স্কোর:', en:'Score:', hi:'स्कोर:'},
+  qCounterPrefix:{bn:'প্রশ্ন', en:'Question', hi:'प्रश्न'},
+
+  resultMsgHigh:{bn:'🌟 অসাধারণ! আপনি Tally ও Accountancy-তে রীতিমতো দক্ষ।', en:'🌟 Excellent! You are truly skilled in Tally and Accountancy.', hi:'🌟 शानदार! आप Tally और Accountancy में वाकई कुशल हैं।'},
+  resultMsgMid:{bn:'👍 ভালো করেছেন! ভুল হওয়া এন্ট্রিগুলো রিভিউ করে আরেকবার চর্চা করুন।', en:'👍 Well done! Review the missed entries and practice once more.', hi:'👍 बहुत बढ़िया! गलत एंट्रीज़ रिव्यू करके फिर अभ्यास करें।'},
+  resultMsgLow:{bn:'💪 চিন্তা নেই, এই বিষয়গুলো প্র্যাকটিসেই আয়ত্ত হয় — ভুলগুলো দেখে আবার চেষ্টা করুন।', en:"💪 Don't worry, these topics are mastered through practice — review mistakes and try again.", hi:'💪 चिंता न करें, ये विषय अभ्यास से ही आते हैं — गलतियाँ देखकर फिर कोशिश करें।'},
+  reviewAllCorrect:{bn:'সব প্রশ্নের উত্তর সঠিক হয়েছে! 🎉', en:'All questions answered correctly! 🎉', hi:'सभी प्रश्नों के उत्तर सही हैं! 🎉'},
+  reviewMissedPrefix:{bn:'ভুল হওয়া', en:'View', hi:'गलत हुए'},
+  reviewMissedSuffix:{bn:'টি প্রশ্ন দেখুন', en:'questions', hi:'प्रश्न देखें'},
+  reviewYour:{bn:'আপনার:', en:'Your:', hi:'आपका:'},
+  reviewCorrect:{bn:'সঠিক:', en:'Correct:', hi:'सही:'},
+  retryBtn:{bn:'আবার একই সেটিংসে চেষ্টা করুন', en:'Retry with same settings', hi:'समान सेटिंग्स से फिर कोशिश करें'},
+  newSettingsBtn:{bn:'নতুন সেটিংস', en:'New Settings', hi:'नई सेटिंग्स'}
+};
+
+/* ===================== VOUCHER OPTIONS (labels stay English, as in real Tally) ===================== */
 var voucherOptions = [
   {code:'F4', label:'Contra'}, {code:'F5', label:'Payment'}, {code:'F6', label:'Receipt'},
   {code:'F7', label:'Journal'}, {code:'F8', label:'Sales'}, {code:'F9', label:'Purchase'},
@@ -230,122 +301,155 @@ var assetNames = ['Furniture','Machinery','Computer','Motor Vehicle','Office Equ
 
 function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
 function pick(arr){ return arr[randInt(0,arr.length-1)]; }
-function rupee(n){ return '₹'+n; }
+function viaPick(){
+  var type = Math.random()<0.5 ? 'cash':'bank';
+  return { ledger: type==='cash'?'CASH':'BANK',
+    bn: type==='cash'?'নগদে':'ব্যাংকের মাধ্যমে',
+    en: type==='cash'?'in cash':'via bank',
+    hi: type==='cash'?'नगद में':'बैंक के माध्यम से' };
+}
+function ledgerWord(code){ return code==='CASH' ? 'Cash' : 'Bank'; }
 
 /* ===================== DYNAMIC TRANSACTION TEMPLATES ===================== */
-/* each instance: {kind:'transaction', q, voucher, dr:[...accepted], cr:[...accepted], sol} */
-
 function genCashSale(n){ var out=[]; for(var i=0;i<n;i++){ var who=pick(customerNames); var amt=randInt(1000,60000);
-  out.push({kind:'transaction', q:who+' নগদে পণ্য বিক্রি করলেন '+rupee(amt)+' টাকার।', voucher:'Sales', dr:['CASH'], cr:['SALES'],
-    sol:'নগদ বিক্রয় তাই Sales ভাউচার (F8)। Dr. Cash (টাকা ব্যবসায় ঢুকছে), Cr. Sales (বিক্রয় আয়)।'}); } return out; }
+  out.push({kind:'transaction', voucher:'Sales', dr:['CASH'], cr:['SALES'],
+    q:{ bn:who+' নগদে পণ্য বিক্রি করলেন '+amtBn(amt)+' টাকার।', en:who+' sold goods worth '+amtEn(amt)+' in cash.', hi:who+' ने नगद '+amtEn(amt)+' का सामान बेचा।' },
+    sol:{ bn:'নগদ বিক্রয় তাই Sales ভাউচার (F8)। Dr. Cash, Cr. Sales।', en:'Cash sale, so Sales voucher (F8). Dr. Cash, Cr. Sales.', hi:'नगद बिक्री है इसलिए Sales वाउचर (F8)। Dr. Cash, Cr. Sales।' }}); } return out; }
 
 function genCreditSale(n){ var out=[]; for(var i=0;i<n;i++){ var who=pick(customerNames); var amt=randInt(1000,60000);
-  out.push({kind:'transaction', q:who+'-কে ধারে (Credit-এ) পণ্য বিক্রি করা হলো '+rupee(amt)+' টাকার।', voucher:'Sales', dr:[who], cr:['SALES'],
-    sol:'ধারে বিক্রিও Sales ভাউচারেই (F8) হয়, শুধু Dr পক্ষে Customer-এর নাম বসে কারণ সে দেনাদার (Debtor) হলো।'}); } return out; }
+  out.push({kind:'transaction', voucher:'Sales', dr:[who], cr:['SALES'],
+    q:{ bn:who+'-কে ধারে (Credit-এ) পণ্য বিক্রি করা হলো '+amtBn(amt)+' টাকার।', en:'Goods worth '+amtEn(amt)+' sold to '+who+' on credit.', hi:who+' को उधार (Credit पर) '+amtEn(amt)+' का सामान बेचा गया।' },
+    sol:{ bn:'ধারে বিক্রিও Sales ভাউচারেই (F8) হয়, Dr পক্ষে Customer-এর নাম বসে।', en:'Credit sale also uses Sales voucher (F8); Dr side gets the name of the Customer.', hi:'उधार बिक्री भी Sales वाउचर (F8) में होती है, Dr पक्ष में Customer का नाम आता है।' }}); } return out; }
 
 function genCashPurchase(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(1000,60000);
-  out.push({kind:'transaction', q:'নগদে পণ্য ক্রয় করা হলো '+rupee(amt)+' টাকার।', voucher:'Purchase', dr:['PURCHASE','PURCHASES'], cr:['CASH'],
-    sol:'নগদ ক্রয় তাই Purchase ভাউচার (F9)। Dr. Purchase, Cr. Cash।'}); } return out; }
+  out.push({kind:'transaction', voucher:'Purchase', dr:['PURCHASE','PURCHASES'], cr:['CASH'],
+    q:{ bn:'নগদে পণ্য ক্রয় করা হলো '+amtBn(amt)+' টাকার।', en:'Goods worth '+amtEn(amt)+' purchased in cash.', hi:'नगद '+amtEn(amt)+' का सामान खरीदा गया।' },
+    sol:{ bn:'নগদ ক্রয় তাই Purchase ভাউচার (F9)। Dr. Purchase, Cr. Cash।', en:'Cash purchase, so Purchase voucher (F9). Dr. Purchase, Cr. Cash.', hi:'नगद खरीद है इसलिए Purchase वाउचर (F9)। Dr. Purchase, Cr. Cash।' }}); } return out; }
 
 function genCreditPurchase(n){ var out=[]; for(var i=0;i<n;i++){ var who=pick(supplierNames); var amt=randInt(1000,60000);
-  out.push({kind:'transaction', q:who+'-এর কাছ থেকে ধারে পণ্য ক্রয় করা হলো '+rupee(amt)+' টাকার।', voucher:'Purchase', dr:['PURCHASE','PURCHASES'], cr:[who],
-    sol:'ধারে ক্রয়ও Purchase ভাউচারেই (F9) হয়, Cr পক্ষে Supplier-এর নাম বসে কারণ সে পাওনাদার (Creditor) হলো।'}); } return out; }
+  out.push({kind:'transaction', voucher:'Purchase', dr:['PURCHASE','PURCHASES'], cr:[who],
+    q:{ bn:who+'-এর কাছ থেকে ধারে পণ্য ক্রয় করা হলো '+amtBn(amt)+' টাকার।', en:'Goods worth '+amtEn(amt)+' purchased on credit from '+who+'.', hi:who+' से उधार पर '+amtEn(amt)+' का सामान खरीदा गया।' },
+    sol:{ bn:'ধারে ক্রয়ও Purchase ভাউচারেই (F9) হয়, Cr পক্ষে Supplier-এর নাম বসে।', en:'Credit purchase also uses Purchase voucher (F9); Cr side gets the name of the Supplier.', hi:'उधार खरीद भी Purchase वाउचर (F9) में होती है, Cr पक्ष में Supplier का नाम आता है।' }}); } return out; }
 
-function genPaymentToCreditor(n){ var out=[]; for(var i=0;i<n;i++){ var who=pick(supplierNames); var amt=randInt(1000,50000); var via=pick(['নগদে','ব্যাংকের মাধ্যমে']); var ledger=via==='নগদে'?'CASH':'BANK';
-  out.push({kind:'transaction', q:who+'-কে '+via+' '+rupee(amt)+' টাকা পরিশোধ করা হলো (পূর্বের ধারের বিপরীতে)।', voucher:'Payment', dr:[who], cr:[ledger],
-    sol:'পাওনাদারকে টাকা মেটানো হলে Payment ভাউচার (F5)। Dr. Creditor-এর নাম, Cr. '+(ledger==='CASH'?'Cash':'Bank')+'।'}); } return out; }
+function genPaymentToCreditor(n){ var out=[]; for(var i=0;i<n;i++){ var who=pick(supplierNames); var amt=randInt(1000,50000); var via=viaPick();
+  out.push({kind:'transaction', voucher:'Payment', dr:[who], cr:[via.ledger],
+    q:{ bn:who+'-কে '+via.bn+' '+amtBn(amt)+' টাকা পরিশোধ করা হলো (পূর্বের ধারের বিপরীতে)।', en:who+' was paid '+amtEn(amt)+' '+via.en+' (against earlier credit).', hi:who+' को '+via.hi+' '+amtEn(amt)+' का भुगतान किया गया (पहले के उधार के बदले में)।' },
+    sol:{ bn:'পাওনাদারকে টাকা মেটালে Payment ভাউচার (F5)। Dr. Creditor, Cr. '+ledgerWord(via.ledger)+'।', en:'Paying a Creditor uses Payment voucher (F5). Dr. Creditor, Cr. '+ledgerWord(via.ledger)+'.', hi:'पावनदार को भुगतान पर Payment वाउचर (F5)। Dr. Creditor, Cr. '+ledgerWord(via.ledger)+'।' }}); } return out; }
 
-function genReceiptFromDebtor(n){ var out=[]; for(var i=0;i<n;i++){ var who=pick(customerNames); var amt=randInt(1000,50000); var via=pick(['নগদে','ব্যাংকের মাধ্যমে']); var ledger=via==='নগদে'?'CASH':'BANK';
-  out.push({kind:'transaction', q:who+'-এর কাছ থেকে '+via+' '+rupee(amt)+' টাকা পাওয়া গেলো (পূর্বের ধারের বিপরীতে)।', voucher:'Receipt', dr:[ledger], cr:[who],
-    sol:'দেনাদার থেকে টাকা পেলে Receipt ভাউচার (F6)। Dr. '+(ledger==='CASH'?'Cash':'Bank')+', Cr. Debtor-এর নাম।'}); } return out; }
+function genReceiptFromDebtor(n){ var out=[]; for(var i=0;i<n;i++){ var who=pick(customerNames); var amt=randInt(1000,50000); var via=viaPick();
+  out.push({kind:'transaction', voucher:'Receipt', dr:[via.ledger], cr:[who],
+    q:{ bn:who+'-এর কাছ থেকে '+via.bn+' '+amtBn(amt)+' টাকা পাওয়া গেলো (পূর্বের ধারের বিপরীতে)।', en:amtEn(amt)+' received '+via.en+' from '+who+' (against earlier credit).', hi:who+' से '+via.hi+' '+amtEn(amt)+' मिले (पहले के उधार के बदले में)।' },
+    sol:{ bn:'দেনাদার থেকে টাকা পেলে Receipt ভাউচার (F6)। Dr. '+ledgerWord(via.ledger)+', Cr. Debtor।', en:'Receiving from a Debtor uses Receipt voucher (F6). Dr. '+ledgerWord(via.ledger)+', Cr. Debtor.', hi:'देनदार से पैसे मिलने पर Receipt वाउचर (F6)। Dr. '+ledgerWord(via.ledger)+', Cr. Debtor।' }}); } return out; }
 
-function genExpensePayment(n){ var out=[]; for(var i=0;i<n;i++){ var exp=pick(expenseNames); var amt=randInt(300,8000); var via=pick(['নগদে','ব্যাংকের মাধ্যমে']); var ledger=via==='নগদে'?'CASH':'BANK';
-  out.push({kind:'transaction', q:exp+' '+via+' পরিশোধ করা হলো '+rupee(amt)+' টাকা।', voucher:'Payment', dr:[exp], cr:[ledger],
-    sol:'কোনো খরচ মেটালে Payment ভাউচার (F5)। Dr. '+exp+', Cr. '+(ledger==='CASH'?'Cash':'Bank')+'।'}); } return out; }
+function genExpensePayment(n){ var out=[]; for(var i=0;i<n;i++){ var exp=pick(expenseNames); var amt=randInt(300,8000); var via=viaPick();
+  out.push({kind:'transaction', voucher:'Payment', dr:[exp], cr:[via.ledger],
+    q:{ bn:exp+' '+via.bn+' পরিশোধ করা হলো '+amtBn(amt)+' টাকা।', en:exp+' worth '+amtEn(amt)+' paid '+via.en+'.', hi:exp+' '+via.hi+' '+amtEn(amt)+' चुकाया गया।' },
+    sol:{ bn:'খরচ মেটালে Payment ভাউচার (F5)। Dr. '+exp+', Cr. '+ledgerWord(via.ledger)+'।', en:'Paying an expense uses Payment voucher (F5). Dr. '+exp+', Cr. '+ledgerWord(via.ledger)+'.', hi:'खर्च चुकाने पर Payment वाउचर (F5)। Dr. '+exp+', Cr. '+ledgerWord(via.ledger)+'।' }}); } return out; }
 
 function genCashDeposited(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(2000,80000);
-  out.push({kind:'transaction', q:'নগদ '+rupee(amt)+' টাকা ব্যাংকে জমা দেওয়া হলো।', voucher:'Contra', dr:['BANK'], cr:['CASH'],
-    sol:'নগদ ও ব্যাংকের মধ্যে লেনদেন তাই Contra ভাউচার (F4)। Dr. Bank, Cr. Cash।'}); } return out; }
+  out.push({kind:'transaction', voucher:'Contra', dr:['BANK'], cr:['CASH'],
+    q:{ bn:'নগদ '+amtBn(amt)+' টাকা ব্যাংকে জমা দেওয়া হলো।', en:amtEn(amt)+' cash deposited into the bank.', hi:'नगद '+amtEn(amt)+' बैंक में जमा किया गया।' },
+    sol:{ bn:'নগদ-ব্যাংক লেনদেন তাই Contra (F4)। Dr. Bank, Cr. Cash।', en:'Cash-Bank transaction, so Contra (F4). Dr. Bank, Cr. Cash.', hi:'नगद-बैंक लेनदेन है इसलिए Contra (F4)। Dr. Bank, Cr. Cash।' }}); } return out; }
 
 function genCashWithdrawn(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(2000,80000);
-  out.push({kind:'transaction', q:'ব্যাংক থেকে '+rupee(amt)+' টাকা নগদ তোলা হলো।', voucher:'Contra', dr:['CASH'], cr:['BANK'],
-    sol:'নগদ ও ব্যাংকের মধ্যে লেনদেন তাই Contra ভাউচার (F4)। Dr. Cash, Cr. Bank।'}); } return out; }
+  out.push({kind:'transaction', voucher:'Contra', dr:['CASH'], cr:['BANK'],
+    q:{ bn:'ব্যাংক থেকে '+amtBn(amt)+' টাকা নগদ তোলা হলো।', en:amtEn(amt)+' cash withdrawn from the bank.', hi:'बैंक से '+amtEn(amt)+' नगद निकाला गया।' },
+    sol:{ bn:'নগদ-ব্যাংক লেনদেন তাই Contra (F4)। Dr. Cash, Cr. Bank।', en:'Cash-Bank transaction, so Contra (F4). Dr. Cash, Cr. Bank.', hi:'नगद-बैंक लेनदेन है इसलिए Contra (F4)। Dr. Cash, Cr. Bank।' }}); } return out; }
 
-function genCapitalIntroduced(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(20000,500000); var via=pick(['নগদে','ব্যাংকের মাধ্যমে']); var ledger=via==='নগদে'?'CASH':'BANK';
-  out.push({kind:'transaction', q:'মালিক ব্যবসায় '+via+' '+rupee(amt)+' টাকা মূলধন (Capital) যুক্ত করলেন।', voucher:'Receipt', dr:[ledger], cr:['CAPITAL'],
-    sol:'মালিকের টাকা ব্যবসায় ঢুকলে Receipt ভাউচার (F6)। Dr. '+(ledger==='CASH'?'Cash':'Bank')+', Cr. Capital।'}); } return out; }
+function genCapitalIntroduced(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(20000,500000); var via=viaPick();
+  out.push({kind:'transaction', voucher:'Receipt', dr:[via.ledger], cr:['CAPITAL'],
+    q:{ bn:'মালিক ব্যবসায় '+via.bn+' '+amtBn(amt)+' টাকা মূলধন (Capital) যুক্ত করলেন।', en:'Owner introduced '+amtEn(amt)+' Capital into the business '+via.en+'.', hi:'मालिक ने व्यवसाय में '+via.hi+' '+amtEn(amt)+' Capital जोड़ा।' },
+    sol:{ bn:'মালিকের টাকা ব্যবসায় ঢুকলে Receipt (F6)। Dr. '+ledgerWord(via.ledger)+', Cr. Capital।', en:"Owner's money entering business uses Receipt (F6). Dr. "+ledgerWord(via.ledger)+', Cr. Capital.', hi:'मालिक का पैसा व्यवसाय में आने पर Receipt (F6)। Dr. '+ledgerWord(via.ledger)+', Cr. Capital।' }}); } return out; }
 
-function genDrawingsCash(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(500,20000); var via=pick(['নগদে','ব্যাংক থেকে']); var ledger=via==='নগদে'?'CASH':'BANK';
-  out.push({kind:'transaction', q:'মালিক ব্যক্তিগত কাজের জন্য '+via+' '+rupee(amt)+' টাকা তুললেন (Drawings)।', voucher:'Payment', dr:['DRAWINGS'], cr:[ledger],
-    sol:'মালিকের ব্যক্তিগত উত্তোলন Drawings, এটা ব্যবসা থেকে টাকা বের হওয়া তাই Payment ভাউচার (F5)। Dr. Drawings, Cr. '+(ledger==='CASH'?'Cash':'Bank')+'।'}); } return out; }
+function genDrawingsCash(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(500,20000); var via=viaPick();
+  out.push({kind:'transaction', voucher:'Payment', dr:['DRAWINGS'], cr:[via.ledger],
+    q:{ bn:'মালিক ব্যক্তিগত কাজের জন্য '+via.bn+' '+amtBn(amt)+' টাকা তুললেন (Drawings)।', en:'Owner withdrew '+amtEn(amt)+' '+via.en+' for personal use (Drawings).', hi:'मालिक ने निजी काम के लिए '+via.hi+' '+amtEn(amt)+' निकाला (Drawings)।' },
+    sol:{ bn:'মালিকের ব্যক্তিগত উত্তোলন Drawings, টাকা বের হয় তাই Payment (F5)। Dr. Drawings, Cr. '+ledgerWord(via.ledger)+'।', en:"Owner's personal withdrawal is Drawings; money goes out so Payment (F5). Dr. Drawings, Cr. "+ledgerWord(via.ledger)+'.', hi:'मालिक की निजी निकासी Drawings है, पैसा बाहर जाता है इसलिए Payment (F5)। Dr. Drawings, Cr. '+ledgerWord(via.ledger)+'।' }}); } return out; }
 
 function genLoanTaken(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(50000,500000);
-  out.push({kind:'transaction', q:'ব্যাংক থেকে '+rupee(amt)+' টাকা ঋণ (Loan) নেওয়া হলো।', voucher:'Receipt', dr:['BANK'], cr:['LOAN'],
-    sol:'ঋণের টাকা ব্যবসায় এলে Receipt ভাউচার (F6)। Dr. Bank, Cr. Loan।'}); } return out; }
+  out.push({kind:'transaction', voucher:'Receipt', dr:['BANK'], cr:['LOAN'],
+    q:{ bn:'ব্যাংক থেকে '+amtBn(amt)+' টাকা ঋণ (Loan) নেওয়া হলো।', en:amtEn(amt)+' Loan taken from the bank.', hi:'बैंक से '+amtEn(amt)+' का Loan लिया गया।' },
+    sol:{ bn:'ঋণের টাকা ব্যবসায় এলে Receipt (F6)। Dr. Bank, Cr. Loan।', en:'Loan money entering business uses Receipt (F6). Dr. Bank, Cr. Loan.', hi:'Loan का पैसा व्यवसाय में आने पर Receipt (F6)। Dr. Bank, Cr. Loan।' }}); } return out; }
 
 function genLoanRepayment(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(5000,100000);
-  out.push({kind:'transaction', q:'ব্যাংক ঋণের '+rupee(amt)+' টাকা কিস্তি পরিশোধ করা হলো।', voucher:'Payment', dr:['LOAN'], cr:['BANK'],
-    sol:'ঋণ পরিশোধ মানে টাকা বের হওয়া তাই Payment ভাউচার (F5)। Dr. Loan, Cr. Bank।'}); } return out; }
+  out.push({kind:'transaction', voucher:'Payment', dr:['LOAN'], cr:['BANK'],
+    q:{ bn:'ব্যাংক ঋণের '+amtBn(amt)+' টাকা কিস্তি পরিশোধ করা হলো।', en:'A loan instalment of '+amtEn(amt)+' was repaid to the bank.', hi:'बैंक Loan की '+amtEn(amt)+' की किस्त चुकाई गई।' },
+    sol:{ bn:'ঋণ পরিশোধে টাকা বের হয় তাই Payment (F5)। Dr. Loan, Cr. Bank।', en:'Repaying a loan means money goes out, so Payment (F5). Dr. Loan, Cr. Bank.', hi:'Loan चुकाने पर पैसा बाहर जाता है इसलिए Payment (F5)। Dr. Loan, Cr. Bank।' }}); } return out; }
 
-function genAssetPurchase(n){ var out=[]; for(var i=0;i<n;i++){ var asset=pick(assetNames); var amt=randInt(15000,300000); var via=pick(['নগদে','ব্যাংকের মাধ্যমে']); var ledger=via==='নগদে'?'CASH':'BANK';
-  out.push({kind:'transaction', q:asset+' '+via+' কেনা হলো '+rupee(amt)+' টাকায়।', voucher:'Payment', dr:[asset], cr:[ledger],
-    sol:'স্থায়ী সম্পদ কেনা ব্যবসার পণ্য ক্রয় নয়, তাই Payment ভাউচার (F5)। Dr. '+asset+', Cr. '+(ledger==='CASH'?'Cash':'Bank')+'।'}); } return out; }
+function genAssetPurchase(n){ var out=[]; for(var i=0;i<n;i++){ var asset=pick(assetNames); var amt=randInt(15000,300000); var via=viaPick();
+  out.push({kind:'transaction', voucher:'Payment', dr:[asset], cr:[via.ledger],
+    q:{ bn:asset+' '+via.bn+' কেনা হলো '+amtBn(amt)+' টাকায়।', en:asset+' purchased '+via.en+' for '+amtEn(amt)+'.', hi:asset+' '+via.hi+' '+amtEn(amt)+' में खरीदा गया।' },
+    sol:{ bn:'স্থায়ী সম্পদ ক্রয় তাই Payment (F5)। Dr. '+asset+', Cr. '+ledgerWord(via.ledger)+'।', en:'Fixed asset purchase, so Payment (F5). Dr. '+asset+', Cr. '+ledgerWord(via.ledger)+'.', hi:'स्थायी संपत्ति खरीद है इसलिए Payment (F5)। Dr. '+asset+', Cr. '+ledgerWord(via.ledger)+'।' }}); } return out; }
 
 function genDepreciation(n){ var out=[]; for(var i=0;i<n;i++){ var asset=pick(assetNames); var amt=randInt(1000,30000);
-  out.push({kind:'transaction', q:asset+'-এর উপর '+rupee(amt)+' টাকা অবচয় (Depreciation) ধরা হলো।', voucher:'Journal', dr:['DEPRECIATION'], cr:[asset],
-    sol:'নগদ/ব্যাংক ছাড়া অ্যাডজাস্টমেন্ট এন্ট্রি তাই Journal ভাউচার (F7)। Dr. Depreciation, Cr. '+asset+'।'}); } return out; }
+  out.push({kind:'transaction', voucher:'Journal', dr:['DEPRECIATION'], cr:[asset],
+    q:{ bn:asset+'-এর উপর '+amtBn(amt)+' টাকা অবচয় (Depreciation) ধরা হলো।', en:amtEn(amt)+' Depreciation charged on '+asset+'.', hi:asset+' पर '+amtEn(amt)+' का Depreciation लगाया गया।' },
+    sol:{ bn:'নগদ ছাড়া অ্যাডজাস্টমেন্ট তাই Journal (F7)। Dr. Depreciation, Cr. '+asset+'।', en:'Non-cash adjustment, so Journal (F7). Dr. Depreciation, Cr. '+asset+'.', hi:'नगद रहित एडजस्टमेंट है इसलिए Journal (F7)। Dr. Depreciation, Cr. '+asset+'।' }}); } return out; }
 
 function genBadDebts(n){ var out=[]; for(var i=0;i<n;i++){ var who=pick(customerNames); var amt=randInt(500,15000);
-  out.push({kind:'transaction', q:who+'-এর কাছ থেকে '+rupee(amt)+' টাকা পাওনা আদায় অযোগ্য (Bad Debts) বলে ধরে নেওয়া হলো।', voucher:'Journal', dr:['BAD DEBTS'], cr:[who],
-    sol:'অনাদায়ী পাওনা মোছার এন্ট্রি Journal ভাউচারে (F7) হয়। Dr. Bad Debts, Cr. '+who+'।'}); } return out; }
+  out.push({kind:'transaction', voucher:'Journal', dr:['BAD DEBTS'], cr:[who],
+    q:{ bn:who+'-এর কাছ থেকে '+amtBn(amt)+' টাকা পাওনা আদায় অযোগ্য (Bad Debts) বলে ধরে নেওয়া হলো।', en:amtEn(amt)+' due from '+who+' was written off as Bad Debts.', hi:who+' से बकाया '+amtEn(amt)+' को Bad Debts मानकर माफ किया गया।' },
+    sol:{ bn:'অনাদায়ী পাওনা মোছার এন্ট্রি Journal-এ (F7)। Dr. Bad Debts, Cr. '+who+'।', en:'Writing off bad debts uses Journal (F7). Dr. Bad Debts, Cr. '+who+'.', hi:'डूबत ऋण माफ करने की एंट्री Journal में (F7)। Dr. Bad Debts, Cr. '+who+'।' }}); } return out; }
 
 function genSalesReturn(n){ var out=[]; for(var i=0;i<n;i++){ var who=pick(customerNames); var amt=randInt(500,15000);
-  out.push({kind:'transaction', q:who+' '+rupee(amt)+' টাকার বিক্রিত পণ্য ফেরত দিলেন।', voucher:'Credit Note', dr:['SALES RETURN'], cr:[who],
-    sol:'বিক্রিত পণ্য ফেরত এলে Credit Note (Ctrl+F8)। Dr. Sales Return, Cr. '+who+' (তার পাওনা কমে গেলো)।'}); } return out; }
+  out.push({kind:'transaction', voucher:'Credit Note', dr:['SALES RETURN'], cr:[who],
+    q:{ bn:who+' '+amtBn(amt)+' টাকার বিক্রিত পণ্য ফেরত দিলেন।', en:who+' returned goods worth '+amtEn(amt)+'.', hi:who+' ने '+amtEn(amt)+' का बिका हुआ सामान वापस किया।' },
+    sol:{ bn:'বিক্রিত পণ্য ফেরত এলে Credit Note (Ctrl+F8)। Dr. Sales Return, Cr. '+who+'।', en:'Sales return uses Credit Note (Ctrl+F8). Dr. Sales Return, Cr. '+who+'.', hi:'बिका सामान वापस आने पर Credit Note (Ctrl+F8)। Dr. Sales Return, Cr. '+who+'।' }}); } return out; }
 
 function genPurchaseReturn(n){ var out=[]; for(var i=0;i<n;i++){ var who=pick(supplierNames); var amt=randInt(500,15000);
-  out.push({kind:'transaction', q:who+'-কে '+rupee(amt)+' টাকার ক্রয় করা পণ্য ফেরত দেওয়া হলো।', voucher:'Debit Note', dr:[who], cr:['PURCHASE RETURN'],
-    sol:'ক্রয় করা পণ্য ফেরত দিলে Debit Note (Ctrl+F9)। Dr. '+who+' (তাকে দেয় কমে গেলো), Cr. Purchase Return।'}); } return out; }
+  out.push({kind:'transaction', voucher:'Debit Note', dr:[who], cr:['PURCHASE RETURN'],
+    q:{ bn:who+'-কে '+amtBn(amt)+' টাকার ক্রয় করা পণ্য ফেরত দেওয়া হলো।', en:'Goods worth '+amtEn(amt)+' returned to '+who+'.', hi:who+' को '+amtEn(amt)+' का खरीदा सामान वापस किया गया।' },
+    sol:{ bn:'ক্রয় ফেরতে Debit Note (Ctrl+F9)। Dr. '+who+', Cr. Purchase Return।', en:'Purchase return uses Debit Note (Ctrl+F9). Dr. '+who+', Cr. Purchase Return.', hi:'खरीद वापसी पर Debit Note (Ctrl+F9)। Dr. '+who+', Cr. Purchase Return।' }}); } return out; }
 
 function genOutstandingExpense(n){ var out=[]; for(var i=0;i<n;i++){ var exp=pick(expenseNames); var amt=randInt(500,8000);
-  out.push({kind:'transaction', q:exp+'-এর '+rupee(amt)+' টাকা এখনও বকেয়া (Outstanding) আছে, এন্ট্রি করুন।', voucher:'Journal', dr:[exp], cr:['OUTSTANDING '+exp.toUpperCase()],
-    sol:'বকেয়া খরচ অ্যাডজাস্টমেন্ট Journal ভাউচারে (F7)। Dr. '+exp+', Cr. Outstanding '+exp+' (এটি একটি দায়)।'}); } return out; }
+  out.push({kind:'transaction', voucher:'Journal', dr:[exp], cr:['OUTSTANDING '+exp.toUpperCase()],
+    q:{ bn:exp+'-এর '+amtBn(amt)+' টাকা এখনও বকেয়া (Outstanding) আছে, এন্ট্রি করুন।', en:amtEn(amt)+' of '+exp+' is still outstanding — make the entry.', hi:exp+' का '+amtEn(amt)+' अभी बकाया (Outstanding) है, एंट्री करें।' },
+    sol:{ bn:'বকেয়া খরচ Journal-এ (F7)। Dr. '+exp+', Cr. Outstanding '+exp+'।', en:'Outstanding expense uses Journal (F7). Dr. '+exp+', Cr. Outstanding '+exp+'.', hi:'बकाया खर्च Journal में (F7)। Dr. '+exp+', Cr. Outstanding '+exp+'।' }}); } return out; }
 
 function genPrepaidExpense(n){ var out=[]; for(var i=0;i<n;i++){ var exp=pick(expenseNames); var amt=randInt(500,8000);
-  out.push({kind:'transaction', q:exp+'-এর '+rupee(amt)+' টাকা অগ্রিম (Prepaid) দেওয়া অংশ অ্যাডজাস্ট করুন।', voucher:'Journal', dr:['PREPAID '+exp.toUpperCase()], cr:[exp],
-    sol:'অগ্রিম খরচ অ্যাডজাস্টমেন্ট Journal ভাউচারে (F7)। Dr. Prepaid '+exp+' (এটি একটি সম্পদ), Cr. '+exp+'।'}); } return out; }
+  out.push({kind:'transaction', voucher:'Journal', dr:['PREPAID '+exp.toUpperCase()], cr:[exp],
+    q:{ bn:exp+'-এর '+amtBn(amt)+' টাকা অগ্রিম (Prepaid) দেওয়া অংশ অ্যাডজাস্ট করুন।', en:'Adjust '+amtEn(amt)+' of '+exp+' that was Prepaid.', hi:exp+' का '+amtEn(amt)+' अग्रिम (Prepaid) हिस्सा एडजस्ट करें।' },
+    sol:{ bn:'অগ্রিম খরচ Journal-এ (F7)। Dr. Prepaid '+exp+', Cr. '+exp+'।', en:'Prepaid expense uses Journal (F7). Dr. Prepaid '+exp+', Cr. '+exp+'.', hi:'अग्रिम खर्च Journal में (F7)। Dr. Prepaid '+exp+', Cr. '+exp+'।' }}); } return out; }
 
-function genInterestReceived(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(200,8000); var via=pick(['নগদে','ব্যাংকের মাধ্যমে']); var ledger=via==='নগদে'?'CASH':'BANK';
-  out.push({kind:'transaction', q:'বিনিয়োগের উপর সুদ '+rupee(amt)+' টাকা '+via+' পাওয়া গেলো।', voucher:'Receipt', dr:[ledger], cr:['INTEREST RECEIVED'],
-    sol:'টাকা ব্যবসায় এলে Receipt ভাউচার (F6)। Dr. '+(ledger==='CASH'?'Cash':'Bank')+', Cr. Interest Received।'}); } return out; }
+function genInterestReceived(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(200,8000); var via=viaPick();
+  out.push({kind:'transaction', voucher:'Receipt', dr:[via.ledger], cr:['INTEREST RECEIVED'],
+    q:{ bn:'বিনিয়োগের উপর সুদ '+amtBn(amt)+' টাকা '+via.bn+' পাওয়া গেলো।', en:'Interest of '+amtEn(amt)+' on investment received '+via.en+'.', hi:'निवेश पर '+amtEn(amt)+' का सूद '+via.hi+' मिला।' },
+    sol:{ bn:'টাকা এলে Receipt (F6)। Dr. '+ledgerWord(via.ledger)+', Cr. Interest Received।', en:'Money coming in uses Receipt (F6). Dr. '+ledgerWord(via.ledger)+', Cr. Interest Received.', hi:'पैसा आने पर Receipt (F6)। Dr. '+ledgerWord(via.ledger)+', Cr. Interest Received।' }}); } return out; }
 
-function genInterestPaid(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(200,8000); var via=pick(['নগদে','ব্যাংকের মাধ্যমে']); var ledger=via==='নগদে'?'CASH':'BANK';
-  out.push({kind:'transaction', q:'ঋণের উপর সুদ '+rupee(amt)+' টাকা '+via+' পরিশোধ করা হলো।', voucher:'Payment', dr:['INTEREST PAID'], cr:[ledger],
-    sol:'টাকা বের হলে Payment ভাউচার (F5)। Dr. Interest Paid, Cr. '+(ledger==='CASH'?'Cash':'Bank')+'।'}); } return out; }
+function genInterestPaid(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(200,8000); var via=viaPick();
+  out.push({kind:'transaction', voucher:'Payment', dr:['INTEREST PAID'], cr:[via.ledger],
+    q:{ bn:'ঋণের উপর সুদ '+amtBn(amt)+' টাকা '+via.bn+' পরিশোধ করা হলো।', en:'Interest of '+amtEn(amt)+' on a loan paid '+via.en+'.', hi:'Loan पर '+amtEn(amt)+' का सूद '+via.hi+' चुकाया गया।' },
+    sol:{ bn:'টাকা বের হলে Payment (F5)। Dr. Interest Paid, Cr. '+ledgerWord(via.ledger)+'।', en:'Money going out uses Payment (F5). Dr. Interest Paid, Cr. '+ledgerWord(via.ledger)+'.', hi:'पैसा बाहर जाने पर Payment (F5)। Dr. Interest Paid, Cr. '+ledgerWord(via.ledger)+'।' }}); } return out; }
 
-function genCommissionReceived(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(300,10000); var via=pick(['নগদে','ব্যাংকের মাধ্যমে']); var ledger=via==='নগদে'?'CASH':'BANK';
-  out.push({kind:'transaction', q:'কমিশন '+rupee(amt)+' টাকা '+via+' পাওয়া গেলো।', voucher:'Receipt', dr:[ledger], cr:['COMMISSION RECEIVED'],
-    sol:'টাকা এলে Receipt ভাউচার (F6)। Dr. '+(ledger==='CASH'?'Cash':'Bank')+', Cr. Commission Received।'}); } return out; }
+function genCommissionReceived(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(300,10000); var via=viaPick();
+  out.push({kind:'transaction', voucher:'Receipt', dr:[via.ledger], cr:['COMMISSION RECEIVED'],
+    q:{ bn:'কমিশন '+amtBn(amt)+' টাকা '+via.bn+' পাওয়া গেলো।', en:'Commission of '+amtEn(amt)+' received '+via.en+'.', hi:'कमीशन '+amtEn(amt)+' '+via.hi+' मिला।' },
+    sol:{ bn:'টাকা এলে Receipt (F6)। Dr. '+ledgerWord(via.ledger)+', Cr. Commission Received।', en:'Money coming in uses Receipt (F6). Dr. '+ledgerWord(via.ledger)+', Cr. Commission Received.', hi:'पैसा आने पर Receipt (F6)। Dr. '+ledgerWord(via.ledger)+', Cr. Commission Received।' }}); } return out; }
 
-function genCommissionPaid(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(300,10000); var via=pick(['নগদে','ব্যাংকের মাধ্যমে']); var ledger=via==='নগদে'?'CASH':'BANK';
-  out.push({kind:'transaction', q:'কমিশন '+rupee(amt)+' টাকা '+via+' পরিশোধ করা হলো।', voucher:'Payment', dr:['COMMISSION PAID'], cr:[ledger],
-    sol:'টাকা বের হলে Payment ভাউচার (F5)। Dr. Commission Paid, Cr. '+(ledger==='CASH'?'Cash':'Bank')+'।'}); } return out; }
+function genCommissionPaid(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(300,10000); var via=viaPick();
+  out.push({kind:'transaction', voucher:'Payment', dr:['COMMISSION PAID'], cr:[via.ledger],
+    q:{ bn:'কমিশন '+amtBn(amt)+' টাকা '+via.bn+' পরিশোধ করা হলো।', en:'Commission of '+amtEn(amt)+' paid '+via.en+'.', hi:'कमीशन '+amtEn(amt)+' '+via.hi+' चुकाया गया।' },
+    sol:{ bn:'টাকা বের হলে Payment (F5)। Dr. Commission Paid, Cr. '+ledgerWord(via.ledger)+'।', en:'Money going out uses Payment (F5). Dr. Commission Paid, Cr. '+ledgerWord(via.ledger)+'.', hi:'पैसा बाहर जाने पर Payment (F5)। Dr. Commission Paid, Cr. '+ledgerWord(via.ledger)+'।' }}); } return out; }
 
 function genGoodsWithdrawn(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(500,15000);
-  out.push({kind:'transaction', q:'মালিক ব্যক্তিগত ব্যবহারের জন্য '+rupee(amt)+' টাকার পণ্য দোকান থেকে নিলেন।', voucher:'Journal', dr:['DRAWINGS'], cr:['PURCHASE','PURCHASES'],
-    sol:'পণ্য উত্তোলন অ্যাডজাস্টমেন্ট Journal ভাউচারে (F7)। Dr. Drawings, Cr. Purchase (ক্রয় কমে গেলো)।'}); } return out; }
+  out.push({kind:'transaction', voucher:'Journal', dr:['DRAWINGS'], cr:['PURCHASE','PURCHASES'],
+    q:{ bn:'মালিক ব্যক্তিগত ব্যবহারের জন্য '+amtBn(amt)+' টাকার পণ্য দোকান থেকে নিলেন।', en:'Owner took goods worth '+amtEn(amt)+' from the shop for personal use.', hi:'मालिक ने निजी उपयोग के लिए दुकान से '+amtEn(amt)+' का सामान लिया।' },
+    sol:{ bn:'পণ্য উত্তোলন Journal-এ (F7)। Dr. Drawings, Cr. Purchase।', en:'Goods withdrawal uses Journal (F7). Dr. Drawings, Cr. Purchase.', hi:'सामान निकासी Journal में (F7)। Dr. Drawings, Cr. Purchase।' }}); } return out; }
 
 function genGoodsCharity(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(500,10000);
-  out.push({kind:'transaction', q:'দান (Charity) হিসেবে '+rupee(amt)+' টাকার পণ্য দেওয়া হলো।', voucher:'Journal', dr:['CHARITY','DONATION'], cr:['PURCHASE','PURCHASES'],
-    sol:'দান করা পণ্যের অ্যাডজাস্টমেন্ট Journal ভাউচারে (F7)। Dr. Charity, Cr. Purchase (ক্রয় কমে গেলো)।'}); } return out; }
+  out.push({kind:'transaction', voucher:'Journal', dr:['CHARITY','DONATION'], cr:['PURCHASE','PURCHASES'],
+    q:{ bn:'দান (Charity) হিসেবে '+amtBn(amt)+' টাকার পণ্য দেওয়া হলো।', en:'Goods worth '+amtEn(amt)+' given away as Charity.', hi:'दान (Charity) के रूप में '+amtEn(amt)+' का सामान दिया गया।' },
+    sol:{ bn:'দানের পণ্য Journal-এ (F7)। Dr. Charity, Cr. Purchase।', en:'Goods donated uses Journal (F7). Dr. Charity, Cr. Purchase.', hi:'दान का सामान Journal में (F7)। Dr. Charity, Cr. Purchase।' }}); } return out; }
 
-function genRentReceived(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(1000,20000); var via=pick(['নগদে','ব্যাংকের মাধ্যমে']); var ledger=via==='নগদে'?'CASH':'BANK';
-  out.push({kind:'transaction', q:'ভাড়া (Rent) '+rupee(amt)+' টাকা '+via+' পাওয়া গেলো।', voucher:'Receipt', dr:[ledger], cr:['RENT RECEIVED'],
-    sol:'টাকা এলে Receipt ভাউচার (F6)। Dr. '+(ledger==='CASH'?'Cash':'Bank')+', Cr. Rent Received।'}); } return out; }
+function genRentReceived(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(1000,20000); var via=viaPick();
+  out.push({kind:'transaction', voucher:'Receipt', dr:[via.ledger], cr:['RENT RECEIVED'],
+    q:{ bn:'ভাড়া (Rent) '+amtBn(amt)+' টাকা '+via.bn+' পাওয়া গেলো।', en:'Rent of '+amtEn(amt)+' received '+via.en+'.', hi:'किराया (Rent) '+amtEn(amt)+' '+via.hi+' मिला।' },
+    sol:{ bn:'টাকা এলে Receipt (F6)। Dr. '+ledgerWord(via.ledger)+', Cr. Rent Received।', en:'Money coming in uses Receipt (F6). Dr. '+ledgerWord(via.ledger)+', Cr. Rent Received.', hi:'पैसा आने पर Receipt (F6)। Dr. '+ledgerWord(via.ledger)+', Cr. Rent Received।' }}); } return out; }
 
-function genInsurancePaid(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(500,15000); var via=pick(['নগদে','ব্যাংকের মাধ্যমে']); var ledger=via==='নগদে'?'CASH':'BANK';
-  out.push({kind:'transaction', q:'বিমার প্রিমিয়াম (Insurance Premium) '+rupee(amt)+' টাকা '+via+' পরিশোধ করা হলো।', voucher:'Payment', dr:['INSURANCE PREMIUM'], cr:[ledger],
-    sol:'টাকা বের হলে Payment ভাউচার (F5)। Dr. Insurance Premium, Cr. '+(ledger==='CASH'?'Cash':'Bank')+'।'}); } return out; }
+function genInsurancePaid(n){ var out=[]; for(var i=0;i<n;i++){ var amt=randInt(500,15000); var via=viaPick();
+  out.push({kind:'transaction', voucher:'Payment', dr:['INSURANCE PREMIUM'], cr:[via.ledger],
+    q:{ bn:'বিমার প্রিমিয়াম (Insurance Premium) '+amtBn(amt)+' টাকা '+via.bn+' পরিশোধ করা হলো।', en:'Insurance Premium of '+amtEn(amt)+' paid '+via.en+'.', hi:'बीमा प्रीमियम (Insurance Premium) '+amtEn(amt)+' '+via.hi+' चुकाया गया।' },
+    sol:{ bn:'টাকা বের হলে Payment (F5)। Dr. Insurance Premium, Cr. '+ledgerWord(via.ledger)+'।', en:'Money going out uses Payment (F5). Dr. Insurance Premium, Cr. '+ledgerWord(via.ledger)+'.', hi:'पैसा बाहर जाने पर Payment (F5)। Dr. Insurance Premium, Cr. '+ledgerWord(via.ledger)+'।' }}); } return out; }
 
 function buildDynamicPool(){
   var pool=[];
@@ -362,105 +466,106 @@ function buildDynamicPool(){
 }
 
 /* ===================== STATIC THEORY BANK ===================== */
-/* [question, [accepted answers], solution] */
+/* [bn, en, hi, [accepted answers]] */
 var staticRaw = [
-['নগদ ও ব্যাংকের মধ্যে টাকা স্থানান্তরের ভাউচার খোলার শর্টকাট কী?', ['F4'], ''],
-['Payment ভাউচার খোলার শর্টকাট কী?', ['F5'], ''],
-['Receipt ভাউচার খোলার শর্টকাট কী?', ['F6'], ''],
-['Journal ভাউচার খোলার শর্টকাট কী?', ['F7'], ''],
-['Sales ভাউচার খোলার শর্টকাট কী?', ['F8'], ''],
-['Purchase ভাউচার খোলার শর্টকাট কী?', ['F9'], ''],
-['Credit Note ভাউচার খোলার শর্টকাট কী?', ['CTRL+F8'], ''],
-['Debit Note ভাউচার খোলার শর্টকাট কী?', ['CTRL+F9'], ''],
-['ভাউচার এন্ট্রি সেভ করার শর্টকাট কী?', ['CTRL+A'], ''],
-['যেকোনো স্ক্রিন থেকে বের হওয়ার (Cancel/Quit) শর্টকাট কী?', ['ESC'], ''],
-['Tally Prime-এ কোম্পানি ডেটা বিভক্ত (Split) করার শর্টকাট কী?', ['ALT+Y'], ''],
-['এন্ট্রি করার সময় নতুন লেজার তৈরির (on-the-fly) শর্টকাট কী?', ['ALT+C'], ''],
-['Company Info স্ক্রিনে যাওয়ার শর্টকাট কী?', ['ALT+F3'], ''],
-['Features সেটিংসে যাওয়ার শর্টকাট কী?', ['F11'], ''],
-['Configuration সেটিংসে যাওয়ার শর্টকাট কী?', ['F12'], ''],
-['আগের ভাউচারে যাওয়ার শর্টকাট কী?', ['PAGE UP'], ''],
-['পরের ভাউচারে যাওয়ার শর্টকাট কী?', ['PAGE DOWN'], ''],
-['ভাউচার ডিলিট করার শর্টকাট কী?', ['ALT+D'], ''],
-['ভাউচার ডুপ্লিকেট করার শর্টকাট কী?', ['ALT+2'], ''],
-['ভাউচার এন্ট্রির সময় তারিখ পরিবর্তনের শর্টকাট কী?', ['F2'], ''],
-['নগদে পণ্য বিক্রি করলে কোন ভাউচার ব্যবহার হয়?', ['SALES'], ''],
-['নগদে পণ্য ক্রয় করলে কোন ভাউচার ব্যবহার হয়?', ['PURCHASE'], ''],
-['পাওনাদারকে (Creditor) টাকা পরিশোধ করলে কোন ভাউচার ব্যবহার হয়?', ['PAYMENT'], ''],
-['দেনাদারের (Debtor) কাছ থেকে টাকা পাওয়া গেলে কোন ভাউচার ব্যবহার হয়?', ['RECEIPT'], ''],
-['অফিসের ভাড়া নগদে পরিশোধ করলে কোন ভাউচার ব্যবহার হয়?', ['PAYMENT'], ''],
-['মালিক ব্যবসায় মূলধন (Capital) যুক্ত করলে কোন ভাউচার ব্যবহার হয়?', ['RECEIPT'], ''],
-['অবচয় (Depreciation) এন্ট্রি করতে কোন ভাউচার ব্যবহার হয়?', ['JOURNAL'], ''],
-['বিক্রিত পণ্য ফেরত (Sales Return) এলে কোন ভাউচার ব্যবহার হয়?', ['CREDIT NOTE'], ''],
-['ক্রয় করা পণ্য ফেরত (Purchase Return) দিলে কোন ভাউচার ব্যবহার হয়?', ['DEBIT NOTE'], ''],
-['নগদ ব্যাংকে জমা দিলে কোন ভাউচার ব্যবহার হয়?', ['CONTRA'], ''],
-['ব্যাংক থেকে নগদ তোলা হলে কোন ভাউচার ব্যবহার হয়?', ['CONTRA'], ''],
-['অনাদায়ী পাওনা (Bad Debts) মোছার এন্ট্রি কোন ভাউচারে করা হয়?', ['JOURNAL'], ''],
-['ব্যাংক থেকে ঋণ (Loan) নেওয়া হলে কোন ভাউচার ব্যবহার হয়?', ['RECEIPT'], ''],
-['ঋণ পরিশোধ করলে কোন ভাউচার ব্যবহার হয়?', ['PAYMENT'], ''],
-['Cash, Furniture, Machinery — এই ধরনের অ্যাকাউন্টকে কী বলা হয়?', ['REAL ACCOUNT','REAL'], ''],
-['Customer, Supplier, Bank — এই ধরনের অ্যাকাউন্টকে কী বলা হয়?', ['PERSONAL ACCOUNT','PERSONAL'], ''],
-['Rent, Salary, Sales, Commission — এই ধরনের অ্যাকাউন্টকে কী বলা হয়?', ['NOMINAL ACCOUNT','NOMINAL'], ''],
-['Personal Account-এর গোল্ডেন রুল: যে গ্রহণ করে (Receiver) তাকে কী করতে হয়?', ['DEBIT'], ''],
-['Personal Account-এর গোল্ডেন রুল: যে প্রদান করে (Giver) তাকে কী করতে হয়?', ['CREDIT'], ''],
-['Real Account-এর গোল্ডেন রুল: যা ব্যবসায় আসে (Comes In) তাকে কী করতে হয়?', ['DEBIT'], ''],
-['Real Account-এর গোল্ডেন রুল: যা ব্যবসা থেকে যায় (Goes Out) তাকে কী করতে হয়?', ['CREDIT'], ''],
-['Nominal Account-এর গোল্ডেন রুল: সকল খরচ ও ক্ষতি কী করতে হয়?', ['DEBIT'], ''],
-['Nominal Account-এর গোল্ডেন রুল: সকল আয় ও লাভ কী করতে হয়?', ['CREDIT'], ''],
-['অ্যাকাউন্টিং ইকুয়েশন: Assets = Liabilities + ___', ['CAPITAL'], ''],
-['অ্যাকাউন্টিং ইকুয়েশন: Capital = Assets - ___', ['LIABILITIES'], ''],
-['ব্যবসার মালিক ব্যবসা থেকে নগদ বা পণ্য ব্যক্তিগত কাজে নিলে তাকে কী বলা হয়?', ['DRAWINGS'], ''],
-['ব্যবসায় বিনিয়োগ করা মালিকের নিজের টাকাকে কী বলা হয়?', ['CAPITAL'], ''],
-['একটি লেনদেনে Debit থাকলে আরেকটি পক্ষে কী থাকতে হবে?', ['CREDIT'], ''],
-['সকল লেজারের Debit ও Credit ব্যালেন্স একসাথে দেখানো বিবরণীকে কী বলা হয়?', ['TRIAL BALANCE'], ''],
-['লেনদেনগুলো সর্বপ্রথম তারিখ অনুযায়ী যেখানে লেখা হয়, তাকে কী বলা হয়?', ['JOURNAL'], ''],
-['জার্নাল থেকে প্রতিটি অ্যাকাউন্টের আলাদা হিসাব রাখার বইকে কী বলা হয়?', ['LEDGER'], ''],
-['কোনো অ্যাকাউন্টের Debit মোট, Credit মোট থেকে বেশি হলে তাকে কী বলে?', ['DEBIT BALANCE'], ''],
-['কোনো অ্যাকাউন্টের Credit মোট, Debit মোট থেকে বেশি হলে তাকে কী বলে?', ['CREDIT BALANCE'], ''],
-['প্রতি বছর সম্পদের মূল্য থেকে সমান পরিমাণ অবচয় কাটার পদ্ধতিকে কী বলা হয়?', ['STRAIGHT LINE METHOD'], ''],
-['প্রতি বছর সম্পদের অবশিষ্ট মূল্যের উপর হারে অবচয় কাটার পদ্ধতিকে কী বলা হয়?', ['WRITTEN DOWN VALUE METHOD','WDV METHOD','WDV'], ''],
-['নতুন মেশিন কেনার খরচ কোন ধরনের ব্যয়?', ['CAPITAL EXPENDITURE'], ''],
-['মেশিনের সাধারণ মেরামতের খরচ কোন ধরনের ব্যয়?', ['REVENUE EXPENDITURE'], ''],
-['ব্যাংক স্টেটমেন্ট আর ক্যাশ বুকের অমিল দূর করার বিবরণীকে কী বলা হয়?', ['BANK RECONCILIATION STATEMENT'], ''],
-['ইস্যু করা চেক ব্যাংকে এখনও জমা না পড়লে তাকে কী বলা হয়?', ['UNPRESENTED CHEQUE','OUTSTANDING CHEQUE'], ''],
-['Bank A/c কোন ধরনের অ্যাকাউন্ট?', ['PERSONAL ACCOUNT','PERSONAL'], ''],
-['Sales A/c কোন ধরনের অ্যাকাউন্ট?', ['NOMINAL ACCOUNT','NOMINAL'], ''],
-['Purchase A/c কোন ধরনের অ্যাকাউন্ট?', ['NOMINAL ACCOUNT','NOMINAL'], ''],
-['Capital A/c কোন ধরনের অ্যাকাউন্ট?', ['PERSONAL ACCOUNT','PERSONAL'], ''],
-['Outstanding Salary কোন ধরনের অ্যাকাউন্ট?', ['PERSONAL ACCOUNT','PERSONAL'], ''],
-['Furniture A/c কোন ধরনের অ্যাকাউন্ট?', ['REAL ACCOUNT','REAL'], ''],
-['Discount Allowed A/c কোন ধরনের অ্যাকাউন্ট?', ['NOMINAL ACCOUNT','NOMINAL'], ''],
-['Drawings A/c কোন ধরনের অ্যাকাউন্ট?', ['PERSONAL ACCOUNT','PERSONAL'], ''],
-['GST সক্রিয় (Enable) করার সেটিংস কোথায় পাওয়া যায়?', ['F11'], ''],
-['Tally Prime খোলার পর প্রধান মেনুকে কী বলা হয়?', ['GATEWAY OF TALLY'], ''],
-['দেনাদারের কাছ থেকে টাকা নেওয়ার সময় তাকে যে ছাড় দেওয়া হয়, তার নাম কী?', ['DISCOUNT ALLOWED'], ''],
-['পাওনাদারকে টাকা দেওয়ার সময় তার থেকে যে ছাড় পাওয়া যায়, তার নাম কী?', ['DISCOUNT RECEIVED'], ''],
-['নতুন লেজার তৈরি করার অপশনের নাম কী (Masters অংশে)?', ['CREATE LEDGER','LEDGER CREATION'], '']
+['নগদ ও ব্যাংকের মধ্যে টাকা স্থানান্তরের ভাউচার খোলার শর্টকাট কী?','What is the shortcut to open the voucher for transferring money between Cash and Bank?','नगद और बैंक के बीच पैसे स्थानांतरण का वाउचर खोलने का शॉर्टकट क्या है?',['F4']],
+['Payment ভাউচার খোলার শর্টকাট কী?','What is the shortcut to open the Payment voucher?','Payment वाउचर खोलने का शॉर्टकट क्या है?',['F5']],
+['Receipt ভাউচার খোলার শর্টকাট কী?','What is the shortcut to open the Receipt voucher?','Receipt वाउचर खोलने का शॉर्टकट क्या है?',['F6']],
+['Journal ভাউচার খোলার শর্টকাট কী?','What is the shortcut to open the Journal voucher?','Journal वाउचर खोलने का शॉर्टकट क्या है?',['F7']],
+['Sales ভাউচার খোলার শর্টকাট কী?','What is the shortcut to open the Sales voucher?','Sales वाउचर खोलने का शॉर्टकट क्या है?',['F8']],
+['Purchase ভাউচার খোলার শর্টকাট কী?','What is the shortcut to open the Purchase voucher?','Purchase वाउचर खोलने का शॉर्टकट क्या है?',['F9']],
+['Credit Note ভাউচার খোলার শর্টকাট কী?','What is the shortcut to open the Credit Note voucher?','Credit Note वाउचर खोलने का शॉर्टकट क्या है?',['CTRL+F8']],
+['Debit Note ভাউচার খোলার শর্টকাট কী?','What is the shortcut to open the Debit Note voucher?','Debit Note वाउचर खोलने का शॉर्टकट क्या है?',['CTRL+F9']],
+['ভাউচার এন্ট্রি সেভ করার শর্টকাট কী?','What is the shortcut to save a voucher entry?','वाउचर एंट्री सेव करने का शॉर्टकट क्या है?',['CTRL+A']],
+['যেকোনো স্ক্রিন থেকে বের হওয়ার (Cancel/Quit) শর্টকাট কী?','What is the shortcut to cancel/quit any screen?','किसी भी स्क्रीन से बाहर निकलने (Cancel/Quit) का शॉर्टकट क्या है?',['ESC']],
+['Tally Prime-এ কোম্পানি ডেটা বিভক্ত (Split) করার শর্টকাট কী?','What is the shortcut to Split Company Data in Tally Prime?','Tally Prime में Company Data Split करने का शॉर्टकट क्या है?',['ALT+Y']],
+['এন্ট্রি করার সময় নতুন লেজার তৈরির (on-the-fly) শর্টকাট কী?','What is the shortcut to create a new ledger on-the-fly while entering a voucher?','एंट्री करते समय नया लेजर बनाने (on-the-fly) का शॉर्टकट क्या है?',['ALT+C']],
+['Company Info স্ক্রিনে যাওয়ার শর্টকাট কী?','What is the shortcut to go to the Company Info screen?','Company Info स्क्रीन पर जाने का शॉर्टकट क्या है?',['ALT+F3']],
+['Features সেটিংসে যাওয়ার শর্টকাট কী?','What is the shortcut to go to Features settings?','Features सेटिंग्स में जाने का शॉर्टकट क्या है?',['F11']],
+['Configuration সেটিংসে যাওয়ার শর্টকাট কী?','What is the shortcut to go to Configuration settings?','Configuration सेटिंग्स में जाने का शॉर्टकट क्या है?',['F12']],
+['আগের ভাউচারে যাওয়ার শর্টকাট কী?','What is the shortcut to go to the previous voucher?','पिछले वाउचर पर जाने का शॉर्टकट क्या है?',['PAGE UP']],
+['পরের ভাউচারে যাওয়ার শর্টকাট কী?','What is the shortcut to go to the next voucher?','अगले वाउचर पर जाने का शॉर्टकट क्या है?',['PAGE DOWN']],
+['ভাউচার ডিলিট করার শর্টকাট কী?','What is the shortcut to delete a voucher?','वाउचर डिलीट करने का शॉर्टकट क्या है?',['ALT+D']],
+['ভাউচার ডুপ্লিকেট করার শর্টকাট কী?','What is the shortcut to duplicate a voucher?','वाउचर डुप्लीकेट करने का शॉर्टकट क्या है?',['ALT+2']],
+['ভাউচার এন্ট্রির সময় তারিখ পরিবর্তনের শর্টকাট কী?','What is the shortcut to change the date while entering a voucher?','वाउचर एंट्री के समय तारीख बदलने का शॉर्टकट क्या है?',['F2']],
+['নগদে পণ্য বিক্রি করলে কোন ভাউচার ব্যবহার হয়?','Which voucher is used for cash sale of goods?','नगद माल बिक्री के लिए कौन सा वाउचर उपयोग होता है?',['SALES']],
+['নগদে পণ্য ক্রয় করলে কোন ভাউচার ব্যবহার হয়?','Which voucher is used for cash purchase of goods?','नगद माल खरीद के लिए कौन सा वाउचर उपयोग होता है?',['PURCHASE']],
+['পাওনাদারকে (Creditor) টাকা পরিশোধ করলে কোন ভাউচার ব্যবহার হয়?','Which voucher is used to pay a Creditor?','किसी Creditor को पैसे चुकाने के लिए कौन सा वाउचर उपयोग होता है?',['PAYMENT']],
+['দেনাদারের (Debtor) কাছ থেকে টাকা পাওয়া গেলে কোন ভাউচার ব্যবহার হয়?','Which voucher is used when money is received from a Debtor?','किसी Debtor से पैसे मिलने पर कौन सा वाउचर उपयोग होता है?',['RECEIPT']],
+['অফিসের ভাড়া নগদে পরিশোধ করলে কোন ভাউচার ব্যবহার হয়?','Which voucher is used to pay office rent in cash?','ऑफिस का किराया नगद चुकाने पर कौन सा वाउचर उपयोग होता है?',['PAYMENT']],
+['মালিক ব্যবসায় মূলধন (Capital) যুক্ত করলে কোন ভাউচার ব্যবহার হয়?','Which voucher is used when the owner introduces Capital into the business?','मालिक व्यवसाय में Capital जोड़ने पर कौन सा वाउचर उपयोग होता है?',['RECEIPT']],
+['অবচয় (Depreciation) এন্ট্রি করতে কোন ভাউচার ব্যবহার হয়?','Which voucher is used to enter Depreciation?','Depreciation एंट्री के लिए कौन सा वाउचर उपयोग होता है?',['JOURNAL']],
+['বিক্রিত পণ্য ফেরত (Sales Return) এলে কোন ভাউচার ব্যবহার হয়?','Which voucher is used when Sales Return comes in?','Sales Return आने पर कौन सा वाउचर उपयोग होता है?',['CREDIT NOTE']],
+['ক্রয় করা পণ্য ফেরত (Purchase Return) দিলে কোন ভাউচার ব্যবহার হয়?','Which voucher is used when giving a Purchase Return?','Purchase Return देने पर कौन सा वाउचर उपयोग होता है?',['DEBIT NOTE']],
+['নগদ ব্যাংকে জমা দিলে কোন ভাউচার ব্যবহার হয়?','Which voucher is used when cash is deposited into the bank?','नगद बैंक में जमा करने पर कौन सा वाउचर उपयोग होता है?',['CONTRA']],
+['ব্যাংক থেকে নগদ তোলা হলে কোন ভাউচার ব্যবহার হয়?','Which voucher is used when cash is withdrawn from the bank?','बैंक से नगद निकालने पर कौन सा वाउचर उपयोग होता है?',['CONTRA']],
+['অনাদায়ী পাওনা (Bad Debts) মোছার এন্ট্রি কোন ভাউচারে করা হয়?','In which voucher is the entry made to write off Bad Debts?','Bad Debts माफ करने की एंट्री किस वाउचर में होती है?',['JOURNAL']],
+['ব্যাংক থেকে ঋণ (Loan) নেওয়া হলে কোন ভাউচার ব্যবহার হয়?','Which voucher is used when a Loan is taken from the bank?','बैंक से Loan लेने पर कौन सा वाउचर उपयोग होता है?',['RECEIPT']],
+['ঋণ পরিশোধ করলে কোন ভাউচার ব্যবহার হয়?','Which voucher is used to repay a Loan?','Loan चुकाने पर कौन सा वाउचर उपयोग होता है?',['PAYMENT']],
+['Cash, Furniture, Machinery — এই ধরনের অ্যাকাউন্টকে কী বলা হয়?','Cash, Furniture, Machinery — what type of account is this?','Cash, Furniture, Machinery — यह किस प्रकार का अकाउंट है?',['REAL ACCOUNT','REAL']],
+['Customer, Supplier, Bank — এই ধরনের অ্যাকাউন্টকে কী বলা হয়?','Customer, Supplier, Bank — what type of account is this?','Customer, Supplier, Bank — यह किस प्रकार का अकाउंट है?',['PERSONAL ACCOUNT','PERSONAL']],
+['Rent, Salary, Sales, Commission — এই ধরনের অ্যাকাউন্টকে কী বলা হয়?','Rent, Salary, Sales, Commission — what type of account is this?','Rent, Salary, Sales, Commission — यह किस प्रकार का अकाउंट है?',['NOMINAL ACCOUNT','NOMINAL']],
+['Personal Account-এর গোল্ডেন রুল: যে গ্রহণ করে (Receiver) তাকে কী করতে হয়?','Golden Rule of Personal Account: what should be done to the Receiver?','Personal Account का गोल्डन रूल: Receiver को क्या करना चाहिए?',['DEBIT']],
+['Personal Account-এর গোল্ডেন রুল: যে প্রদান করে (Giver) তাকে কী করতে হয়?','Golden Rule of Personal Account: what should be done to the Giver?','Personal Account का गोल्डन रूल: Giver को क्या करना चाहिए?',['CREDIT']],
+['Real Account-এর গোল্ডেন রুল: যা ব্যবসায় আসে (Comes In) তাকে কী করতে হয়?','Golden Rule of Real Account: what should be done to what Comes In?','Real Account का गोल्डन रूल: जो अंदर आता है उसे क्या करना चाहिए?',['DEBIT']],
+['Real Account-এর গোল্ডেন রুল: যা ব্যবসা থেকে যায় (Goes Out) তাকে কী করতে হয়?','Golden Rule of Real Account: what should be done to what Goes Out?','Real Account का गोल्डन रूल: जो बाहर जाता है उसे क्या करना चाहिए?',['CREDIT']],
+['Nominal Account-এর গোল্ডেন রুল: সকল খরচ ও ক্ষতি কী করতে হয়?','Golden Rule of Nominal Account: what should be done to all Expenses and Losses?','Nominal Account का गोल्डन रूल: सभी खर्च और हानि के साथ क्या करना चाहिए?',['DEBIT']],
+['Nominal Account-এর গোল্ডেন রুল: সকল আয় ও লাভ কী করতে হয়?','Golden Rule of Nominal Account: what should be done to all Income and Gains?','Nominal Account का गोल्डन रूल: सभी आय और लाभ के साथ क्या करना चाहिए?',['CREDIT']],
+['অ্যাকাউন্টিং ইকুয়েশন: Assets = Liabilities + ___','Accounting Equation: Assets = Liabilities + ___','Accounting Equation: Assets = Liabilities + ___',['CAPITAL']],
+['অ্যাকাউন্টিং ইকুয়েশন: Capital = Assets - ___','Accounting Equation: Capital = Assets - ___','Accounting Equation: Capital = Assets - ___',['LIABILITIES']],
+['ব্যবসার মালিক ব্যবসা থেকে নগদ বা পণ্য ব্যক্তিগত কাজে নিলে তাকে কী বলা হয়?','What is it called when the owner takes cash or goods from the business for personal use?','जब मालिक व्यवसाय से नगद या सामान निजी उपयोग के लिए लेता है, उसे क्या कहा जाता है?',['DRAWINGS']],
+['ব্যবসায় বিনিয়োগ করা মালিকের নিজের টাকাকে কী বলা হয়?','What is the money invested by the owner in the business called?','व्यवसाय में निवेश किए गए मालिक के अपने पैसे को क्या कहा जाता है?',['CAPITAL']],
+['একটি লেনদেনে Debit থাকলে আরেকটি পক্ষে কী থাকতে হবে?','If a transaction has a Debit, what must the other side have?','किसी लेनदेन में Debit है तो दूसरी तरफ क्या होना चाहिए?',['CREDIT']],
+['সকল লেজারের Debit ও Credit ব্যালেন্স একসাথে দেখানো বিবরণীকে কী বলা হয়?','What is the statement called that shows the Debit and Credit balances of all ledgers together?','सभी लेजर के Debit और Credit बैलेंस एक साथ दिखाने वाले विवरण को क्या कहा जाता है?',['TRIAL BALANCE']],
+['লেনদেনগুলো সর্বপ্রথম তারিখ অনুযায়ী যেখানে লেখা হয়, তাকে কী বলা হয়?','Where are transactions first recorded, date-wise?','लेनदेन सबसे पहले तारीख के अनुसार कहाँ लिखे जाते हैं?',['JOURNAL']],
+['জার্নাল থেকে প্রতিটি অ্যাকাউন্টের আলাদা হিসাব রাখার বইকে কী বলা হয়?','What is the book called that keeps a separate account for each ledger, taken from the Journal?','Journal से हर अकाउंट का अलग हिसाब रखने वाली किताब को क्या कहा जाता है?',['LEDGER']],
+['কোনো অ্যাকাউন্টের Debit মোট, Credit মোট থেকে বেশি হলে তাকে কী বলে?','If the total Debit of an account is more than the total Credit, what is it called?','किसी अकाउंट का कुल Debit, कुल Credit से ज्यादा हो तो उसे क्या कहते हैं?',['DEBIT BALANCE']],
+['কোনো অ্যাকাউন্টের Credit মোট, Debit মোট থেকে বেশি হলে তাকে কী বলে?','If the total Credit of an account is more than the total Debit, what is it called?','किसी अकाउंट का कुल Credit, कुल Debit से ज्यादा हो तो उसे क्या कहते हैं?',['CREDIT BALANCE']],
+['প্রতি বছর সম্পদের মূল্য থেকে সমান পরিমাণ অবচয় কাটার পদ্ধতিকে কী বলা হয়?','What is the method called where an equal amount of depreciation is deducted every year?','जिस तरीके में हर साल बराबर मात्रा में Depreciation घटाया जाता है, उसे क्या कहा जाता है?',['STRAIGHT LINE METHOD']],
+['প্রতি বছর সম্পদের অবশিষ্ট মূল্যের উপর হারে অবচয় কাটার পদ্ধতিকে কী বলা হয়?','What is the method called where depreciation is deducted at a rate on the remaining value each year?','जिस तरीके में हर साल शेष मूल्य पर दर से Depreciation घटाया जाता है, उसे क्या कहा जाता है?',['WRITTEN DOWN VALUE METHOD','WDV METHOD','WDV']],
+['নতুন মেশিন কেনার খরচ কোন ধরনের ব্যয়?','What type of expenditure is buying a new machine?','नई मशीन खरीदना किस प्रकार का व्यय है?',['CAPITAL EXPENDITURE']],
+['মেশিনের সাধারণ মেরামতের খরচ কোন ধরনের ব্যয়?','What type of expenditure is regular repair of a machine?','मशीन की सामान्य मरम्मत किस प्रकार का व्यय है?',['REVENUE EXPENDITURE']],
+['ব্যাংক স্টেটমেন্ট আর ক্যাশ বুকের অমিল দূর করার বিবরণীকে কী বলা হয়?','What is the statement called that removes the mismatch between the Bank Statement and Cash Book?','Bank Statement और Cash Book के बीच का अंतर दूर करने वाले विवरण को क्या कहा जाता है?',['BANK RECONCILIATION STATEMENT']],
+['ইস্যু করা চেক ব্যাংকে এখনও জমা না পড়লে তাকে কী বলা হয়?','What is an issued cheque called if it has not yet been presented at the bank?','जारी किया गया चेक बैंक में अभी जमा नहीं हुआ हो तो उसे क्या कहा जाता है?',['UNPRESENTED CHEQUE','OUTSTANDING CHEQUE']],
+['Bank A/c কোন ধরনের অ্যাকাউন্ট?','What type of account is Bank A/c?','Bank A/c किस प्रकार का अकाउंट है?',['PERSONAL ACCOUNT','PERSONAL']],
+['Sales A/c কোন ধরনের অ্যাকাউন্ট?','What type of account is Sales A/c?','Sales A/c किस प्रकार का अकाउंट है?',['NOMINAL ACCOUNT','NOMINAL']],
+['Purchase A/c কোন ধরনের অ্যাকাউন্ট?','What type of account is Purchase A/c?','Purchase A/c किस प्रकार का अकाउंट है?',['NOMINAL ACCOUNT','NOMINAL']],
+['Capital A/c কোন ধরনের অ্যাকাউন্ট?','What type of account is Capital A/c?','Capital A/c किस प्रकार का अकाउंट है?',['PERSONAL ACCOUNT','PERSONAL']],
+['Outstanding Salary কোন ধরনের অ্যাকাউন্ট?','What type of account is Outstanding Salary?','Outstanding Salary किस प्रकार का अकाउंट है?',['PERSONAL ACCOUNT','PERSONAL']],
+['Furniture A/c কোন ধরনের অ্যাকাউন্ট?','What type of account is Furniture A/c?','Furniture A/c किस प्रकार का अकाउंट है?',['REAL ACCOUNT','REAL']],
+['Discount Allowed A/c কোন ধরনের অ্যাকাউন্ট?','What type of account is Discount Allowed A/c?','Discount Allowed A/c किस प्रकार का अकाउंट है?',['NOMINAL ACCOUNT','NOMINAL']],
+['Drawings A/c কোন ধরনের অ্যাকাউন্ট?','What type of account is Drawings A/c?','Drawings A/c किस प्रकार का अकाउंट है?',['PERSONAL ACCOUNT','PERSONAL']],
+['GST সক্রিয় (Enable) করার সেটিংস কোথায় পাওয়া যায়?','Where can the setting to enable GST be found?','GST सक्रिय (Enable) करने की सेटिंग कहाँ मिलती है?',['F11']],
+['Tally Prime খোলার পর প্রধান মেনুকে কী বলা হয়?','What is the main menu called after opening Tally Prime?','Tally Prime खोलने के बाद मुख्य मेनू को क्या कहा जाता है?',['GATEWAY OF TALLY']],
+['দেনাদারের কাছ থেকে টাকা নেওয়ার সময় তাকে যে ছাড় দেওয়া হয়, তার নাম কী?','What is the discount given to a Debtor for quick payment called?','देनदार को जल्दी भुगतान के लिए दी गई छूट को क्या कहा जाता है?',['DISCOUNT ALLOWED']],
+['পাওনাদারকে টাকা দেওয়ার সময় তার থেকে যে ছাড় পাওয়া যায়, তার নাম কী?','What is the discount received from a Creditor when paying them called?','पावनदार को भुगतान करते समय मिलने वाली छूट को क्या कहा जाता है?',['DISCOUNT RECEIVED']],
+['নতুন লেজার তৈরি করার অপশনের নাম কী (Masters অংশে)?','What is the option called to create a new ledger (in Masters)?','नया लेजर बनाने के विकल्प (Masters में) को क्या कहा जाता है?',['CREATE LEDGER','LEDGER CREATION']]
 ];
 
-var staticBankBase = staticRaw.map(function(r){ return {kind:'theory', type:'text', q:r[0], ans:r[1], sol:r[2]}; });
+var staticBankBase = staticRaw.map(function(r){ return {kind:'theory', type:'text', q:{bn:r[0],en:r[1],hi:r[2]}, ans:r[3], sol:{bn:'',en:'',hi:''}}; });
 
 var equationNumeric = [
-  {kind:'theory', type:'number', q:'মোট সম্পদ ₹৫০,০০০ এবং দায় ₹২০,০০০ হলে মূলধন কত হবে?', correctNumber:30000, tol:0, sol:'হিসাব: ৫০,০০০ - ২০,০০০ = ৩০,০০০'},
-  {kind:'theory', type:'number', q:'মূলধন ₹৪০,০০০ এবং দায় ₹১৫,০০০ হলে মোট সম্পদ কত হবে?', correctNumber:55000, tol:0, sol:'হিসাব: ৪০,০০০ + ১৫,০০০ = ৫৫,০০০'},
-  {kind:'theory', type:'number', q:'মোট সম্পদ ₹৭৫,০০০ এবং মূলধন ₹৫০,০০০ হলে দায় কত হবে?', correctNumber:25000, tol:0, sol:'হিসাব: ৭৫,০০০ - ৫০,০০০ = ২৫,০০০'},
-  {kind:'theory', type:'number', q:'একটি ভাউচারে Total Debit ₹১৫,৫০০ হলে Total Credit কত হওয়া উচিত (ব্যালেন্সড এন্ট্রির জন্য)?', correctNumber:15500, tol:0, sol:'Double Entry-তে Debit = Credit সর্বদা সমান হতে হবে।'}
+  {kind:'theory', type:'number', correctNumber:30000, tol:0,
+   q:{bn:'মোট সম্পদ ₹৫০,০০০ এবং দায় ₹২০,০০০ হলে মূলধন কত হবে?', en:'If Total Assets are ₹50,000 and Liabilities are ₹20,000, what will Capital be?', hi:'यदि कुल संपत्ति ₹50,000 और दायित्व ₹20,000 है, तो Capital कितना होगा?'},
+   sol:{bn:'হিসাব: ৫০,০০০ - ২০,০০০ = ৩০,০০০', en:'Calculation: 50,000 - 20,000 = 30,000', hi:'गणना: 50,000 - 20,000 = 30,000'}},
+  {kind:'theory', type:'number', correctNumber:55000, tol:0,
+   q:{bn:'মূলধন ₹৪০,০০০ এবং দায় ₹১৫,০০০ হলে মোট সম্পদ কত হবে?', en:'If Capital is ₹40,000 and Liabilities are ₹15,000, what will Total Assets be?', hi:'यदि Capital ₹40,000 और दायित्व ₹15,000 है, तो कुल संपत्ति कितनी होगी?'},
+   sol:{bn:'হিসাব: ৪০,০০০ + ১৫,০০০ = ৫৫,০০০', en:'Calculation: 40,000 + 15,000 = 55,000', hi:'गणना: 40,000 + 15,000 = 55,000'}},
+  {kind:'theory', type:'number', correctNumber:25000, tol:0,
+   q:{bn:'মোট সম্পদ ₹৭৫,০০০ এবং মূলধন ₹৫০,০০০ হলে দায় কত হবে?', en:'If Total Assets are ₹75,000 and Capital is ₹50,000, what will Liabilities be?', hi:'यदि कुल संपत्ति ₹75,000 और Capital ₹50,000 है, तो दायित्व कितना होगा?'},
+   sol:{bn:'হিসাব: ৭৫,০০০ - ৫০,০০০ = ২৫,০০০', en:'Calculation: 75,000 - 50,000 = 25,000', hi:'गणना: 75,000 - 50,000 = 25,000'}},
+  {kind:'theory', type:'number', correctNumber:15500, tol:0,
+   q:{bn:'একটি ভাউচারে Total Debit ₹১৫,৫০০ হলে Total Credit কত হওয়া উচিত (ব্যালেন্সড এন্ট্রির জন্য)?', en:'If the Total Debit in a voucher is ₹15,500, what should the Total Credit be (for a balanced entry)?', hi:'यदि किसी वाउचर में Total Debit ₹15,500 है, तो Total Credit कितना होना चाहिए (बैलेंस्ड एंट्री के लिए)?'},
+   sol:{bn:'Double Entry-তে Debit = Credit সর্বদা সমান হতে হবে।', en:'In Double Entry, Debit = Credit must always be equal.', hi:'Double Entry में Debit = Credit हमेशा बराबर होना चाहिए।'}}
 ];
 
 function buildStaticPool(){ return staticBankBase.concat(equationNumeric); }
-
-function buildFullBank(){
-  return buildStaticPool().concat(buildDynamicPool());
-}
+function buildFullBank(){ return buildStaticPool().concat(buildDynamicPool()); }
 var FULL_BANK_ALL = buildFullBank();
 
 /* ===================== ANSWER CHECKING ===================== */
-function normLedger(s){
-  return String(s).trim().toUpperCase()
-    .replace(/A\/C\.?/g,'').replace(/ACCOUNT/g,'').replace(/[.\-]/g,'').replace(/\s+/g,'');
-}
+function normLedger(s){ return String(s).trim().toUpperCase().replace(/A\/C\.?/g,'').replace(/ACCOUNT/g,'').replace(/[.\-]/g,'').replace(/\s+/g,''); }
 function normText(s){ return String(s).trim().toUpperCase().replace(/\s+/g,''); }
-
 function checkTheory(item, userInput){
   if(item.type === 'number'){
     var val = parseFloat(String(userInput).replace(/,/g,'').trim());
@@ -470,7 +575,7 @@ function checkTheory(item, userInput){
   var norm = normText(userInput);
   return item.ans.some(function(a){ return normText(a)===norm; });
 }
-function correctTheoryDisplay(item){ return item.type==='number' ? String(item.correctNumber) : item.ans[0]; }
+function correctTheoryDisplay(item){ return item.type==='number' ? fmtNum(item.correctNumber) : item.ans[0]; }
 
 /* ===================== SOUND ===================== */
 var soundOn = true;
@@ -488,14 +593,59 @@ function playCorrectSound(){ playTone(880,0.12,'sine',0,0.16); playTone(1320,0.1
 function playWrongSound(){ playTone(220,0.18,'sawtooth',0,0.13); playTone(160,0.22,'sawtooth',0.12,0.13); }
 
 /* ===================== APP STATE ===================== */
-var state = { pool:[], idx:0, score:0, results:[], sessionLen:25, kindFilter:'mixed', selectedVoucher:null };
+var state = { pool:[], idx:0, score:0, results:[], sessionLen:25, kindFilter:'mixed', selectedVoucher:null, started:false };
 var screens = { lock:document.getElementById('screen-lock'), start:document.getElementById('screen-start'), quiz:document.getElementById('screen-quiz'), result:document.getElementById('screen-result') };
 function showScreen(name){
   Object.keys(screens).forEach(function(k){ screens[k].classList.remove('active'); });
   screens[name].classList.add('active');
   document.getElementById('homeBtn').classList.toggle('show', name!=='start' && name!=='lock');
 }
-function shuffle(arr){ var a=arr.slice(); for(var i=a.length-1;i>0;i--){ var j=randInt(0,i); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function shuffle(arr){ var a=arr.slice(); for(var i=a.length-1;i>0;i--){ var j=randInt(0,i); var tmp=a[i]; a[i]=a[j]; a[j]=tmp; } return a; }
+
+/* ===================== APPLY LANGUAGE (updates all static text) ===================== */
+function applyLanguage(){
+  document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.lang===currentLang); });
+
+  document.getElementById('lockEyebrow').textContent = t('lockEyebrow');
+  document.getElementById('lockTitle').textContent = t('lockTitle');
+  document.getElementById('lockSub').textContent = t('lockSub');
+  document.getElementById('lockInput').placeholder = t('lockPlaceholder');
+  document.getElementById('lockBtn').textContent = t('lockBtn');
+  document.getElementById('lockErrorText').textContent = t('lockErrorText');
+
+  document.getElementById('startEyebrow').textContent = t('startEyebrow');
+  document.getElementById('startTitle').textContent = t('startTitle');
+  document.getElementById('startSub').textContent = t('startSub');
+  document.getElementById('kindLabel').textContent = t('kindLabel');
+  document.querySelector('[data-kind="mixed"]').textContent = t('kindMixed');
+  document.querySelector('[data-kind="transaction"]').textContent = t('kindTransaction');
+  document.querySelector('[data-kind="theory"]').textContent = t('kindTheory');
+  document.getElementById('lenLabel').textContent = t('lenLabel');
+  document.querySelector('[data-len="10"]').textContent = t('len10');
+  document.querySelector('[data-len="25"]').textContent = t('len25');
+  document.querySelector('[data-len="50"]').textContent = t('len50');
+  document.querySelector('[data-len="100"]').textContent = t('len100');
+  document.querySelector('[data-len="all"]').textContent = t('lenAll');
+  document.getElementById('startBtn').textContent = t('startBtn');
+
+  document.getElementById('drLabel').textContent = t('drLabel');
+  document.getElementById('crLabel').textContent = t('crLabel');
+  document.getElementById('drInput').placeholder = t('ledgerPlaceholder');
+  document.getElementById('crInput').placeholder = t('ledgerPlaceholder');
+  document.getElementById('txSubmitBtn').textContent = t('txSubmit');
+  document.getElementById('theoryInput').placeholder = t('answerPlaceholder');
+  document.getElementById('thSubmitBtn').textContent = t('thSubmit');
+
+  document.getElementById('retryBtn').textContent = t('retryBtn');
+  document.getElementById('newSettingsBtn').textContent = t('newSettingsBtn');
+
+  if(screens.quiz.classList.contains('active') && state.pool.length){ renderQuestion(); }
+  if(screens.result.classList.contains('active')){ refreshResultDisplay(); }
+}
+
+document.querySelectorAll('.lang-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){ currentLang = btn.dataset.lang; applyLanguage(); });
+});
 
 document.querySelectorAll('#kindChips .chip').forEach(function(btn){
   btn.addEventListener('click', function(){
@@ -516,23 +666,6 @@ document.getElementById('newSettingsBtn').addEventListener('click', goHome);
 document.getElementById('retryBtn').addEventListener('click', startQuiz);
 function goHome(){ showScreen('start'); }
 
-/* ===================== PASSWORD GATE ===================== */
-var SITE_PASSWORD = 'Tally2026';
-function normPass(s){ return String(s).trim().toUpperCase(); }
-function tryUnlock(){
-  var val = document.getElementById('lockInput').value;
-  if(normPass(val) === normPass(SITE_PASSWORD)){
-    document.getElementById('lockError').classList.remove('show');
-    showScreen('start');
-  } else {
-    document.getElementById('lockError').classList.add('show');
-    document.getElementById('lockInput').focus();
-  }
-}
-document.getElementById('lockBtn').addEventListener('click', tryUnlock);
-document.getElementById('lockInput').addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); tryUnlock(); } });
-document.getElementById('lockInput').focus();
-
 function getPoolForFilter(){
   if(state.kindFilter === 'transaction') return FULL_BANK_ALL.filter(function(q){return q.kind==='transaction';});
   if(state.kindFilter === 'theory') return FULL_BANK_ALL.filter(function(q){return q.kind==='theory';});
@@ -551,9 +684,9 @@ function buildRuler(){
   var ticks=document.getElementById('rulerTicks'); ticks.innerHTML='';
   var total=state.pool.length;
   for(var i=0;i<total;i++){
-    var t=document.createElement('div'); t.className='tick'; var n=i+1;
-    if(total<=15){ if(n%5===0) t.classList.add('medium'); } else { if(n%25===0) t.classList.add('major'); else if(n%10===0) t.classList.add('medium'); }
-    ticks.appendChild(t);
+    var tk=document.createElement('div'); tk.className='tick'; var nn=i+1;
+    if(total<=15){ if(nn%5===0) tk.classList.add('medium'); } else { if(nn%25===0) tk.classList.add('major'); else if(nn%10===0) tk.classList.add('medium'); }
+    ticks.appendChild(tk);
   }
   moveCursor();
 }
@@ -562,7 +695,7 @@ function moveCursor(){ var total=state.pool.length; var pct= total<=1?0:(state.i
 function buildFkeyRow(){
   var row=document.getElementById('fkeyRow'); row.innerHTML='';
   voucherOptions.forEach(function(v){
-    var b=document.createElement('button'); b.className='fkey-btn'; b.dataset.label=v.label;
+    var b=document.createElement('button'); b.className='fkey-btn'; b.dataset.label=v.label; b.type='button';
     b.innerHTML='<span class="k">'+v.code+'</span>'+v.label;
     b.addEventListener('click', function(){
       if(document.getElementById('drInput').disabled) return;
@@ -576,15 +709,15 @@ buildFkeyRow();
 
 function renderQuestion(){
   var item = state.pool[state.idx];
-  document.getElementById('qCounter').textContent = 'প্রশ্ন '+(state.idx+1)+' / '+state.pool.length;
-  document.getElementById('scoreCounter').textContent = 'স্কোর: '+state.score;
-  document.getElementById('questionText').textContent = item.q;
+  document.getElementById('qCounter').textContent = t('qCounterPrefix')+' '+fmtNum(state.idx+1)+' / '+fmtNum(state.pool.length);
+  document.getElementById('scoreCounter').textContent = t('scoreLabel')+' '+fmtNum(state.score);
+  document.getElementById('questionText').textContent = item.q[currentLang];
   document.getElementById('qTagArea').innerHTML = item.kind==='transaction'
-    ? '<span class="q-tag tx">ভাউচার এন্ট্রি</span>' : '<span class="q-tag th">থিওরি / শর্টকাট</span>';
+    ? '<span class="q-tag tx">'+t('qTagTx')+'</span>' : '<span class="q-tag th">'+t('qTagTh')+'</span>';
 
   document.getElementById('feedbackBox').classList.remove('show','correct','incorrect');
   document.getElementById('nextBtn').disabled = true;
-  document.getElementById('nextBtn').textContent = (state.idx===state.pool.length-1) ? 'রেজাল্ট দেখুন →' : 'পরবর্তী প্রশ্ন →';
+  document.getElementById('nextBtn').textContent = (state.idx===state.pool.length-1) ? t('resultBtn') : t('nextBtn');
   moveCursor();
 
   if(item.kind === 'transaction'){
@@ -633,21 +766,21 @@ function submitTransaction(){
 
   var box=document.getElementById('feedbackBox');
   box.classList.add('show', allOK?'correct':'incorrect');
-  document.getElementById('feedbackHead').textContent = allOK ? '✅ সঠিক এন্ট্রি!' : '❌ এন্ট্রিতে ভুল আছে';
+  document.getElementById('feedbackHead').textContent = allOK ? t('fbCorrectHead') : t('fbWrongHead');
   document.getElementById('feedbackDetail').innerHTML =
-    '<div class="row-fb">ভাউচার: '+(voucherOK?'✅':'❌ সঠিক: '+item.voucher)+'</div>'+
-    '<div class="row-fb">Dr: '+(drOK?'✅':'❌ সঠিক: '+item.dr[0])+'</div>'+
-    '<div class="row-fb">Cr: '+(crOK?'✅':'❌ সঠিক: '+item.cr[0])+'</div>';
-  document.getElementById('feedbackSol').textContent = item.sol ? ('ব্যাখ্যা: '+item.sol) : '';
+    '<div class="row-fb">'+t('fbVoucher')+' '+(voucherOK?'✅':'❌ '+t('fbCorrectShort')+' '+item.voucher)+'</div>'+
+    '<div class="row-fb">Dr: '+(drOK?'✅':'❌ '+t('fbCorrectShort')+' '+item.dr[0])+'</div>'+
+    '<div class="row-fb">Cr: '+(crOK?'✅':'❌ '+t('fbCorrectShort')+' '+item.cr[0])+'</div>';
+  document.getElementById('feedbackSol').textContent = item.sol[currentLang] ? (t('fbSolPrefix')+' '+item.sol[currentLang]) : '';
 
   if(allOK){ state.score++; playCorrectSound(); } else { playWrongSound(); }
-  state.results.push({kind:'transaction', q:item.q,
-    userSummary:'ভাউচার:'+(state.selectedVoucher||'—')+' Dr:'+drVal+' Cr:'+crVal,
-    correctSummary:'ভাউচার:'+item.voucher+' Dr:'+item.dr[0]+' Cr:'+item.cr[0], correct:allOK});
+  state.results.push({kind:'transaction', q:item.q[currentLang],
+    userSummary:t('fbVoucher')+(state.selectedVoucher||'—')+' Dr:'+drVal+' Cr:'+crVal,
+    correctSummary:t('fbVoucher')+item.voucher+' Dr:'+item.dr[0]+' Cr:'+item.cr[0], correct:allOK});
 
   var tickEl = document.querySelectorAll('#rulerTicks .tick')[state.idx];
   if(tickEl) tickEl.classList.add(allOK?'correct':'incorrect');
-  document.getElementById('scoreCounter').textContent='স্কোর: '+state.score;
+  document.getElementById('scoreCounter').textContent=t('scoreLabel')+' '+fmtNum(state.score);
   document.getElementById('nextBtn').disabled=false;
 }
 
@@ -661,16 +794,16 @@ function submitTheory(){
 
   var box=document.getElementById('feedbackBox');
   box.classList.add('show', isCorrect?'correct':'incorrect');
-  document.getElementById('feedbackHead').textContent = isCorrect ? '✅ সঠিক উত্তর!' : '❌ ভুল উত্তর';
-  document.getElementById('feedbackDetail').innerHTML = '<div class="row-fb">সঠিক উত্তর: '+correctTheoryDisplay(item)+'</div>';
-  document.getElementById('feedbackSol').textContent = item.sol ? ('ব্যাখ্যা: '+item.sol) : '';
+  document.getElementById('feedbackHead').textContent = isCorrect ? t('fbCorrectHeadTh') : t('fbWrongHeadTh');
+  document.getElementById('feedbackDetail').innerHTML = '<div class="row-fb">'+t('fbCorrectAnsPrefix')+' '+correctTheoryDisplay(item)+'</div>';
+  document.getElementById('feedbackSol').textContent = item.sol[currentLang] ? (t('fbSolPrefix')+' '+item.sol[currentLang]) : '';
 
   if(isCorrect){ state.score++; playCorrectSound(); } else { playWrongSound(); }
-  state.results.push({kind:'theory', q:item.q, userSummary:val, correctSummary:correctTheoryDisplay(item), correct:isCorrect});
+  state.results.push({kind:'theory', q:item.q[currentLang], userSummary:val, correctSummary:correctTheoryDisplay(item), correct:isCorrect});
 
   var tickEl = document.querySelectorAll('#rulerTicks .tick')[state.idx];
   if(tickEl) tickEl.classList.add(isCorrect?'correct':'incorrect');
-  document.getElementById('scoreCounter').textContent='স্কোর: '+state.score;
+  document.getElementById('scoreCounter').textContent=t('scoreLabel')+' '+fmtNum(state.score);
   document.getElementById('nextBtn').disabled=false;
 }
 
@@ -687,30 +820,52 @@ document.getElementById('nextBtn').addEventListener('click', function(){
   if(state.idx < state.pool.length-1){ state.idx++; renderQuestion(); } else { showResult(); }
 });
 
+var lastResultData = null;
 function showResult(){
-  showScreen('result');
   var total=state.pool.length;
-  document.getElementById('resultScore').innerHTML = state.score+'<span>/'+total+'</span>';
   var pct=Math.round((state.score/total)*100);
-  document.getElementById('resultPct').textContent=pct+'%';
-  var msg='';
-  if(pct>=80) msg='🌟 অসাধারণ! আপনি Tally ও Accountancy-তে রীতিমতো দক্ষ।';
-  else if(pct>=50) msg='👍 ভালো করেছেন! ভুল হওয়া এন্ট্রিগুলো রিভিউ করে আরেকবার চর্চা করুন।';
-  else msg='💪 চিন্তা নেই, এই বিষয়গুলো প্র্যাকটিসেই আয়ত্ত হয় — ভুলগুলো দেখে আবার চেষ্টা করুন।';
-  document.getElementById('resultMsg').textContent=msg;
+  lastResultData = { score:state.score, total:total, pct:pct, results:state.results.slice() };
+  showScreen('result');
+  refreshResultDisplay();
+}
+function refreshResultDisplay(){
+  if(!lastResultData) return;
+  document.getElementById('resultScore').innerHTML = fmtNum(lastResultData.score)+'<span>/'+fmtNum(lastResultData.total)+'</span>';
+  document.getElementById('resultPct').textContent = fmtNum(lastResultData.pct)+'%';
+  var msg = lastResultData.pct>=80 ? t('resultMsgHigh') : (lastResultData.pct>=50 ? t('resultMsgMid') : t('resultMsgLow'));
+  document.getElementById('resultMsg').textContent = msg;
 
-  var missed=state.results.filter(function(r){return !r.correct;});
+  var missed = lastResultData.results.filter(function(r){return !r.correct;});
   var reviewList=document.getElementById('reviewList'), reviewToggle=document.getElementById('reviewToggle');
-  if(missed.length===0){ reviewToggle.textContent='সব প্রশ্নের উত্তর সঠিক হয়েছে! 🎉'; reviewList.innerHTML=''; }
+  if(missed.length===0){ reviewToggle.textContent=t('reviewAllCorrect'); reviewList.innerHTML=''; }
   else {
-    reviewToggle.textContent='ভুল হওয়া '+missed.length+'টি প্রশ্ন দেখুন';
+    reviewToggle.textContent=t('reviewMissedPrefix')+' '+fmtNum(missed.length)+' '+t('reviewMissedSuffix');
     reviewList.innerHTML = missed.map(function(r){
-      return '<div class="review-item"><div>'+r.q+'</div><div>আপনার: <span class="ra">'+r.userSummary+'</span></div><div>সঠিক: <span class="rc">'+r.correctSummary+'</span></div></div>';
+      return '<div class="review-item"><div>'+r.q+'</div><div>'+t('reviewYour')+' <span class="ra">'+r.userSummary+'</span></div><div>'+t('reviewCorrect')+' <span class="rc">'+r.correctSummary+'</span></div></div>';
     }).join('');
   }
   reviewList.classList.remove('show');
 }
 document.getElementById('reviewToggle').addEventListener('click', function(){ document.getElementById('reviewList').classList.toggle('show'); });
+
+/* ===================== PASSWORD GATE ===================== */
+var SITE_PASSWORD = 'Tally2026';
+function normPass(s){ return String(s).trim().toUpperCase(); }
+function tryUnlock(){
+  var val = document.getElementById('lockInput').value;
+  if(normPass(val) === normPass(SITE_PASSWORD)){
+    document.getElementById('lockError').classList.remove('show');
+    showScreen('start');
+  } else {
+    document.getElementById('lockError').classList.add('show');
+    document.getElementById('lockInput').focus();
+  }
+}
+document.getElementById('lockBtn').addEventListener('click', tryUnlock);
+document.getElementById('lockInput').addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); tryUnlock(); } });
+
+applyLanguage();
+document.getElementById('lockInput').focus();
 </script>
 </body>
 </html>
