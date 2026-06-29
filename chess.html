@@ -16,16 +16,38 @@
     font-size:16px;
   }
   *{box-sizing:border-box;}
-  body{margin:0; min-height:100vh; background:var(--bg); color:var(--ink);
+  body{margin:0; min-height:100vh; background:#10131C; color:var(--ink); position:relative; overflow-x:hidden;
     font-family:'Noto Sans Bengali', sans-serif; display:flex; align-items:center; justify-content:center; padding:18px 10px;}
-  .app{width:100%; max-width:560px; background:var(--panel); border-radius:14px; box-shadow:0 20px 55px rgba(0,0,0,0.45); overflow:hidden;}
+  .bg-pieces{position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;}
+  .bg-piece{position:absolute; opacity:0.07; color:#D9A441; font-size:22vmin; line-height:1;}
+  .bg-piece.p1{top:-8%; left:-6%; animation:bgDrift1 38s ease-in-out infinite;}
+  .bg-piece.p2{top:55%; left:-10%; font-size:18vmin; animation:bgDrift2 46s ease-in-out infinite;}
+  .bg-piece.p3{top:-5%; right:-8%; font-size:20vmin; animation:bgDrift3 42s ease-in-out infinite;}
+  .bg-piece.p4{top:60%; right:-6%; font-size:24vmin; animation:bgDrift1 50s ease-in-out infinite reverse;}
+  .bg-piece.p5{top:30%; left:42%; font-size:16vmin; opacity:0.045; animation:bgDrift2 60s ease-in-out infinite;}
+  @keyframes bgDrift1{0%,100%{transform:translate(0,0) rotate(0deg);} 50%{transform:translate(4vw,3vh) rotate(8deg);}}
+  @keyframes bgDrift2{0%,100%{transform:translate(0,0) rotate(0deg);} 50%{transform:translate(-3vw,4vh) rotate(-10deg);}}
+  @keyframes bgDrift3{0%,100%{transform:translate(0,0) rotate(0deg);} 50%{transform:translate(-4vw,-3vh) rotate(6deg);}}
+  @media (prefers-reduced-motion: reduce){ .bg-piece{animation:none;} }
+
+  .app{position:relative; z-index:1; width:100%; max-width:560px; background:var(--panel); border-radius:14px; box-shadow:0 20px 55px rgba(0,0,0,0.45); overflow:hidden; transition:opacity 0.4s ease, transform 0.4s ease;}
+  .app.unlocking{opacity:0; transform:scale(0.96);}
   header.topbar{display:flex; align-items:center; justify-content:space-between; padding:14px 18px; background:var(--bg); border-bottom:1px solid rgba(255,255,255,0.06);}
   .brandmark{font-family:'Space Mono', monospace; font-size:0.7rem; color:var(--ink-soft); letter-spacing:0.04em;}
   .icon-btn{background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.15); color:var(--ink); font-size:1rem; padding:6px 10px; border-radius:10px; cursor:pointer;}
+  .lang-switch{display:flex; gap:3px; background:rgba(255,255,255,0.07); border-radius:12px; padding:3px;}
+  .lang-btn{background:none; border:none; color:var(--ink-soft); font-size:0.74rem; padding:5px 10px; border-radius:9px; cursor:pointer; font-family:inherit;}
+  .lang-btn.active{background:var(--gold); color:#1B2030; font-weight:700;}
 
   main{padding:18px;}
   .screen{display:none;} .screen.active{display:block; animation:fadeIn 0.3s ease;}
   @keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+  #screen-lock.unlocking-out{animation:unlockOut 0.42s ease forwards;}
+  @keyframes unlockOut{
+    0%{opacity:1; transform:scale(1) rotate(0deg);}
+    40%{opacity:0.7; transform:scale(1.04) rotate(1deg);}
+    100%{opacity:0; transform:scale(0.85) rotate(-3deg);}
+  }
 
   /* ---- SETUP SCREEN ---- */
   .hero-eyebrow{font-family:'Space Mono', monospace; font-size:0.7rem; color:var(--gold); letter-spacing:0.06em; margin-bottom:6px;}
@@ -88,75 +110,106 @@
   footer.brandfooter b{color:var(--ink);}
   footer.brandfooter a{color:var(--green); font-weight:700; text-decoration:none;}
 
-  .lock-icon-wrap{display:flex; justify-content:center; margin:10px 0 16px 0;}
-  .lock-icon{
-    width:92px; height:92px; border-radius:22px; background:linear-gradient(160deg, var(--panel-light), var(--bg));
-    border:2px solid rgba(217,164,65,0.3); display:flex; align-items:center; justify-content:center;
-    font-size:48px; color:var(--gold); box-shadow:0 10px 26px rgba(0,0,0,0.4);
-    animation:lockPop 0.55s cubic-bezier(.34,1.56,.64,1) both, lockFloat 3.2s ease-in-out infinite 0.55s, lockGlow 2.4s ease-in-out infinite 0.6s;
+  .lock-board-scene{position:relative; height:120px; margin:6px 0 18px 0; display:flex; align-items:center; justify-content:center; overflow:hidden;}
+  .lock-board-grid{
+    position:absolute; width:120px; height:120px; top:50%; left:50%; margin:-60px 0 0 -60px;
+    background-image:
+      linear-gradient(45deg, var(--dark-sq) 25%, transparent 25%, transparent 75%, var(--dark-sq) 75%),
+      linear-gradient(45deg, var(--dark-sq) 25%, transparent 25%, transparent 75%, var(--dark-sq) 75%);
+    background-size:30px 30px; background-position:0 0, 15px 15px; background-color:var(--light-sq);
+    border-radius:10px; opacity:0.85; box-shadow:0 10px 26px rgba(0,0,0,0.4);
+    animation:boardPulse 4s ease-in-out infinite, boardPop 0.6s cubic-bezier(.34,1.56,.64,1) both;
   }
-  @keyframes lockPop{from{opacity:0; transform:scale(0.5) rotate(-12deg);} to{opacity:1; transform:scale(1) rotate(0deg);}}
-  @keyframes lockFloat{0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);}}
-  @keyframes lockGlow{0%,100%{text-shadow:0 0 8px rgba(217,164,65,0.4);} 50%{text-shadow:0 0 18px rgba(217,164,65,0.85);}}
-  @media (prefers-reduced-motion: reduce){ .lock-icon{animation:none;} }
+  @keyframes boardPop{from{opacity:0; transform:scale(0.6) rotate(-6deg);} to{opacity:0.85; transform:scale(1) rotate(0deg);}}
+  @keyframes boardPulse{0%,100%{box-shadow:0 10px 26px rgba(0,0,0,0.4);} 50%{box-shadow:0 10px 34px rgba(217,164,65,0.25);}}
+  .lock-piece{position:absolute; font-size:34px; color:var(--gold); text-shadow:0 3px 8px rgba(0,0,0,0.5); opacity:0;
+    animation:pieceFloatIn 0.6s ease both, pieceBob 2.8s ease-in-out infinite;}
+  .lp1{top:8px; left:18%; animation-delay:0.05s, 0.65s;}
+  .lp2{top:30px; left:36%; font-size:30px; animation-delay:0.18s, 0.78s;}
+  .lp3{top:4px; left:54%; font-size:38px; animation-delay:0.3s, 0.9s;}
+  .lp4{top:34px; left:70%; font-size:28px; animation-delay:0.42s, 1.02s;}
+  .lp5{top:14px; left:84%; font-size:30px; animation-delay:0.54s, 1.14s;}
+  @keyframes pieceFloatIn{from{opacity:0; transform:translateY(22px) scale(0.6);} to{opacity:1; transform:translateY(0) scale(1);}}
+  @keyframes pieceBob{0%,100%{transform:translateY(0);} 50%{transform:translateY(-7px);}}
+  @media (prefers-reduced-motion: reduce){ .lock-board-grid, .lock-piece{animation:none; opacity:1;} }
 </style>
 </head>
 <body>
+<div class="bg-pieces">
+  <div class="bg-piece p1">♟</div>
+  <div class="bg-piece p2">♝</div>
+  <div class="bg-piece p3">♞</div>
+  <div class="bg-piece p4">♜</div>
+  <div class="bg-piece p5">♛</div>
+</div>
 <div class="app">
   <header class="topbar">
     <span class="brandmark">♞ CHESS MASTER</span>
-    <button class="icon-btn" id="soundToggleBtn">🔊</button>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <div class="lang-switch" id="langSwitch">
+        <button class="lang-btn active" data-lang="bn">বাং</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <button class="icon-btn" id="soundToggleBtn">🔊</button>
+    </div>
   </header>
   <main>
     <section class="screen active" id="screen-lock">
-      <div class="lock-icon-wrap"><div class="lock-icon">♞</div></div>
-      <div class="hero-eyebrow" style="text-align:center;">প্রবেশ সুরক্ষিত</div>
-      <h1 class="hero-title" style="text-align:center;">পাসওয়ার্ড দিন</h1>
-      <p style="text-align:center; color:var(--ink-soft); font-size:0.88rem; margin:0 0 18px 0;">এই চেস অ্যাপে প্রবেশ করতে পাসওয়ার্ডটি লিখুন।</p>
-      <div style="display:flex; gap:10px;">
-        <input id="lockInput" type="text" autocomplete="off" spellcheck="false" placeholder="পাসওয়ার্ড লিখুন..."
-          style="flex:1; border:1.5px solid rgba(255,255,255,0.18); border-radius:8px; padding:11px 13px; font-family:'Space Mono', monospace; font-size:0.95rem; color:var(--ink); background:var(--panel-light); outline:none;">
-        <button id="lockBtn" class="begin-btn" style="width:auto; margin-top:0; padding:0 20px;">প্রবেশ</button>
+      <div class="lock-board-scene">
+        <div class="lock-board-grid"></div>
+        <div class="lock-piece lp1">♚</div>
+        <div class="lock-piece lp2">♞</div>
+        <div class="lock-piece lp3">♛</div>
+        <div class="lock-piece lp4">♝</div>
+        <div class="lock-piece lp5">♜</div>
       </div>
-      <div id="lockError" style="display:none; margin-top:12px; color:var(--red); font-size:0.85rem; text-align:center;">❌ পাসওয়ার্ড ভুল হয়েছে, আবার চেষ্টা করুন।</div>
+      <div class="hero-eyebrow" style="text-align:center;" data-i18n="lockEyebrow"></div>
+      <h1 class="hero-title" style="text-align:center;" data-i18n="lockTitle"></h1>
+      <p style="text-align:center; color:var(--ink-soft); font-size:0.88rem; margin:0 0 18px 0;" data-i18n="lockSub"></p>
+      <div style="display:flex; gap:10px;">
+        <input id="lockInput" type="text" autocomplete="off" spellcheck="false" data-i18n-ph="lockPh"
+          style="flex:1; border:1.5px solid rgba(255,255,255,0.18); border-radius:8px; padding:11px 13px; font-family:'Space Mono', monospace; font-size:0.95rem; color:var(--ink); background:var(--panel-light); outline:none;">
+        <button id="lockBtn" class="begin-btn" style="width:auto; margin-top:0; padding:0 20px;" data-i18n="lockBtn"></button>
+      </div>
+      <div id="lockError" style="display:none; margin-top:12px; color:var(--red); font-size:0.85rem; text-align:center;" data-i18n="lockError"></div>
     </section>
 
     <section class="screen" id="screen-setup">
-      <div class="hero-eyebrow">আধুনিক চেস অ্যাপ · AI সহ</div>
-      <h1 class="hero-title">♟️ চেস মাস্টার</h1>
+      <div class="hero-eyebrow" data-i18n="setupEyebrow"></div>
+      <h1 class="hero-title">♟️ <span data-i18n="setupTitle"></span></h1>
 
-      <div class="option-label">মোড বেছে নিন</div>
+      <div class="option-label" data-i18n="modeLabel"></div>
       <div class="chip-row">
-        <button class="chip active" data-setup-mode="ai">Computer-এর বিরুদ্ধে</button>
-        <button class="chip" data-setup-mode="pvp">দুই খেলোয়াড় (একই ডিভাইসে)</button>
+        <button class="chip active" data-setup-mode="ai" data-i18n="modeAi"></button>
+        <button class="chip" data-setup-mode="pvp" data-i18n="modePvp"></button>
       </div>
 
       <div id="aiOptionsBlock">
-        <div class="option-label">আপনার রং</div>
+        <div class="option-label" data-i18n="colorLabel"></div>
         <div class="chip-row">
-          <button class="chip active" data-setup-color="w">সাদা (White)</button>
-          <button class="chip" data-setup-color="b">কালো (Black)</button>
-          <button class="chip" data-setup-color="random">র‍্যান্ডম</button>
+          <button class="chip active" data-setup-color="w" data-i18n="colorWhite"></button>
+          <button class="chip" data-setup-color="b" data-i18n="colorBlack"></button>
+          <button class="chip" data-setup-color="random" data-i18n="colorRandom"></button>
         </div>
-        <div class="option-label">কম্পিউটারের লেভেল</div>
+        <div class="option-label" data-i18n="levelLabel"></div>
         <div class="chip-row">
-          <button class="chip" data-setup-level="1">শিক্ষানবিস</button>
-          <button class="chip active" data-setup-level="2">মাঝারি</button>
-          <button class="chip" data-setup-level="3">ভালো খেলোয়াড়</button>
-          <button class="chip" data-setup-level="4">কঠিন</button>
+          <button class="chip" data-setup-level="1" data-i18n="level1"></button>
+          <button class="chip active" data-setup-level="2" data-i18n="level2"></button>
+          <button class="chip" data-setup-level="3" data-i18n="level3"></button>
+          <button class="chip" data-setup-level="4" data-i18n="level4"></button>
         </div>
       </div>
 
-      <div class="option-label">সময়সীমা (ক্লক)</div>
+      <div class="option-label" data-i18n="clockLabel"></div>
       <div class="chip-row">
-        <button class="chip active" data-setup-clock="none">ক্লক ছাড়া</button>
-        <button class="chip" data-setup-clock="bullet">৩ মিনিট (Bullet)</button>
-        <button class="chip" data-setup-clock="blitz">৫ মিনিট (Blitz)</button>
-        <button class="chip" data-setup-clock="rapid">১০ মিনিট (Rapid)</button>
-        <button class="chip" data-setup-clock="classical">৩০ মিনিট</button>
+        <button class="chip active" data-setup-clock="none" data-i18n="clockNone"></button>
+        <button class="chip" data-setup-clock="bullet" data-i18n="clockBullet"></button>
+        <button class="chip" data-setup-clock="blitz" data-i18n="clockBlitz"></button>
+        <button class="chip" data-setup-clock="rapid" data-i18n="clockRapid"></button>
+        <button class="chip" data-setup-clock="classical" data-i18n="clockClassical"></button>
       </div>
 
-      <button class="begin-btn" id="beginGameBtn">খেলা শুরু করুন</button>
+      <button class="begin-btn" id="beginGameBtn" data-i18n="beginBtn"></button>
     </section>
 
     <section class="screen" id="screen-game">
@@ -177,14 +230,14 @@
       <div class="status-bar" id="statusText"></div>
 
       <div class="controls-row">
-        <button class="ctrl-btn" id="newGameBtn">🆕 নতুন খেলা</button>
-        <button class="ctrl-btn" id="undoBtn">↩️ Undo</button>
-        <button class="ctrl-btn" id="hintBtn">💡 Hint</button>
-        <button class="ctrl-btn" id="flipBtn">🔄 Flip</button>
-        <button class="ctrl-btn" id="resignBtn">🏳️ Resign</button>
+        <button class="ctrl-btn" id="newGameBtn">🆕 <span data-i18n="newGameBtn"></span></button>
+        <button class="ctrl-btn" id="undoBtn">↩️ <span data-i18n="undoBtn"></span></button>
+        <button class="ctrl-btn" id="hintBtn">💡 <span data-i18n="hintBtn"></span></button>
+        <button class="ctrl-btn" id="flipBtn">🔄 <span data-i18n="flipBtn"></span></button>
+        <button class="ctrl-btn" id="resignBtn">🏳️ <span data-i18n="resignBtn"></span></button>
       </div>
 
-      <div class="option-label">মুভ হিস্ট্রি</div>
+      <div class="option-label" data-i18n="historyLabel"></div>
       <div class="history-box" id="historyList"></div>
     </section>
   </main>
@@ -196,7 +249,7 @@
 
 <div class="modal-overlay" id="promoModal">
   <div class="modal-box">
-    <h3>কোন পিসে প্রোমোট করবেন?</h3>
+    <h3 data-i18n="promoTitle"></h3>
     <div class="promo-row">
       <button class="promo-choice" data-piece="q">♕</button>
       <button class="promo-choice" data-piece="r">♖</button>
@@ -210,8 +263,8 @@
   <div class="modal-box">
     <h3 id="gameOverText"></h3>
     <div class="modal-actions">
-      <button class="modal-btn secondary" id="gameOverCloseBtn">বোর্ড দেখুন</button>
-      <button class="modal-btn" id="gameOverNewBtn">নতুন খেলা</button>
+      <button class="modal-btn secondary" id="gameOverCloseBtn" data-i18n="viewBoardBtn"></button>
+      <button class="modal-btn" id="gameOverNewBtn" data-i18n="newGameBtn2"></button>
     </div>
   </div>
 </div>
@@ -3782,21 +3835,74 @@ function sndIllegal(){ playTone(180,0.08,'square',0,0.08); }
 
 /* ----------------- UI STRINGS ----------------- */
 const T = {
-  thinking:{bn:'ভাবছে...', en:'Thinking...', hi:'सोच रहा है...'},
-  yourTurn:{bn:'আপনার চাল', en:'Your turn', hi:'आपकी बारी'},
-  whiteTurn:{bn:'সাদার চাল', en:"White's turn", hi:'सफेद की बारी'},
-  blackTurn:{bn:'কালোর চাল', en:"Black's turn", hi:'काले की बारी'},
-  check:{bn:'চেক!', en:'Check!', hi:'चेक!'},
-  checkmateWin:{bn:'চেকমেট! আপনি জিতেছেন! 🎉', en:'Checkmate! You won! 🎉', hi:'चेकमेट! आप जीत गए! 🎉'},
-  checkmateLose:{bn:'চেকমেট! এবার হেরে গেছেন।', en:'Checkmate! You lost this time.', hi:'चेकमेट! इस बार आप हार गए।'},
-  checkmateGeneric:{bn:'চেকমেট!', en:'Checkmate!', hi:'चेकमेट!'},
-  stalemate:{bn:'স্টেলমেট — ড্র!', en:'Stalemate — Draw!', hi:'स्टेलमेट — ड्रॉ!'},
-  draw:{bn:'খেলা ড্র হয়েছে', en:'The game is a draw', hi:'खेल ड्रॉ हो गया'},
-  timeUp:{bn:'সময় শেষ!', en:'Time is up!', hi:'समय समाप्त!'},
-  resigned:{bn:'রিজাইন করা হয়েছে', en:'Resigned', hi:'हार मान ली'}
+  thinking:{bn:'ভাবছে...', en:'Thinking...'},
+  yourTurn:{bn:'আপনার চাল', en:'Your turn'},
+  whiteTurn:{bn:'সাদার চাল', en:"White's turn"},
+  blackTurn:{bn:'কালোর চাল', en:"Black's turn"},
+  check:{bn:'চেক!', en:'Check!'},
+  checkmateWin:{bn:'চেকমেট! আপনি জিতেছেন! 🎉', en:'Checkmate! You won! 🎉'},
+  checkmateLose:{bn:'চেকমেট! এবার হেরে গেছেন।', en:'Checkmate! You lost this time.'},
+  checkmateGeneric:{bn:'চেকমেট!', en:'Checkmate!'},
+  stalemate:{bn:'স্টেলমেট — ড্র!', en:'Stalemate — Draw!'},
+  draw:{bn:'খেলা ড্র হয়েছে', en:'The game is a draw'},
+  timeUp:{bn:'সময় শেষ!', en:'Time is up!'},
+  resigned:{bn:'রিজাইন করা হয়েছে', en:'Resigned'},
+
+  lockEyebrow:{bn:'প্রবেশ সুরক্ষিত', en:'Secure Access'},
+  lockTitle:{bn:'পাসওয়ার্ড দিন', en:'Enter Password'},
+  lockSub:{bn:'এই চেস অ্যাপে প্রবেশ করতে পাসওয়ার্ডটি লিখুন।', en:'Enter the password to access this chess app.'},
+  lockPh:{bn:'পাসওয়ার্ড লিখুন...', en:'Enter password...'},
+  lockBtn:{bn:'প্রবেশ', en:'Enter'},
+  lockError:{bn:'❌ পাসওয়ার্ড ভুল হয়েছে, আবার চেষ্টা করুন।', en:'❌ Wrong password, please try again.'},
+
+  setupEyebrow:{bn:'আধুনিক চেস অ্যাপ · AI সহ', en:'Modern Chess App · with AI'},
+  setupTitle:{bn:'চেস মাস্টার', en:'Chess Master'},
+  modeLabel:{bn:'মোড বেছে নিন', en:'Choose Mode'},
+  modeAi:{bn:'Computer-এর বিরুদ্ধে', en:'vs Computer'},
+  modePvp:{bn:'দুই খেলোয়াড় (একই ডিভাইসে)', en:'Two Players (same device)'},
+  colorLabel:{bn:'আপনার রং', en:'Your Color'},
+  colorWhite:{bn:'সাদা (White)', en:'White'},
+  colorBlack:{bn:'কালো (Black)', en:'Black'},
+  colorRandom:{bn:'র‍্যান্ডম', en:'Random'},
+  levelLabel:{bn:'কম্পিউটারের লেভেল', en:"Computer's Level"},
+  level1:{bn:'শিক্ষানবিস', en:'Beginner'},
+  level2:{bn:'মাঝারি', en:'Intermediate'},
+  level3:{bn:'ভালো খেলোয়াড়', en:'Strong Player'},
+  level4:{bn:'কঠিন', en:'Hard'},
+  clockLabel:{bn:'সময়সীমা (ক্লক)', en:'Time Control (Clock)'},
+  clockNone:{bn:'ক্লক ছাড়া', en:'No Clock'},
+  clockBullet:{bn:'৩ মিনিট (Bullet)', en:'3 min (Bullet)'},
+  clockBlitz:{bn:'৫ মিনিট (Blitz)', en:'5 min (Blitz)'},
+  clockRapid:{bn:'১০ মিনিট (Rapid)', en:'10 min (Rapid)'},
+  clockClassical:{bn:'৩০ মিনিট', en:'30 min'},
+  beginBtn:{bn:'খেলা শুরু করুন', en:'Start Game'},
+
+  newGameBtn:{bn:'নতুন খেলা', en:'New Game'},
+  newGameBtn2:{bn:'নতুন খেলা', en:'New Game'},
+  undoBtn:{bn:'Undo', en:'Undo'},
+  hintBtn:{bn:'Hint', en:'Hint'},
+  flipBtn:{bn:'Flip', en:'Flip'},
+  resignBtn:{bn:'Resign', en:'Resign'},
+  historyLabel:{bn:'মুভ হিস্ট্রি', en:'Move History'},
+  promoTitle:{bn:'কোন পিসে প্রোমোট করবেন?', en:'Promote to which piece?'},
+  viewBoardBtn:{bn:'বোর্ড দেখুন', en:'View Board'},
+  you:{bn:'আপনি', en:'You'},
+  aiLabel:{bn:'Computer', en:'Computer'},
+  whiteLabel:{bn:'সাদা', en:'White'},
+  blackLabel:{bn:'কালো', en:'Black'}
 };
 let lang='bn';
 function tt(key){ return T[key] ? T[key][lang] : key; }
+
+function applyLanguage(){
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active', b.dataset.lang===lang));
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ const k=el.dataset.i18n; if(T[k]) el.textContent=T[k][lang]; });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{ const k=el.dataset.i18nPh; if(T[k]) el.placeholder=T[k][lang]; });
+  if(screens.game.classList.contains('active')){ renderNames(); updateStatus(); }
+}
+document.querySelectorAll('.lang-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{ lang=btn.dataset.lang; applyLanguage(); });
+});
 
 /* ----------------- GAME STATE ----------------- */
 const chess = new Chess();
@@ -3826,6 +3932,7 @@ const screens = {
 };
 function showScreen(name){
   Object.values(screens).forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-lock').classList.remove('unlocking-out');
   screens[name].classList.add('active');
 }
 
@@ -3936,8 +4043,8 @@ function renderHistory(){
 
 /* ----------------- STATUS / CLOCK LABELS ----------------- */
 function renderNames(){
-  const whiteLabel = state.mode==='ai' ? (state.humanColor==='w'?'You':'AI ('+DIFFICULTY[state.aiLevel].label[lang]+')') : 'White';
-  const blackLabel = state.mode==='ai' ? (state.humanColor==='b'?'You':'AI ('+DIFFICULTY[state.aiLevel].label[lang]+')') : 'Black';
+  const whiteLabel = state.mode==='ai' ? (state.humanColor==='w'?tt('you'):tt('aiLabel')+' ('+DIFFICULTY[state.aiLevel].label[lang]+')') : tt('whiteLabel');
+  const blackLabel = state.mode==='ai' ? (state.humanColor==='b'?tt('you'):tt('aiLabel')+' ('+DIFFICULTY[state.aiLevel].label[lang]+')') : tt('blackLabel');
   const topLabel = state.flipped ? whiteLabel : blackLabel;
   const bottomLabel = state.flipped ? blackLabel : whiteLabel;
   nameTopEl.textContent = topLabel;
@@ -4209,7 +4316,8 @@ function tryUnlock(){
   const val = document.getElementById('lockInput').value;
   if(normPass(val) === normPass(SITE_PASSWORD)){
     document.getElementById('lockError').style.display='none';
-    showScreen('setup');
+    document.getElementById('screen-lock').classList.add('unlocking-out');
+    setTimeout(()=>{ showScreen('setup'); }, 420);
   } else {
     document.getElementById('lockError').style.display='block';
     document.getElementById('lockInput').focus();
@@ -4220,6 +4328,7 @@ document.getElementById('lockInput').addEventListener('keydown', (e)=>{ if(e.key
 
 /* ----------------- INIT ----------------- */
 buildBoardDom();
+applyLanguage();
 showScreen('lock');
 document.getElementById('lockInput').focus();
 
