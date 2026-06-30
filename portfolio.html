@@ -105,6 +105,34 @@
   .contact-card h2{font-family:'Noto Serif Bengali', serif; font-size:1.45rem; margin:0 0 10px 0;}
   .contact-card p{font-size:0.9rem; opacity:0.85; margin:0 0 24px 0; line-height:1.6;}
   .contact-row{display:flex; gap:10px; justify-content:center; flex-wrap:wrap;}
+
+  .divider-or{display:flex; align-items:center; gap:12px; margin:26px 0; color:rgba(255,255,255,0.5); font-size:0.8rem;}
+  .divider-or::before, .divider-or::after{content:""; flex:1; height:1px; background:rgba(255,255,255,0.18);}
+
+  .inquiry-form{text-align:left; max-width:420px; margin:0 auto;}
+  .form-row{margin-bottom:14px;}
+  .form-row label{display:block; font-size:0.82rem; color:rgba(255,255,255,0.85); margin-bottom:6px; font-weight:600;}
+  .form-row input, .form-row select, .form-row textarea{
+    width:100%; padding:11px 13px; border-radius:9px; border:1.5px solid rgba(255,255,255,0.22);
+    background:rgba(255,255,255,0.08); color:#fff; font-family:'Noto Sans Bengali', sans-serif; font-size:0.92rem; outline:none;
+  }
+  .form-row input::placeholder, .form-row textarea::placeholder{color:rgba(255,255,255,0.45);}
+  .form-row input:focus, .form-row select:focus, .form-row textarea:focus{border-color:var(--gold);}
+  .form-row select option{background:#1A2238; color:#fff;}
+  .form-row textarea{resize:vertical; min-height:64px;}
+  .hp-field{position:absolute; left:-9999px; top:-9999px;}
+  .form-submit-btn{
+    width:100%; background:var(--gold); color:#1A1F33; border:none; border-radius:24px; padding:13px 0;
+    font-size:0.95rem; font-weight:700; cursor:pointer; font-family:inherit; margin-top:6px;
+  }
+  .form-submit-btn:hover{background:#FFC766;}
+  .form-submit-btn:disabled{opacity:0.6; cursor:not-allowed;}
+  .form-status{margin-top:14px; font-size:0.86rem; text-align:center; display:none; padding:10px 14px; border-radius:10px; line-height:1.6;}
+  .form-status.show{display:block;}
+  .form-status.success{background:rgba(37,211,102,0.15); border:1px solid rgba(37,211,102,0.4); color:#7CF0AA;}
+  .form-status.error{background:rgba(220,80,80,0.15); border:1px solid rgba(220,80,80,0.4); color:#FF9B9B;}
+  .field-error{color:#FF9B9B; font-size:0.76rem; margin-top:4px; display:none;}
+  .field-error.show{display:block;}
   .btn-whatsapp{background:var(--whatsapp); color:#fff; box-shadow:0 10px 24px rgba(37,211,102,0.35);}
   .btn-whatsapp:hover{background:#1fb858;}
 
@@ -247,6 +275,42 @@
       <div class="contact-row">
         <a class="btn btn-whatsapp" href="https://wa.me/919563971100" target="_blank">💬 WhatsApp-এ মেসেজ করুন</a>
       </div>
+
+      <div class="divider-or">অথবা ফর্ম পূরণ করুন</div>
+
+      <form class="inquiry-form" id="inquiryForm">
+        <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off">
+
+        <div class="form-row">
+          <label for="fName">আপনার নাম *</label>
+          <input type="text" id="fName" name="name" placeholder="যেমন: রমেশ দাস" required>
+          <div class="field-error" id="errName">দয়া করে আপনার নাম লিখুন।</div>
+        </div>
+
+        <div class="form-row">
+          <label for="fPhone">ফোন / হোয়াটসঅ্যাপ নম্বর *</label>
+          <input type="tel" id="fPhone" name="phone" placeholder="যেমন: 9XXXXXXXXX" required inputmode="numeric">
+          <div class="field-error" id="errPhone">দয়া করে সঠিক ১০ সংখ্যার নম্বর লিখুন।</div>
+        </div>
+
+        <div class="form-row">
+          <label for="fInterest">কোন বিষয়ে আগ্রহী</label>
+          <select id="fInterest" name="interest">
+            <option value="কাস্টম অ্যাপ তৈরি">নতুন কাস্টম অ্যাপ তৈরি করাতে চাই</option>
+            <option value="রেডিমেড অ্যাপ কাস্টমাইজ">এই রেডিমেড অ্যাপগুলোর কোনোটা নিজের নামে কাস্টমাইজ করাতে চাই</option>
+            <option value="দাম জানতে চাই">দাম ও বিস্তারিত জানতে চাই</option>
+            <option value="অন্যান্য">অন্যান্য</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="fMessage">আপনার বার্তা (ঐচ্ছিক)</label>
+          <textarea id="fMessage" name="message" placeholder="আপনার প্রয়োজনটা একটু লিখুন..."></textarea>
+        </div>
+
+        <button type="submit" class="form-submit-btn" id="formSubmitBtn">বার্তা পাঠান</button>
+        <div class="form-status" id="formStatus"></div>
+      </form>
     </div>
   </div>
 
@@ -258,6 +322,68 @@
   <b>স্মার্ট স্টাডি যুব কম্পিউটার এডুকেশন সেন্টার</b> &amp; <b>পারুলিয়া যুব কম্পিউটার প্রশিক্ষণ কেন্দ্র</b><br>
   নবদ্বীপ, নদীয়া, পশ্চিমবঙ্গ
 </footer>
+
+<script>
+// ⚠️ এই URL-টা পরে বদলে দিতে হবে — Apps Script Deploy করার পর যে লিংক পাবেন, সেটা এখানে বসবে
+const FORM_ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycbwiOSpL01KW_OohbbTF7-sfWs2hkwh88EhsduhW8px0ZL_aug6l7y2StsbN0CCb9NN3WQ/exec';
+
+const inquiryForm = document.getElementById('inquiryForm');
+const formStatus = document.getElementById('formStatus');
+const submitBtn = document.getElementById('formSubmitBtn');
+
+function showFieldError(id, show){
+  const el = document.getElementById(id);
+  if(el) el.classList.toggle('show', show);
+}
+function isValidPhone(v){
+  const digits = v.replace(/\D/g, '');
+  return digits.length === 10 || (digits.length === 12 && digits.startsWith('91'));
+}
+
+inquiryForm.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  formStatus.classList.remove('show','success','error');
+
+  const honeypot = inquiryForm.website.value;
+  if(honeypot){ return; } // bot caught silently
+
+  const name = inquiryForm.name.value.trim();
+  const phone = inquiryForm.phone.value.trim();
+  const interest = inquiryForm.interest.value;
+  const message = inquiryForm.message.value.trim();
+
+  let valid = true;
+  if(!name){ showFieldError('errName', true); valid=false; } else { showFieldError('errName', false); }
+  if(!isValidPhone(phone)){ showFieldError('errPhone', true); valid=false; } else { showFieldError('errPhone', false); }
+  if(!valid) return;
+
+  if(FORM_ENDPOINT_URL.indexOf('PASTE_YOUR') === 0){
+    formStatus.textContent = 'ফর্মটি এখনও সংযুক্ত করা হয়নি। দয়া করে WhatsApp বাটন ব্যবহার করুন।';
+    formStatus.classList.add('show','error');
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'পাঠানো হচ্ছে...';
+
+  try{
+    await fetch(FORM_ENDPOINT_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify({name, phone, interest, message})
+    });
+    formStatus.textContent = '✅ ধন্যবাদ! আপনার বার্তা পেয়েছি, শীঘ্রই যোগাযোগ করা হবে।';
+    formStatus.classList.add('show','success');
+    inquiryForm.reset();
+  } catch(err){
+    formStatus.textContent = '❌ কিছু একটা সমস্যা হয়েছে। দয়া করে WhatsApp বাটন ব্যবহার করুন।';
+    formStatus.classList.add('show','error');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'বার্তা পাঠান';
+  }
+});
+</script>
 
 </body>
 </html>
